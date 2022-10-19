@@ -8,8 +8,11 @@ https://spacenxtlabs.com
 
 # Our group members
 Benjamin Aram
+
 David Yan
+
 Gene Ding
+
 Stephen Chen
 
 # Stakeholders and User Stories
