@@ -6,6 +6,12 @@ Metrics that will be taking into consideration are key words, hashtags, geograph
 # Our client
 https://spacenxtlabs.com
 
+# Our group members
+Benjamin Aram
+David Yan
+Gene Ding
+Stephen Chen
+
 # Stakeholders and User Stories
 
 # Stakeholders
