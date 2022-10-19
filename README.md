@@ -4,6 +4,7 @@ An autonomous AI assistant to generate content for social media based on recent 
 Metrics that will be taking into consideration are key words, hashtags, geography, demography, international observances, trending topics etc. in order to keep up to date with trends using a Pytorch infrastructure.
 
 # Our client
+https://spacenxtlabs.com
 
 # Stakeholders and User Stories
 
