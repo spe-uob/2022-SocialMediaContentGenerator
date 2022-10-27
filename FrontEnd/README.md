@@ -9,4 +9,13 @@ SocialMediaContentGenerator
 ### 3. install `quasar cli` by `yarn global add @quasar/cli`
 ### 4. install `vite plugin` by `yarn add quasar @quasar/extras`
 ### 5. use `yarn global bin` to find yarn bin path and add it to environment variables
-### and then, goto the directory of font end
+and then, goto the directory of font end
+execute `quasar dev` to develop quasar projects
+
+## build && deploy
+
+### build:
+`quasar build`
+
+### deploy:
+waiting
