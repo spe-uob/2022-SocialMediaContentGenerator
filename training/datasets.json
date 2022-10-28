@@ -9,6 +9,11 @@
       "link": "https://drive.google.com/file/d/1qnru_Y1sLwamXLDqZoJfNAuRfwsFY0Ss/view?usp=sharing",
       "description": "Image dataset for detecting drones. Contains Annotations and JPEGImages folder",
       "number": 787
+    } 
+    "Planes": {
+      "link": "https://drive.google.com/file/d/1bkleAa1yD0yO5KXr-wj_3z-SNen7FOZL/view?usp=sharing",
+      "description": "Image dataset for object detection of planes",
+      "number": 800
     }
   }
 }
