@@ -14,9 +14,12 @@
       </q-toolbar>
 
       <q-tabs align="left">
-        <q-route-tab to="/page1" label="Application" />
-        <q-route-tab to="/page2" label="About" />
-        <q-route-tab to="/page3" label="Contact Us" />
+        <q-route-tab to="/page1" label="Page 1" />
+        <q-route-tab to="/page2" label="Page 2" />
+        <q-route-tab to="/page3" label="Page 3" />
+        <q-route-tab to="/page1" label="Page 4" />
+        <q-route-tab to="/page2" label="Page 5" />
+        <q-route-tab to="/page3" label="Page 6" />
       </q-tabs>
     </q-header>
 
