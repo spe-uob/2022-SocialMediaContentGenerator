@@ -9,7 +9,7 @@
           <q-avatar>
             <img src="~/assets/drone-svgrepo-com.svg">
           </q-avatar>
-           Social Media Content Generator
+           Social Media Content Generator Ver 0.0
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
