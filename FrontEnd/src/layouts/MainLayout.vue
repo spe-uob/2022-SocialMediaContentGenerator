@@ -1,29 +1,20 @@
 <template>
-  <q-layout view="hHh LpR fff">
+  <q-layout view="hhh lpR lFf">
 
-    <q-header elevated class="bg-accent text-white" height-hint="98">
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
         <q-toolbar-title>
           <q-avatar>
-            <img src="~assets/drone-svgrepo-com.svg">
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-          Social Media Content Generator
+          Title
         </q-toolbar-title>
-
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
-
-      <q-tabs align="left">
-        <q-route-tab to="/page1" label="Page 1" />
-        <q-route-tab to="/page2" label="Page 2" />
-        <q-route-tab to="/page3" label="Page 3" />
-        <q-route-tab to="/page1" label="Page 4" />
-        <q-route-tab to="/page2" label="Page 5" />
-        <q-route-tab to="/page3" label="Page 6" />
-      </q-tabs>
     </q-header>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+    <q-drawer v-model="leftDrawerOpen" side="left" overlay bordered>
       <!-- drawer content -->
     </q-drawer>
 
@@ -34,7 +25,23 @@
   </q-layout>
 </template>
 
+<script>
+import { ref } from 'vue'
 
+export default {
+  setup () {
+    const leftDrawerOpen = ref(false)
+
+    return {
+      leftDrawerOpen,
+      toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
+    }
+  }
+}
+
+</script>
 <script>
 import { ref } from 'vue'
 
