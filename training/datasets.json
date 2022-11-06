@@ -19,6 +19,11 @@
       "link": "",
       "description": "Image datset for detecting different weather conditions",
       "number": 6862
+    },
+    "Satellite images": {
+      "link": "",
+      "description": "Image datasets for object detection of satellite images",
+      "number": 5631
     }
   }
 }
