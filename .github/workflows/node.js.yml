@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm i -g @quasar/cli
-    - run: cd FrontEnd
-    - run: quasar build -d
+    - name: Installing project dependencies
+    - run: npm install
+    - name: Building the project
+    - run: npm run build
+    - uses: w9jds/firebase-action@master
