@@ -24,5 +24,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - uses: actions/checkout@v2
     - run: npm install
     - run: npm run build
