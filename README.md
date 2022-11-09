@@ -48,3 +48,29 @@ As a member of the general public, I want to keep up to date with social media t
 Member of the general public (consumer):
 As a general consumer of social media content, I want to see the newest trends to keep up with people around me.
 
+# Dev env
+
+## fornt end
+
+---
+
+1. nodejs: 18.x
+2. quasar: laset
+3. nginx
+
+## back end
+
+---
+
+1. python >= 3.7
+2. pytorch
+3. stable diffusion
+
+## training
+
+1. deepbooru
+
+
+## Software tools
+
+jetbrain pycharm
