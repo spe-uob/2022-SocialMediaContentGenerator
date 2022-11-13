@@ -16,8 +16,8 @@
 
     <q-drawer v-model="leftDrawerOpen" side="left"
       show-if-above
-      :width="200"
-      :breakpoint="500"
+      :width="300"
+      :breakpoint="600"
       overlay bordered
       class="bg-light-blue-2">
       <q-scroll-area class="fit">
@@ -59,6 +59,36 @@
 
                     <q-item-section>
                       Item 4
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple>
+                    <q-item-section avatar>
+                      <q-icon name="send" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      Item 5
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple>
+                    <q-item-section avatar>
+                      <q-icon name="send" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      Item 6
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple>
+                    <q-item-section avatar>
+                      <q-icon name="send" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      Item 7
                     </q-item-section>
                   </q-item>
                 </q-list>
