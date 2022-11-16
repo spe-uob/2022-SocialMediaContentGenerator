@@ -182,7 +182,7 @@ for epoch in range(num_epochs):
     if test_accuracy > best_accuracy:
         torch.save(model.state_dict(), 'best_checkpoint.model')
         best_accuracy = test_accuracy
-
+# fin
 
 
 
