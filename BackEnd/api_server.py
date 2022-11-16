@@ -3,22 +3,19 @@ import asyncio
 import tornado.web
 
 
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write("Hello, world")
+class Application:
+    def __init__(self, port, host="0.0.0.0"):
+        self.handlers = []
+        self.port = port
+        self.host = host
 
+    def register_handler(self, handler):
+        self.handlers.append(handler)
 
-def make_app():
-    return tornado.web.Application([
-        (r"/", MainHandler),
-    ])
+    def build_app(self):
+        return tornado.web.Application([(r"/", handler) for handler in self.handlers])
 
-
-async def main():
-    app = make_app()
-    app.listen(8888)
-    await asyncio.Event().wait()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    async def run(self):
+        app = self.build_app()
+        app.listen(8888)
+        await asyncio.Event().wait()
