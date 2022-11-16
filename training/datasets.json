@@ -1,34 +1,43 @@
 {
   "datasets": {
-    "Malicious Drones": {
-      "link": "https://drive.google.com/file/d/1LUnp7MpxrcmLKWzftZoUrj4dNpPTJRrb/view?usp=sharing",
-      "description": "Malicious Drones carry dangerous loads and are harmful. So, it is crucial to distinguish between malicious drones and other flying objects. The dataset contains five classes named Aeroplane, Bird, Drone, Helicopter, and Malicious Drone.",
-      "number": 776
+    "mechanical": {
+      "Malicious Drones": {
+        "link": "https://drive.google.com/file/d/1LUnp7MpxrcmLKWzftZoUrj4dNpPTJRrb/view?usp=sharing",
+        "description": "Malicious Drones carry dangerous loads and are harmful. So, it is crucial to distinguish between malicious drones and other flying objects. The dataset contains five classes named Aeroplane, Bird, Drone, Helicopter, and Malicious Drone.",
+        "number": 776
+      },
+      "Drones": {
+        "link": "https://drive.google.com/file/d/1qnru_Y1sLwamXLDqZoJfNAuRfwsFY0Ss/view?usp=sharing",
+        "description": "Image dataset for detecting drones. Contains Annotations and JPEGImages folder",
+        "number": 787
+      }, 
+      "Planes": {
+        "link": "https://drive.google.com/file/d/1bkleAa1yD0yO5KXr-wj_3z-SNen7FOZL/view?usp=sharing",
+        "description": "Image dataset for object detection of planes",
+        "number": 800
+      },
+      "Satellite images": {
+        "link": "https://drive.google.com/file/d/10Tc3xJEylbX69U0MG77BxWkq3dGYlikD/view?usp=sharing",
+        "description": "Image datasets for object detection of satellite images",
+        "number": 5631
+      },
+      "Vehicles": {
+        "link": "https://drive.google.com/file/d/1bonRx5S-Ilh-jvehKKnIF7IqJHs3q-3B/view?usp=sharing",
+        "description": "Image dataset for detecting whether an object is a vehicle or not",
+        "number": 17800
+      }
     },
-    "Drones": {
-      "link": "https://drive.google.com/file/d/1qnru_Y1sLwamXLDqZoJfNAuRfwsFY0Ss/view?usp=sharing",
-      "description": "Image dataset for detecting drones. Contains Annotations and JPEGImages folder",
-      "number": 787
-    }, 
-    "Planes": {
-      "link": "https://drive.google.com/file/d/1bkleAa1yD0yO5KXr-wj_3z-SNen7FOZL/view?usp=sharing",
-      "description": "Image dataset for object detection of planes",
-      "number": 800
-    },
-    "Weather": {
-      "link": "https://drive.google.com/file/d/1RouS6712zsc2Eqh3SGq-jcMLAWnrWHJr/view?usp=sharing",
-      "description": "Image datset for detecting different weather conditions",
-      "number": 6862
-    },
-    "Satellite images": {
-      "link": "https://drive.google.com/file/d/10Tc3xJEylbX69U0MG77BxWkq3dGYlikD/view?usp=sharing",
-      "description": "Image datasets for object detection of satellite images",
-      "number": 5631
-    },
-    "Vehicles": {
-      "link": "https://drive.google.com/file/d/1bonRx5S-Ilh-jvehKKnIF7IqJHs3q-3B/view?usp=sharing",
-      "description": "Image dataset for detecting whether an object is a vehicle or not",
-      "number": 17800, 
+    "human": {
+      "Weather": {
+        "link": "https://drive.google.com/file/d/1RouS6712zsc2Eqh3SGq-jcMLAWnrWHJr/view?usp=sharing",
+        "description": "Image datset for detecting different weather conditions",
+        "number": 6862
+      },
+      "Animals": {
+        "link": "https://drive.google.com/file/d/13My7_IGCztO07fN_enzm3RVXwO7wH-9J/view?usp=sharing",
+        "description": "Image dataset for detecting 151 different animals",
+        "number": 6271
+      }
     }
   }
 }
