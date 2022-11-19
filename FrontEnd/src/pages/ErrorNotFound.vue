@@ -10,7 +10,7 @@
       </div>
       <img
         alt="Quasar logo"
-        src="~assets/404.jpg"
+        src="~assets/error-404-on-screen-svgrepo-com.svg"
         style="width: 400px; height: 400px"
       >
 
