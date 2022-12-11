@@ -1,4 +1,5 @@
 import torch
+from imwatermark import WatermarkEncoder
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.dpm_solver import DPMSolverSampler
 from ldm.models.diffusion.plms import PLMSSampler
@@ -10,6 +11,7 @@ from stable_diffusion.model import Model
 class Core:
     def __init__(self):
         self.model = Model()
+        self.wm_encoder = WatermarkEncoder()
 
     def on_load_model(self, model_name):
         config = OmegaConf.load(f"v1-inference.yaml")
@@ -26,3 +28,5 @@ class Core:
         elif sample.lower() == "plms":
             sampler = PLMSSampler(model)
 
+    def set_wm(self, wm: str = "SMCG-SD-V1"):
+        self.wm_encoder.set_watermark('bytes', wm.encode('utf-8'))
