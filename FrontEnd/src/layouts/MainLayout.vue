@@ -1,3 +1,6 @@
+import { ref } from 'vue'
+import { api } from 'boot/axios'
+import { useQuasar } from 'quasar'
 <template>
   <q-layout view="hhh lpR lFf" container style="height: 900px" class="shadow-2 rounded-borders">
 
@@ -30,6 +33,18 @@
                     <q-item-section>
                       Item 1
                     </q-item-section>
+                    <div class="q-pa-md">
+                      <q-ajax-bar
+                        hijack-filter="myFilterFn"
+                        ref="bar"
+                        position="bottom"
+                        color="accent"
+                        size="10px"
+                        skip-hijack
+                      />
+
+                      <q-btn color="primary" label="Start" @click="trigger" />
+                    </div>
                   </q-item>
 
                   <q-item active clickable v-ripple>
@@ -76,7 +91,7 @@
                     <q-item-section avatar>
                       <q-icon name="send" />
                     </q-item-section>
-
+                      <q-ajax-bar :hijack-filter="myFilterFn" />
                     <q-item-section>
                       Item 6
                     </q-item-section>
@@ -95,6 +110,8 @@
               </q-scroll-area>
     </q-drawer>
 
+
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -106,14 +123,24 @@
 import { ref } from 'vue'
 
 export default {
+  name: "get-request",
+  data() {
+    return {
+      totalVuePackages: null
+    };
+  },
+  created() {
+    fetch("127.1.1.0.8030")
+      .then(response => response.json())
+      .then(data => (this.totalVuePackages = data.total));
+  },
   setup () {
     const leftDrawerOpen = ref(false)
-
     return {
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
     }
   }
 }
