@@ -47,11 +47,6 @@ class Core:
         elif sample.lower() == "plms":
             sampler = PLMSSampler(model)
 
-        # n_rows = opt.n_rows if opt.n_rows > 0 else batch_size
-        # if not opt.from_file:
-        #     prompt = opt.prompt
-        #     assert prompt is not None
-        #     data = [batch_size * [prompt]]
         data = [batch_size * [prompt]]
         start_code = None
         base_count = len(os.listdir(self.save_path))
