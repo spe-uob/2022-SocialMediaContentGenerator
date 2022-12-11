@@ -67,12 +67,11 @@ class Core:
         base_count = len(os.listdir(self.save_path))
         grid_count = len(os.listdir(self.grid_path)) - 1
         n_rows = self.n_rows if self.n_rows > 0 else batch_size
-
+        all_samples = list()
+        images_buffer = None
         with torch.no_grad():
             with autocast("cuda"):
                 with model.ema_scope():
-                    tic = time.time()
-                    all_samples = list()
                     with Progress() as progress:
                         task1 = progress.add_task("[red]Sampling...", total=batch_size)
                         for n in range(batch_size):
@@ -98,11 +97,12 @@ class Core:
                                 x_samples_ddim = model.decode_first_stage(samples_ddim)
                                 x_samples_ddim = torch.clamp((x_samples_ddim + 1.0) / 2.0, min=0.0, max=1.0)
                                 x_samples_ddim = x_samples_ddim.cpu().permute(0, 2, 3, 1).numpy()
-                                x_checked_image, has_nsfw_concept = self.check_safety(x_samples_ddim)
-
+                                # x_checked_image, has_nsfw_concept = self.check_safety(x_samples_ddim)
+                                x_checked_image = x_samples_ddim
                                 x_checked_image_torch = torch.from_numpy(x_checked_image).permute(0, 3, 1, 2)
 
                                 for x_sample in x_checked_image_torch:
+                                    images_buffer = x_sample
                                     x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
                                     img = Image.fromarray(x_sample.astype(np.uint8))
                                     # img = put_watermark(img, wm_encoder)
@@ -127,8 +127,8 @@ class Core:
                         # img = put_watermark(img, wm_encoder)
                         img.save(os.path.join(self.grid_path, f'grid-{grid_count:04}.png'))
                         grid_count += 1
-
-                    toc = time.time()
+        result = 255. * rearrange(images_buffer.cpu().numpy(), 'c h w -> h w c')
+        return result.astype(np.uint8)
 
     def set_wm(self, wm: str = "SMCG-SD-V1"):
         self.wm_encoder.set_watermark('bytes', wm.encode('utf-8'))
