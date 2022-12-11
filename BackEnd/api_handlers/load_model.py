@@ -3,7 +3,7 @@ from typing import Optional, Awaitable
 import tornado.web
 
 
-class ModelList(tornado.web.RequestHandler):
+class LoadModel(tornado.web.RequestHandler):
     router = r"/load_model"
 
     def __init__(self, application, request, **kwargs):
