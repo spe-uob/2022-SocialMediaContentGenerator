@@ -4,6 +4,7 @@ from itertools import islice
 
 import numpy as np
 import torch
+from loguru import logger
 from PIL import Image
 from diffusers.pipelines.stable_diffusion import StableDiffusionSafetyChecker
 from einops import rearrange
@@ -28,18 +29,31 @@ class Core:
     def __init__(self):
         self.model = Model()
         self.wm_encoder = WatermarkEncoder()
-        self.save_path = "samples"
-        self.grid_path = "grids"
+        self.model_path = "stable_diffusion/models"
+        self.save_path = "out/samples"
+        self.grid_path = "out/grids"
         self.n_rows = 2
 
+    @staticmethod
+    def check_and_create_dir(path: str):
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+    def check_out_dir(self):
+        self.check_and_create_dir(self.save_path)
+        self.check_and_create_dir(self.grid_path)
+
     def on_load_model(self, model_name):
-        config = OmegaConf.load(f"v1-inference.yaml")
-        self.model.load_model_from_config(config, model_name, verbose=False)
+        logger.info(f"loading model {model_name}...")
+        config = OmegaConf.load(f"stable_diffusion/v1-inference.yaml")
+        self.model.load_model_from_config(config, os.path.join(self.model_path, model_name), verbose=False)
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         model = self.model.model.to(device)
         self.model.model = model
 
     def exec_sample(self, prompt, sample: str, batch_size=1, step=20, cfg=7.5, width=512, height=512, f=8, channel=4, ddim_eta=0.0, skip_grid=True):
+        logger.info(f"exec sample {sample}...")
+        self.check_out_dir()
         model = self.model.model
         sampler = DDIMSampler(model)
         if sample.lower() == "dpm":
