@@ -1,3 +1,5 @@
+import os
+
 import torch
 from ldm.util import instantiate_from_config
 
@@ -24,3 +26,11 @@ class Model:
         model.cuda()
         model.eval()
         self.model = model
+
+    @staticmethod
+    def find_model(path):
+        result = []
+        for file in os.listdir(path):
+            if file.endswith(".ckpt"):
+                result.append(file)
+        return result
