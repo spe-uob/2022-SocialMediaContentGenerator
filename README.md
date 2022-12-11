@@ -50,7 +50,7 @@ As a general consumer of social media content, I want to see the newest trends t
 
 # Dev env
 
-## fornt end
+## front end
 
 ---
 
