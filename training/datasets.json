@@ -37,6 +37,11 @@
         "link": "https://drive.google.com/file/d/13My7_IGCztO07fN_enzm3RVXwO7wH-9J/view?usp=sharing",
         "description": "Image dataset for detecting 151 different animals",
         "number": 6271
+      },
+      "Vegetables": {
+        "link": "https://drive.google.com/file/d/1wXMWQL2DBAQ10Hiiqb4Qkai3bpsMMFtz/view?usp=sharing".
+        "description": "Image datset for detecting different vegetables. Contains train, test and validation folders.",
+        "number": 21000
       }
     }
   }
