@@ -7,6 +7,7 @@ from ldm.util import instantiate_from_config
 class Model:
     def __init__(self):
         self.model = None
+        self.current_model_name = ""
 
     def load_model_from_config(self, config, ckpt, verbose=False):
         print(f"Loading model from {ckpt}")
@@ -25,6 +26,7 @@ class Model:
 
         model.cuda()
         model.eval()
+        self.current_model_name = os.path.basename(ckpt)
         self.model = model
 
     @staticmethod
