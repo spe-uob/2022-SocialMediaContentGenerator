@@ -12,7 +12,7 @@ def main(opt: argparse.Namespace):
     app = Application(8888)
     config = {
         "core": core,
-        "model_list": Model.find_model(opt.model_path)
+        "model_dir": opt.model_path
     }
     api_register(app, config)
     app.build_app()
