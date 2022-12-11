@@ -176,7 +176,7 @@ for epoch in range(num_epochs):
 
     test_accuracy = test_accuracy/test_count
 
-    print('Epoch: ' + str(epoch) + ' Train loss' + str(int(train_loss)) + ' Train accuracy: ' + str(int(train_accuracy)) + 'Test accuracy: '+str(int(test_accuracy)))
+    print('Epoch: ' + str(epoch) + ' Train loss' + str(int(train_loss)) + ' Train accuracy: ' + str(int(train_accuracy)) + ' Test accuracy: '+str(int(test_accuracy)))
 
     # Save the best model
     if test_accuracy > best_accuracy:
