@@ -1,13 +1,18 @@
 <template>
   <div class="fullscreen bg-warning text-white text-center q-pa-md flex flex-center">
     <div>
-      <div style="font-size: 30vh">
+      <div style="font-size: 40vh">
         404 Not Found
       </div>
 
       <div class="text-h2" style="opacity:.4">
-        Sorry, here's nothing
+        Sorry, there's a problem
       </div>
+      <img
+        alt="Quasar logo"
+        src="~assets/error-404-on-screen-svgrepo-com.svg"
+        style="width: 400px; height: 400px"
+      >
 
       <q-btn
         class="q-mt-xl"
