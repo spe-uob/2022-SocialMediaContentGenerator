@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
 <template>
-  <q-layout view="hhh lpR lFf" container style="height: 900px" class="shadow-2 rounded-borders">
+  <q-layout view="LHh lpR fFf" container style="height: 900px" class="shadow-2 rounded-borders">
 
     <q-header elevated class="bg-indigo-7 text-white">
       <q-toolbar>
