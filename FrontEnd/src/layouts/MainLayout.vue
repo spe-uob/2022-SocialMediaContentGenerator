@@ -39,10 +39,6 @@
             </q-item-section>
           </q-item>
 
-
-
-
-
           <q-item to="/StatisticsData" active-class="q-item-no-link-highlighting">
             <q-item-section avatar>
               <q-icon name="insert_chart" />

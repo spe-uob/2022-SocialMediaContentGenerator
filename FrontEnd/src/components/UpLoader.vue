@@ -14,10 +14,9 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
-export default defineComponent({
-name: "UpLoader",
-})
+export default {
+name: "UpLoader"
+}
 </script>
 
 <style scoped>
