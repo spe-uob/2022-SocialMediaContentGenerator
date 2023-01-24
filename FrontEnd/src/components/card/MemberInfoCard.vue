@@ -10,10 +10,10 @@
       <q-item-section>
         <q-item-label class="text-grey-8 text-weight-bold">{{ name }}</q-item-label>
         <q-item-label caption>
-          {{ contact }}
+          {{ disc }}
         </q-item-label>
         <q-item-label class="text-grey-8">
-          {{ disc }}
+          {{ contact }}
         </q-item-label>
       </q-item-section>
 
@@ -28,19 +28,16 @@
       </q-item-section>
     </q-item>
 
-    <q-separator></q-separator>
-    <q-card-section>
-      <div class="q-pa-sm text-grey-8">
-      </div>
-    </q-card-section>
   </q-card>
 </template>
 
 <script>
-export default {
+import {defineComponent} from "vue";
+
+export default defineComponent({
   name: "MemberInfoCard",
   props: ['id','avatar','name','contact','disc']
-}
+})
 </script>
 
 <style scoped>
