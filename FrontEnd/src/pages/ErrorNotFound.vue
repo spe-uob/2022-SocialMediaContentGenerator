@@ -1,7 +1,7 @@
 <template>
   <div class="fullscreen bg-warning text-white text-center q-pa-md flex flex-center">
     <div>
-      <div style="font-size: 40vh">
+      <div style="font-size: 10vh">
         404 Not Found
       </div>
 
