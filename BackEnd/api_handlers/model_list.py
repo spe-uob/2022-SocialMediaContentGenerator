@@ -2,12 +2,15 @@ from typing import Optional, Awaitable
 
 import tornado.web
 
-from information_provider import InformationProvider
+from stable_diffusion.model import Model
 
 
-class GetInfo(tornado.web.RequestHandler):
+class ModelList(tornado.web.RequestHandler):
+    router = r"/model_list"
+
     def __init__(self, application, request, **kwargs):
-        self.information_provider: InformationProvider = None
+        self.model_list = []
+        self.model_dir = ""
         super().__init__(application, request, **kwargs)
 
     def set_default_headers(self):
@@ -21,8 +24,9 @@ class GetInfo(tornado.web.RequestHandler):
     def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
         pass
 
-    def initialize(self, information_provider: InformationProvider):
-        self.information_provider = information_provider
+    def initialize(self, model_dir):
+        self.model_dir = model_dir
 
     def get(self):
-        self.write(self.information_provider.get_info())
+        self.model_list = Model.find_model(self.model_dir)
+        self.write({"mode_list": self.model_list})
