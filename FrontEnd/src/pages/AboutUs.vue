@@ -37,7 +37,7 @@ const card_data = [
 export default defineComponent({
   name: "AboutUs",
   components: {
-    MemberInfoCard: defineAsyncComponent(() => import('components/card/MemberInfoCard'))
+    MemberInfoCard: defineAsyncComponent(() => import('~components/card/MemberInfoCard'))
   },
   setup() {
     return {
