@@ -56,7 +56,7 @@ As a general consumer of social media content, I want to see the newest trends t
 
 ### 1. nodejs: 18.x
   1.1 download the latest stable release of node.js from http://nodejs.org
-### 2. quasar: laset
+### 2. quasar: latest
   2.1 Search `nodejs` on Google and download it, make sure use version 18.0.0 or higher
   
   2.2 install `yarn` by `npm install -g yarn`
@@ -74,14 +74,16 @@ As a general consumer of social media content, I want to see the newest trends t
 
 ---
 
-1. python >= 3.7
-2. pytorch
-3. stable diffusion
+### 1. python >= 3.7
+  1.1 download the latest stable release of python from http://python.org/downloads/
+### 2. pytorch
+  2.1 install `pytorch` by `pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116`. pip should already be installed from python
+  2.2 for more information, see https://pytorch.org/get-started/locally/ for different system specifications
+### 3. stable diffusion
 
 ## training
 
 1. deepbooru
-
 
 ## Software tools
 
