@@ -58,10 +58,15 @@ As a general consumer of social media content, I want to see the newest trends t
   1.1 download the latest stable release of node.js from http://nodejs.org
 ### 2. quasar: laset
   2.1 Search `nodejs` on Google and download it, make sure use version 18.0.0 or higher
+  
   2.2 install `yarn` by `npm install -g yarn`
+  
   2.3 install `quasar` by `yarn add quasar`
+  
   2.4 install `quasar cli` by `yarn global add @quasar/cli`
+  
   2.5 install `vite plugin` by `yarn add quasar @quasar/extras`
+  
   2.6 use `yarn global bin` to find yarn bin path and add it to environment variables and then, goto the directory of front end. execute `quasar dev` to develop quasar projects
 ### 3. nginx
 
