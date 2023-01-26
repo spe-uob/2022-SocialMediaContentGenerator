@@ -1,12 +1,12 @@
 # 2022-SocialMediaContentGenerator
-# About the project
+## About the project
 An autonomous AI assistant to generate content for social media based on recent trends designed for companies that aim to extend their social media presence. 
 Metrics that will be taking into consideration are key words, hashtags, geography, demography, international observances, trending topics etc. in order to keep up to date with trends using a Pytorch infrastructure.
 
-# Our client
+## Our client
 https://spacenxtlabs.com
 
-# Our group members
+## Our group members
 Benjamin Aram
 
 David Yan
@@ -17,7 +17,7 @@ Stephen Chen
 
 # Stakeholders and User Stories
 
-# Stakeholders
+## Stakeholders
 SpaceNXT Labs: 
 
 Distributing the project.
@@ -35,7 +35,7 @@ Legislators:
 
 GDPR usage of social media user data.
 
-# User Stories
+## User Stories
 SpaceNXT Labs:
 As a representative of SpaceNXT, I want to have a service that can predict social media trends.
 
@@ -50,7 +50,7 @@ As a general consumer of social media content, I want to see the newest trends t
 
 # Dev env
 
-## front end
+## Front end
 
 ---
 
@@ -58,7 +58,7 @@ As a general consumer of social media content, I want to see the newest trends t
 2. quasar: laset
 3. nginx
 
-## back end
+## Back end
 
 ---
 
