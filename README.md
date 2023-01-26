@@ -54,7 +54,8 @@ As a general consumer of social media content, I want to see the newest trends t
 
 ---
 
-1. nodejs: 18.x
+### 1. nodejs: 18.x
+  1.1 download the latest stable release of node.js from http://nodejs.org
 2. quasar: laset
 3. nginx
 
