@@ -55,7 +55,7 @@ As a general consumer of social media content, I want to see the newest trends t
 ---
 
 1. nodejs: 18.x
-2. quasar: laset
+2. quasar: latest
 3. nginx
 
 ## back end
