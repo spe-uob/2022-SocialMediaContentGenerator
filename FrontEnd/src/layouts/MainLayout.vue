@@ -30,6 +30,15 @@
             </q-item-section>
           </q-item>
 
+          <q-item to="/LoginPage" active-class="q-item-no-link-highlighting">
+            <q-item-section avatar>
+              <q-icon name="person" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Login</q-item-label>
+            </q-item-section>
+          </q-item>
+
           <q-item to="/LabStation" active-class="q-item-no-link-highlighting">
             <q-item-section avatar>
               <q-icon name="dashboard" />
@@ -47,6 +56,9 @@
               <q-item-label>Statistics</q-item-label>
             </q-item-section>
           </q-item>
+
+
+          <!-- <q-item to="/Login" active-class="" -->
 
           <q-separator class="bg-grey-7" size="2px" inset></q-separator>
 
