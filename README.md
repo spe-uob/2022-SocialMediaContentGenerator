@@ -1,12 +1,12 @@
 # 2022-SocialMediaContentGenerator
-# About the project
+## About the project
 An autonomous AI assistant to generate content for social media based on recent trends designed for companies that aim to extend their social media presence. 
 Metrics that will be taking into consideration are key words, hashtags, geography, demography, international observances, trending topics etc. in order to keep up to date with trends using a Pytorch infrastructure.
 
-# Our client
+## Our client
 https://spacenxtlabs.com
 
-# Our group members
+## Our group members
 Benjamin Aram
 
 David Yan
@@ -17,7 +17,7 @@ Stephen Chen
 
 # Stakeholders and User Stories
 
-# Stakeholders
+## Stakeholders
 SpaceNXT Labs: 
 
 Distributing the project.
@@ -35,7 +35,7 @@ Legislators:
 
 GDPR usage of social media user data.
 
-# User Stories
+## User Stories
 SpaceNXT Labs:
 As a representative of SpaceNXT, I want to have a service that can predict social media trends.
 
@@ -50,26 +50,40 @@ As a general consumer of social media content, I want to see the newest trends t
 
 # Dev env
 
-## front end
+## Front end
 
 ---
 
-1. nodejs: 18.x
-2. quasar: laset
-3. nginx
+### 1. nodejs: 18.x
+  1.1 download the latest stable release of node.js from http://nodejs.org
+### 2. quasar: latest
+  2.1 Search `nodejs` on Google and download it, make sure use version 18.0.0 or higher
+  
+  2.2 install `yarn` by `npm install -g yarn`
+  
+  2.3 install `quasar` by `yarn add quasar`
+  
+  2.4 install `quasar cli` by `yarn global add @quasar/cli`
+  
+  2.5 install `vite plugin` by `yarn add quasar @quasar/extras`
+  
+  2.6 use `yarn global bin` to find yarn bin path and add it to environment variables and then, goto the directory of front end. execute `quasar dev` to develop quasar projects
+### 3. nginx
 
-## back end
+## Back end
 
 ---
 
-1. python >= 3.7
-2. pytorch
-3. stable diffusion
+### 1. python >= 3.7
+  1.1 download the latest stable release of python from http://python.org/downloads/
+### 2. pytorch
+  2.1 install `pytorch` by `pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116`. pip should already be installed from python
+  2.2 for more information, see https://pytorch.org/get-started/locally/ for different system specifications
+### 3. stable diffusion
 
 ## training
 
 1. deepbooru
-
 
 ## Software tools
 
