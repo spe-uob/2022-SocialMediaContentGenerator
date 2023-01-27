@@ -53,6 +53,29 @@ As a general consumer of social media content, I want to see the newest trends t
 ## Front end
 
 ---
+### Mac:
+### 1. nodejs: 18.x
+  1.1 download the latest stable release of node.js from http://nodejs.org
+  
+### 2. quasar
+  2.1 install `yarn` by `npm install -g yarn` may need to use `sudo npm install -g yarn` to be an admin.
+    
+  2.2 install `quasar` by `yarn add quasar`
+  
+  2.3 install `quasar cli` by `yarn global add @quasar/cli`
+  
+  2.4 install `vite plugin` by `yarn add quasar @quasar/extras`
+  
+  2.5 use `yarn global bin` to find yarn bin path and add it to environment variables and then, goto the directory of front end. execute `quasar dev` to develop quasar projects
+    
+  2.6 if using yarn doesn't work do `sudo npm i -g @quasar/cli`
+    
+### 3. WebStorm 
+  3.1 check what type of core your mac has either Intel or Apple Silicon by going to "about this mac" after clicking the apple in the top left.
+    
+  3.2 go to https://www.jetbrains.com/webstorm/download/#section=mac
+
+### Windows:
 
 ### 1. nodejs: 18.x
   1.1 download the latest stable release of node.js from http://nodejs.org
@@ -73,7 +96,30 @@ As a general consumer of social media content, I want to see the newest trends t
 ## Back end
 
 ---
-
+### Mac:
+### 1. python >= 3.7 should already be installed on a mac os system but run `python --version` if not up to date do:
+  1.1 `brew install python` --> install the latest Python.
+    
+  1.2 ls -l /usr/local/bin/python* --> List all Python versions installed on your system.
+    
+  1.3 `ln -s -f /usr/local/bin/python[your-latest-version-just-installed] /usr/local/bin/python` --> Change default Python version to the latest version.
+        E.g: `ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python`
+        
+  1.4 Restart terminal.
+    
+  1.5 `python --version` --> Check Python version default again.
+    
+### 2. pytorch
+  2.1 run `pip3 install torch torchvision torchaudio`
+   
+### 3. pycharm 
+  3.1 check what type of core your mac has either Intel or Apple Silicon by going to "about this mac" after clicking the apple in the top left.
+    
+  3.2 go to https://www.jetbrains.com/pycharm/download/#section=mac
+    
+      
+    
+### Windows:
 ### 1. python >= 3.7
   1.1 download the latest stable release of python from http://python.org/downloads/
 ### 2. pytorch
