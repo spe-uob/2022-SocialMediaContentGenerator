@@ -7,7 +7,7 @@
       </div>
       <div class="col-12 col-md-6 flex content-center">
         <q-card>
-          <!-- todo -->
+          <!-- todo  -->
         </q-card>
       </div>
     </div>
