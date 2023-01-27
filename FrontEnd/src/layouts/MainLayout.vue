@@ -30,7 +30,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/LoginPage" active-class="q-item-no-link-highlighting">
+          <q-item to="/LoginPage"  active-class="q-item-no-link-highlighting">
             <q-item-section avatar>
               <q-icon name="person" />
             </q-item-section>
