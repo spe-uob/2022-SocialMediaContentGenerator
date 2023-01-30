@@ -28,34 +28,32 @@
               </q-card-section>
 
               <q-card-section>
+
                 <div class="text-h6">Prompt:</div>
 
                 <q-form
                   v-on:submit.prevent="addNewPromptsBadge"
-                  id="new-prompt-badge"
-                  label="AddPrompts"
-                  hint=""
                   @submit="onSubmit"
                   @reset="onReset"
                   class="q-gutter-md"
                 >
-                <label for="new-prompt-badge">Add prompts</label>
                 <q-input
                   v-model="newPromptBadge"
                   id = "new-prompt-badge"
-                  filled
-                  autogrow
                 />
                   <button> Add </button>
                 </q-form>
-                  <li>
-                    <prompt-badge
+
+                <ul>
+                    <q-badge
                     v-for = "(prompt, index) in PromptBadges"
                     :key="prompt.id"
                     :tag="prompt.tag"
                     @remove="prompt.splice(index,1)">
-                    </prompt-badge>
-                  </li>
+                      {{prompt.name}}
+                    </q-badge>
+                  <button @click="$emit('remove')">Delete</button>
+                </ul>
 
 
               </q-card-section>
@@ -78,6 +76,7 @@
                 <q-btn color="primary" label="generate" :disable="generating" @click="generate"/>
               </q-card-section>
             </q-card>
+
           </div>
           <div class="col-8 q-pa-sm">
             <q-card>
@@ -97,10 +96,9 @@
 
 <script>
 import {defineComponent} from 'vue'
-import PromptBadge from "components/PromptBadge";
 export default defineComponent({
   name: 'NewUI',
-  components:{PromptBadge},
+  emits: ['remove'],
   data() {
     return {
       model: null,
@@ -193,6 +191,7 @@ export default defineComponent({
       let request = await fetch('http://localhost:8888/api/v1/get_info', {method: 'GET', mode: 'cors'});
       return request.json();
     },
+
     addNewPromptsBadge(){
       this.PromptBadges.push({
         id: this.nextPromptBadgeID++,
@@ -200,6 +199,12 @@ export default defineComponent({
       })
       this.newPromptBadge = ''
     },
+
+    onSubmit (evt) {
+      console.log('@submit - do something here', evt)
+      evt.target.submit()
+    },
+
   },
   async beforeMount() {
     await this.syncModelList()

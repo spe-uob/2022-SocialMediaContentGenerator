@@ -9,8 +9,9 @@
 
 <script>
 export default {
-  name: "PromptBadge.vue",
-  props:['tag']
+  name:"PromptBadge.vue",
+  props:['tag'],
+  emits: ['delete']
 }
 </script>
 
