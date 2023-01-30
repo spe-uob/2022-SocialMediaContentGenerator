@@ -26,14 +26,40 @@
               <q-card-section>
                 <div class="text-h3">Control Area</div>
               </q-card-section>
+
               <q-card-section>
                 <div class="text-h6">Prompt:</div>
+
+                <q-form
+                  v-on:submit.prevent="addNewPromptsBadge"
+                  id="new-prompt-badge"
+                  label="AddPrompts"
+                  hint=""
+                  @submit="onSubmit"
+                  @reset="onReset"
+                  class="q-gutter-md"
+                >
+                <label for="new-prompt-badge">Add prompts</label>
                 <q-input
-                  v-model="prompts"
+                  v-model="newPromptBadge"
+                  id = "new-prompt-badge"
                   filled
                   autogrow
                 />
+                  <button> Add </button>
+                </q-form>
+                  <li>
+                    <prompt-badge
+                    v-for = "(prompt, index) in PromptBadges"
+                    :key="prompt.id"
+                    :tag="prompt.tag"
+                    @remove="prompt.splice(index,1)">
+                    </prompt-badge>
+                  </li>
+
+
               </q-card-section>
+
               <q-card-section>
                 <q-badge color="secondary">
                   Steps: {{ step }} (0 to 150)
@@ -71,14 +97,18 @@
 
 <script>
 import {defineComponent} from 'vue'
+import PromptBadge from "components/PromptBadge";
 export default defineComponent({
   name: 'NewUI',
+  components:{PromptBadge},
   data() {
     return {
       model: null,
       models: [],
       loading_model: false,
-      prompts: '',
+      newPromptBadge: '',
+      PromptBadges:[],
+      nextPromptBadgeID: 1,
       generating: false,
       image: '',
       step: 20,
@@ -162,7 +192,14 @@ export default defineComponent({
     async getInfo() {
       let request = await fetch('http://localhost:8888/api/v1/get_info', {method: 'GET', mode: 'cors'});
       return request.json();
-    }
+    },
+    addNewPromptsBadge(){
+      this.PromptBadges.push({
+        id: this.nextPromptBadgeID++,
+        name: this.newPromptBadge
+      })
+      this.newPromptBadge = ''
+    },
   },
   async beforeMount() {
     await this.syncModelList()
