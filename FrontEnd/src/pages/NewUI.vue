@@ -26,48 +26,20 @@
               <q-card-section>
                 <div class="text-h3">Control Area</div>
               </q-card-section>
-
               <q-card-section>
-
                 <div class="text-h6">Prompt:</div>
-
-                <q-form
-                  v-on:submit.prevent="addNewPrompt"
-                  @submit="onSubmit"
-                  @reset="onReset"
-                  class="q-gutter-md"
-                >
                 <q-input
-                  v-model="newPrompt"
-                  id = "new-prompt-badge"
+                  v-model="prompts"
+                  filled
+                  autogrow
                 />
-                  <q-btn @click="addNewPrompt"> Add </q-btn>
-                </q-form>
-
-                <q-list
-                  class="row inline">
-                  <q-item-label
-                    v-for = "prompt in Prompts"
-                    :key="prompt.id"
-                    :name="prompt.name"
-                    >
-                    <q-badge>
-                      {{prompt.name}}
-                    </q-badge>
-                  <q-btn
-                    round
-                    dense
-                    size = "10px"
-                    color="blue"
-                    padding ="2px 4px"
-                    @click="removePrompt(prompt)">x</q-btn>
-                  </q-item-label>
-                </q-list>
-
-
-
               </q-card-section>
-
+              <q-card-section>
+                <div class="text-h8">Seed:</div>
+                <q-input
+                  v-model="seed"
+                />
+              </q-card-section>
               <q-card-section>
                 <q-badge color="secondary">
                   Steps: {{ step }} (0 to 150)
@@ -115,9 +87,8 @@ export default defineComponent({
       model: null,
       models: [],
       loading_model: false,
-      newPrompt: '',
-      Prompts:[],
-      nextPromptID: 1,
+      prompt:'',
+      seed:'',
       generating: false,
       image: '',
       step: 20,
@@ -141,6 +112,7 @@ export default defineComponent({
         },
         body: JSON.stringify({
           prompt: this.prompts,
+          seed: this.seed,
           sample: "dpm",
           batch_size: 1,
           step: this.step,
