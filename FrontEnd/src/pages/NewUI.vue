@@ -32,28 +32,38 @@
                 <div class="text-h6">Prompt:</div>
 
                 <q-form
-                  v-on:submit.prevent="addNewPromptsBadge"
+                  v-on:submit.prevent="addNewPrompt"
                   @submit="onSubmit"
                   @reset="onReset"
                   class="q-gutter-md"
                 >
                 <q-input
-                  v-model="newPromptBadge"
+                  v-model="newPrompt"
                   id = "new-prompt-badge"
                 />
-                  <button> Add </button>
+                  <q-btn @click="addNewPrompt"> Add </q-btn>
                 </q-form>
 
-                <ul>
-                    <q-badge
-                    v-for = "(prompt, index) in PromptBadges"
+                <q-list
+                  class="row inline">
+                  <q-item-label
+                    v-for = "prompt in Prompts"
                     :key="prompt.id"
-                    :tag="prompt.tag"
-                    @remove="prompt.splice(index,1)">
+                    :name="prompt.name"
+                    >
+                    <q-badge>
                       {{prompt.name}}
                     </q-badge>
-                  <button @click="$emit('remove')">Delete</button>
-                </ul>
+                  <q-btn
+                    round
+                    dense
+                    size = "10px"
+                    color="blue"
+                    padding ="2px 4px"
+                    @click="removePrompt(prompt)">x</q-btn>
+                  </q-item-label>
+                </q-list>
+
 
 
               </q-card-section>
@@ -95,18 +105,19 @@
 </template>
 
 <script>
+let PromptID = 0
+
 import {defineComponent} from 'vue'
 export default defineComponent({
   name: 'NewUI',
-  emits: ['remove'],
   data() {
     return {
       model: null,
       models: [],
       loading_model: false,
-      newPromptBadge: '',
-      PromptBadges:[],
-      nextPromptBadgeID: 1,
+      newPrompt: '',
+      Prompts:[],
+      nextPromptID: 1,
       generating: false,
       image: '',
       step: 20,
@@ -192,12 +203,16 @@ export default defineComponent({
       return request.json();
     },
 
-    addNewPromptsBadge(){
-      this.PromptBadges.push({
-        id: this.nextPromptBadgeID++,
-        name: this.newPromptBadge
+    addNewPrompt(){
+      this.Prompts.push({
+        id: PromptID++,
+        name: this.newPrompt
       })
-      this.newPromptBadge = ''
+      this.newPrompt = ''
+    },
+
+    removePrompt(prompt) {
+      this.Prompts = this.Prompts.filter((t) => t !== prompt)
     },
 
     onSubmit (evt) {

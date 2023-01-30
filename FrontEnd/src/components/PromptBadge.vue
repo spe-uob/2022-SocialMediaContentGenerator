@@ -11,7 +11,7 @@
 export default {
   name:"PromptBadge.vue",
   props:['tag'],
-  emits: ['delete']
+  emits: ['remove']
 }
 </script>
 
