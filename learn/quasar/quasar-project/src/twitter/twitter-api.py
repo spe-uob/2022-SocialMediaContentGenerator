@@ -19,7 +19,8 @@ class Tweet(Resource):
       auth.set_access_token(access_token, access_token_secret)
 
       api = tweepy.API(auth)
-      api.update_status(tweet_string)
+      #api.update_status(tweet_string)
+      api.update_status_with_media(tweet_string, '../assets/dkqad8ncoz871.jpg')
 
       return jsonify({'status': 'success'})
 
