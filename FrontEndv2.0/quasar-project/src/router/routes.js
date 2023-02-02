@@ -1,5 +1,6 @@
 import Index from "layouts/Index.vue";
 import Home from "pages/Home.vue";
+import TwitterView from "pages/TwitterView.vue";
 
 const routes = [
   {
@@ -7,7 +8,8 @@ const routes = [
     component: Index,
     children: [
       { path: '', component: Home },
-      { path: '/home' , name: 'home', component: Home}
+      { path: '/home' , name: 'home', component: Home},
+      {path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
     ]
   },
 
