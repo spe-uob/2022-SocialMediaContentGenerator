@@ -29,7 +29,7 @@
               <q-card-section>
                 <div class="text-h6">Prompt:</div>
                 <q-input
-                  v-model="prompts"
+                  v-model="prompt"
                   filled
                   autogrow
                 />
@@ -40,6 +40,7 @@
                   v-model="seed"
                 />
               </q-card-section>
+
               <q-card-section>
                 <q-badge color="secondary">
                   Steps: {{ step }} (0 to 150)
@@ -48,12 +49,14 @@
                 <q-badge color="warning"> CFG: {{ cfg }} (1 to 30)</q-badge>
                 <q-slider v-model="cfg" :min="1.0" :max="30.0" :step="0.5"/>
               </q-card-section>
+
               <q-card-section>
                 <q-badge color="positive"> width: {{ width }}</q-badge>
                 <q-slider v-model="width" :min="64" :max="2048" :step="64"/>
                 <q-badge color="positive"> height: {{ height }}</q-badge>
                 <q-slider v-model="height" :min="64" :max="2048" :step="64"/>
               </q-card-section>
+
               <q-card-section>
                 <q-btn color="primary" label="generate" :disable="generating" @click="generate"/>
               </q-card-section>
