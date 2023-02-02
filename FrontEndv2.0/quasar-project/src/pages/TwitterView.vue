@@ -36,10 +36,19 @@
                 <div class="text-center q-mt-sm q-gutter-lg">
                   <router-link class="text-blue" to="/">Forgotten password?</router-link>
                   <router-link class="text-blue" to="/">sign up</router-link>
+<!--                  <q-btn class="text-center full-width" color="light-blue" label="sign in with twitter" type="submit" rounded></q-btn>-->
+<!--                  <div>
+                    <button>
+                      <img src="~assets/MicrosoftTeams-image.png" width="240">
+                    </button>
+                  </div>-->
                 </div>
+                <div class="q-pa-sm"></div>
+                <q-btn class="text-center full-width" color="light-blue" icon="fa-brands fa-twitter" label="sign in with twitter" type="submit" rounded></q-btn>
               </div>
             </q-form>
           </q-card-section>
+
         </q-card>
 
       </div>

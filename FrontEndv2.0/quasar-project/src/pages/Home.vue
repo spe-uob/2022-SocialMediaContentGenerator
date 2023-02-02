@@ -5,7 +5,7 @@
     </q-toolbar>
   </div>
   <div class="col-0 col-md-6 flex justify-center content-center">
-    <img src="~assets/spaceNXT.svg" class="responsive" alt = "login-image" >
+    <img src="~assets/spaceNXT.png" class="responsive" alt = "login-image" >
   </div>
 
 </template>
