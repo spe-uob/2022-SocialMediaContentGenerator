@@ -11,6 +11,5 @@ export default defineComponent({
     this.$q.dark.set(true)
 
   }
-
 })
 </script>

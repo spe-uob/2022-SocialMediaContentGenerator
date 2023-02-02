@@ -127,6 +127,10 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 export default defineComponent({
   name: 'MainLayout',
+  created(){
+    this.$q.dark.set(true)
+
+  },
   components: {
    // EssentialLink,
   },
