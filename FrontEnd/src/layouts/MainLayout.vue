@@ -116,6 +116,9 @@
             <img src="~assets/DuskXi_Avatar.jpeg" />
           </q-avatar>
           <div class="text-weight-bold">
+            Space NXT Labs
+          </div>
+          <div class="text-weight-bold">
             University of Bristol
           </div>
           <div>2022 SPE</div>
