@@ -48,6 +48,15 @@
             </q-item-section>
           </q-item>
 
+          <q-item to="/NewUI" active-class="q-item-no-link-highlighting">
+            <q-item-section avatar>
+              <q-icon name="dashboard" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>NewUI</q-item-label>
+            </q-item-section>
+          </q-item>
+
           <q-item to="/StatisticsData" active-class="q-item-no-link-highlighting">
             <q-item-section avatar>
               <q-icon name="insert_chart" />
@@ -106,6 +115,9 @@
           <q-avatar size="56px" class="q-mb-sm">
             <img src="~assets/DuskXi_Avatar.jpeg" />
           </q-avatar>
+          <div class="text-weight-bold">
+            Space NXT Labs
+          </div>
           <div class="text-weight-bold">
             University of Bristol
           </div>
