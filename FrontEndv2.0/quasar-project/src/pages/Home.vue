@@ -4,6 +4,10 @@
       <q-toolbar-title class="text-subtitle2 text-grey-5">HOME</q-toolbar-title>
     </q-toolbar>
   </div>
+  <div class="col-0 col-md-6 flex justify-center content-center">
+    <img src="~assets/spaceNXT.png" class="responsive" alt = "login-image" >
+  </div>
+
 </template>
 
 <script>

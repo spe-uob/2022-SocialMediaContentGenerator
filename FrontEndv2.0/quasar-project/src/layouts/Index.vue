@@ -5,24 +5,24 @@
       <q-toolbar shrink class="bg-grey-3" style="max-width:240px">
         <q-btn flat round dense icon="apps" class="text-grey-6" @click="drawerMenu = !drawerMenu">
           <q-avatar square size="28px">
-            <img src="'statics/image/vue.png'">
+            <img src="~assets/spaceNXT.svg" class="responsive" alt = "login-image" >
           </q-avatar>
         <q-toolbar-title>
-          <span class="text-h6 text-grey-6">Vue.</span><span class="text-orange-5">js</span>
+          <span class="text-h6 text-grey-6">Space</span><span class="text-orange-5">.NXT</span>
         </q-toolbar-title>
         </q-btn>
       </q-toolbar>
       <q-toolbar class="bg-grey-5">
         <q-toolbar-title>
-          <span class="gt-sm text-subtitle2 text-grey-6 vertical-middle">Quasar Framework</span>
+          <span class="gt-sm text-subtitle2 text-h6 text-grey-6 vertical-middle">Social Media Content Generator</span>
 
         </q-toolbar-title>
       </q-toolbar>
     </div>
   </q-header>
   <q-footer bordered>
-    <q-bar class="bg-grey-3 text-grey-6 q-pa-sm">
-      <span class="text caption">Vue Quasar Framework</span>
+    <q-bar class="bg-grey-3 text-h6 text-grey-6 q-pa-sm">
+      <span class="text caption">Social Media Content Generator: Benjamin, Gene, David, Stephen</span>
     </q-bar>
   </q-footer>
   <q-page-container>
@@ -52,7 +52,17 @@
           </q-item-section>
           <q-item-section>Home</q-item-section>
         </q-item>
+
+        <q-item clickable v-ripple class="text-grey-6" to="/TwitterView" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="crop_din" />
+          </q-item-section>
+          <q-item-section>Twitter Page</q-item-section>
+        </q-item>
       </q-list>
+
+
+
     </q-scroll-areac>
 
   </q-drawer>
@@ -75,6 +85,4 @@ export default {
 .menu-link
   color #1da1f2
   background #2f353a
-
-
 </style>
