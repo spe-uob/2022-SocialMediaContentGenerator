@@ -1,0 +1,35 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "description": "A Quasar Project",
+  "productName": "Test",
+  "author": "davidhaoyan <60042375+davidhaoyan@users.noreply.github.com>",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.0.0",
+    "animate.css": "^4.1.1",
+    "browserify": "^17.0.0",
+    "codebird": "^2.6.0",
+    "date-fns": "^2.29.3",
+    "firebase": "^9.16.0",
+    "quasar": "^2.6.0",
+    "twit": "^2.2.11",
+    "twitter-api-v2": "^1.14.1",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^1.0.0",
+    "@types/twit": "^2.2.31",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.14"
+  },
+  "engines": {
+    "node": "^18 || ^16 || ^14.19",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
