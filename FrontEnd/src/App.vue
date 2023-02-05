@@ -6,6 +6,11 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  created(){
+    this.$q.dark.set(true)
+
+  }
+
 })
 </script>
