@@ -91,6 +91,10 @@
                 label-style="font-size: 1.1em"
               />
 
+              <q-card-section>
+                <q-btn color="primary" label="save"  @click="SaveFile"/>
+              </q-card-section>
+
             </q-card>
           </div>
         </div>
@@ -103,6 +107,8 @@
 let PromptID = 0
 
 import {defineComponent,ref} from 'vue'
+import {saveAs} from 'file-saver'
+
 export default defineComponent({
   name: 'NewUI',
   setup(){
@@ -132,6 +138,7 @@ export default defineComponent({
       seed:'',
       generating: false,
       image: '',
+      image_name:'',
       step: 20,
       cfg: 7.5,
       width: 512,
@@ -139,6 +146,11 @@ export default defineComponent({
     }
   },
   methods: {
+
+    SaveFile (){
+      let FileSaver = require('file-saver')
+      FileSaver.saveAs(this.image, "image.jpg");
+    },
     async sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
