@@ -79,7 +79,7 @@
                   leave-active-class="animated fadeOut"
                 >
 
-                    <div v-show="showSimulatedReturnData"> what ?</div>
+                    <q-img v-show="showSimulatedReturnData" :src="image" style="max-width: 40vw"></q-img>
 
                 </transition>
               </q-card-section>
