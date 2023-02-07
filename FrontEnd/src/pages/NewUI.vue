@@ -149,7 +149,7 @@ export default defineComponent({
 
     SaveFile (){
       let FileSaver = require('file-saver')
-      FileSaver.saveAs(this.image, "image.jpg");
+      FileSaver.saveAs(this.image, "image_name");
     },
     async sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
