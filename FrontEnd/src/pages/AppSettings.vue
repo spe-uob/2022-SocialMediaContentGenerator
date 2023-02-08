@@ -25,20 +25,20 @@ export default {
     setup () {
       const $q = useQuasar()
 
-      watch(() => $q.dark.isActive, val => {
-        console.log(val ? 'On dark mode' : 'On light mode')
-      })
-    },
-  data(){
-    return{
-      formData: {
-        theme: false
+      //watch(() => $q.dark.isActive, val => {
+        //console.log(val ? 'On dark mode' : 'On light mode')
+      //})
+
+      return {
+        formData: {
+          theme: false
+        }
       }
-    }
-  }
+    },
+
 
 }
-Dark.set(true)
+Dark.set(false)
 console.log(Dark.isActive)
 </script>
 

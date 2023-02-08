@@ -48,6 +48,16 @@
             </q-item-section>
           </q-item>
 
+
+          <q-item to="/TestPage" active-class="q-item-no-link-highlighting">
+            <q-item-section avatar>
+              <q-icon name="dashboard" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Test</q-item-label>
+            </q-item-section>
+          </q-item>
+
           <q-item to="/NewUI" active-class="q-item-no-link-highlighting">
             <q-item-section avatar>
               <q-icon name="dashboard" />

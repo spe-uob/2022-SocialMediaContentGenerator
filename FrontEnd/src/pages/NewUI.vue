@@ -23,17 +23,20 @@
         <div class="row q-pa-xl q-mr-xl" style="width: 80%">
           <div class="col-4 q-pa-sm">
             <q-card>
+
               <q-card-section>
-                <div class="text-h3">Control Area</div>
+                <div class="text-h7">Control Area</div>
               </q-card-section>
+
               <q-card-section>
-                <div class="text-h6">Prompt:</div>
+                <div class="text-h9">Prompt:</div>
                 <q-input
                   v-model="prompt"
                   filled
                   autogrow
                 />
               </q-card-section>
+
               <q-card-section>
                 <div class="text-h8">Seed:</div>
                 <q-input
@@ -58,7 +61,7 @@
               </q-card-section>
 
               <q-card-section>
-                <q-btn color="primary" label="generate" :disable="generating" @click="generate"/>
+                <q-btn color="primary" label="generate" :disable="generating" @click="generate,showImageLoading"/>
               </q-card-section>
             </q-card>
 
@@ -68,9 +71,30 @@
               <q-card-section>
                 <div class="text-h3">Image Show</div>
               </q-card-section>
+
               <q-card-section>
-                <q-img :src="image" style="max-width: 40vw"></q-img>
+                <transition
+                  appear
+                  enter-active-class="animated fadeIn"
+                  leave-active-class="animated fadeOut"
+                >
+
+                    <q-img v-show="showSimulatedReturnData" :src="image" style="max-width: 40vw"></q-img>
+
+                </transition>
               </q-card-section>
+
+              <q-inner-loading
+                :showing="visible"
+                label="Please wait..."
+                label-class="text-teal"
+                label-style="font-size: 1.1em"
+              />
+
+              <q-card-section>
+                <q-btn color="primary" label="save"  @click="SaveFile"/>
+              </q-card-section>
+
             </q-card>
           </div>
         </div>
@@ -82,9 +106,29 @@
 <script>
 let PromptID = 0
 
-import {defineComponent} from 'vue'
+import {defineComponent,ref} from 'vue'
+import {saveAs} from 'file-saver'
+
 export default defineComponent({
   name: 'NewUI',
+  setup(){
+    const visible = ref(false)
+    const showSimulatedReturnData = ref(false)
+    return {
+      visible,
+      showSimulatedReturnData,
+
+      showImageLoading () {
+        visible.value = true
+        showSimulatedReturnData.value = false
+
+        setTimeout(() => {
+          visible.value = false
+          showSimulatedReturnData.value = true
+        }, 3000)
+      }
+    }
+  },
   data() {
     return {
       model: null,
@@ -94,6 +138,7 @@ export default defineComponent({
       seed:'',
       generating: false,
       image: '',
+      image_name:'',
       step: 20,
       cfg: 7.5,
       width: 512,
@@ -101,6 +146,11 @@ export default defineComponent({
     }
   },
   methods: {
+
+    SaveFile (){
+      let FileSaver = require('file-saver')
+      FileSaver.saveAs(this.image, "image_name");
+    },
     async sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
