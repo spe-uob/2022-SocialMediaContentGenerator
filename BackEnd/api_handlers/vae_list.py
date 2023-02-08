@@ -9,7 +9,7 @@ class VAEList(tornado.web.RequestHandler):
     router = r"/vae_list"
 
     def __init__(self, application, request, **kwargs):
-        self.model_list = []
+        self.vae_list = []
         self.model_dir = ""
         super().__init__(application, request, **kwargs)
 
@@ -28,5 +28,5 @@ class VAEList(tornado.web.RequestHandler):
         self.model_dir = model_dir
 
     def get(self):
-        self.model_list = Model.find_model(self.model_dir)
-        self.write({"vae_list": self.model_list})
+        self.vae_list = Model.find_vae(self.model_dir)
+        self.write({"mode_list": self.vae_list})
