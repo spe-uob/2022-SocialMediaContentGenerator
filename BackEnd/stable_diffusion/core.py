@@ -52,7 +52,11 @@ class Core:
         model = self.model.model.to(device)
         self.model.model = model
 
-    def exec_sample(self, prompt, sample: str, batch_size=1, step=20, cfg=7.5, width=512, height=512, f=8, channel=4, ddim_eta=0.0, skip_grid=True):
+    def on_load_vae(self, vae_name):
+        logger.info(f"loading vae {vae_name}...")
+        self.model.load_vae(os.path.join(self.model_path, vae_name))
+
+    def exec_sample(self, prompt, negative_prompt, sample: str, batch_size=1, step=20, cfg=7.5, width=512, height=512, f=8, channel=4, ddim_eta=0.0, skip_grid=True):
         logger.info(f"exec sample {sample}...")
         self.check_out_dir()
         model = self.model.model
@@ -79,7 +83,7 @@ class Core:
                             for prompts in data:
                                 uc = None
                                 if cfg != 1.0:
-                                    uc = model.get_learned_conditioning(batch_size * [""])
+                                    uc = model.get_learned_conditioning(batch_size * [negative_prompt])
                                 if isinstance(prompts, tuple):
                                     prompts = list(prompts)
                                 c = model.get_learned_conditioning(prompts)
@@ -97,7 +101,7 @@ class Core:
                                 x_samples_ddim = model.decode_first_stage(samples_ddim)
                                 x_samples_ddim = torch.clamp((x_samples_ddim + 1.0) / 2.0, min=0.0, max=1.0)
                                 x_samples_ddim = x_samples_ddim.cpu().permute(0, 2, 3, 1).numpy()
-                                # x_checked_image, has_nsfw_concept = self.check_safety(x_samples_ddim)
+                                x_checked_image, has_nsfw_concept = self.check_safety(x_samples_ddim)
                                 x_checked_image = x_samples_ddim
                                 x_checked_image_torch = torch.from_numpy(x_checked_image).permute(0, 3, 1, 2)
 
@@ -128,6 +132,11 @@ class Core:
                         img.save(os.path.join(self.grid_path, f'grid-{grid_count:04}.png'))
                         grid_count += 1
         result = 255. * rearrange(images_buffer.cpu().numpy(), 'c h w -> h w c')
+        del samples_ddim
+        del x_samples_ddim
+        del x_checked_image
+        del x_checked_image_torch
+        del images_buffer
         return result.astype(np.uint8)
 
     def set_wm(self, wm: str = "SMCG-SD-V1"):
