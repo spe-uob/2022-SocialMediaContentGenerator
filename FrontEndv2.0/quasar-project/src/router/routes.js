@@ -9,7 +9,8 @@ const routes = [
     children: [
       { path: '', component: Home },
       { path: '/home' , name: 'home', component: Home},
-      {path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
+      { path: '/twitter', component: () => import('pages/Twitter.vue')},
+      { path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
     ]
   },
 
