@@ -45,7 +45,9 @@ class StableDiffusionModel:
             model_config.model.params.unet_config.params.use_fp16 = False
         model = instantiate_from_config(model_config.model)
         self.load_model_weights(model_name, model)
-
+        vae_name = os.path.basename(model_name) + ".vae.pt"
+        if os.path.exists(os.path.join(self.path, vae_name)):
+            self.load_vae(model, vae_name)
 
     def unload_model(self):
         del self.model
@@ -85,7 +87,26 @@ class StableDiffusionModel:
         self.dtype_vae = torch.float16 if not self.vae_half or not self.half else torch.float32
         model.first_stage_model.to(self.dtype_vae)
 
+    def load_vae(self, model, vae):
+        vae_path = os.path.join(self.path, vae)
+        if vae:
+            self.cache_base_vae(model)
+            vae_dict = torch.load(vae_path, map_location=self.map_location)
+            vae_dict_filtered = {k: v for k, v in vae_dict["state_dict"].items() if k[0:4] != "loss" and k not in self.vae_ignore_keys}
+            model.first_stage_model.load_state_dict(vae_dict_filtered)
+            model.first_stage_model.to(self.dtype_vae)
 
+        self.current_vae_file = vae
+
+    def cache_base_vae(self, model):
+        self.base_vae = deepcopy(model.first_stage_model.state_dict())
+
+    def rollback_vae(self, model):
+        if self.base_vae is not None:
+            model.first_stage_model.load_state_dict(self.base_vae)
+            model.first_stage_model.to(self.dtype_vae)
+            self.current_vae_file = None
+        self.base_vae = None
 
     def transform_checkpoint_dict_key(self, k):
         for text, replacement in self.chckpoint_dict_replacements.items():
