@@ -47,6 +47,52 @@ class StableDiffusionModel:
         self.load_model_weights(model_name, model)
 
 
+    def unload_model(self):
+        del self.model
+        self.model = None
+        del self.base_vae
+        self.base_vae = None
+        self.current_vae_file = None
+
+    def load_model_weights(self, model_name, model):
+        pl_sd = torch.load(model_name, map_location=self.map_location)
+        if self.show_global_state and "global_step" in pl_sd:
+            print(f"Global Step: {pl_sd['global_step']}")
+        pl_sd = pl_sd.pop("state_dict", pl_sd)
+        pl_sd.pop("state_dict", None)
+        state_dict = {}
+        for k, v in pl_sd.items():
+            new_key = self.transform_checkpoint_dict_key(k)
+            if new_key is not None:
+                state_dict[new_key] = v
+        pl_sd.clear()
+        pl_sd.update(state_dict)
+        model.load_state_dict(pl_sd, strict=False)
+        del pl_sd, state_dict
+
+        # TODO: if want implement cache, add here
+
+        if self.opt_channelslast:
+            model.to(memory_format=torch.channels_last)
+        if self.half:
+            vae = model.first_stage_model
+            if not self.vae_half:
+                # backup vae if vae half is not enabled
+                model.first_stage_model = None
+            model = model.half()
+            model.first_stage_model = vae
+        self.dtype = torch.float16 if self.half else torch.float32
+        self.dtype_vae = torch.float16 if not self.vae_half or not self.half else torch.float32
+        model.first_stage_model.to(self.dtype_vae)
+
+
+
+    def transform_checkpoint_dict_key(self, k):
+        for text, replacement in self.chckpoint_dict_replacements.items():
+            if k.startswith(text):
+                k = replacement + k[len(text):]
+        return k
+
     def sync_checkpoint_list(self):
         self.checkpoint_list = []
         checkpoint_list = list(filter(lambda x: x.endswith(".ckpt"), os.listdir(self.path)))
