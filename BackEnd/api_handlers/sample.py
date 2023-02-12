@@ -37,13 +37,14 @@ class Sample(tornado.web.RequestHandler):
         try:
             data = json.loads(post_data)
             result = self.core.exec_sample(
-                prompt=data['prompt'],
-                sample=data['sample'],
-                batch_size=data['batch_size'],
-                step=data['step'],
-                cfg=data['cfg'],
-                width=data['width'],
-                height=data['height']
+                prompt=data.get('prompt', ""),
+                negative_prompt=data.get('negative_prompt', ""),
+                sample=data.get('sample', "dpm"),
+                batch_size=data.get('batch_size', 1),
+                step=data.get('step', 20),
+                cfg=data.get('cfg', 7.5),
+                width=data.get('width', 512),
+                height=data.get('height', 512),
             )
 
             retval, buffer = cv2.imencode('.jpg', cv2.cvtColor(result, cv2.COLOR_RGB2BGR))
