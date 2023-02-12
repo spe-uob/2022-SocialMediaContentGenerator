@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <div class="column" style="width: 100vw">
       <div class="col flex flex-center">
-        <div class="row" style="width: 66.5vw">
+        <div class="row" style="width: 69.5vw">
           <div class="col-sm-12 ">
             <q-card>
               <q-card-section>
@@ -68,7 +68,7 @@
             </q-card>
 
           </div>
-          <div class="col-8 q-pa-sm">
+          <div class="col-lg-8 q-pa-sm">
             <q-card>
               <q-bar>
               <q-card-section>
@@ -96,11 +96,11 @@
 <script>
 let PromptID = 0
 
-import {defineComponent,ref} from 'vue'
-import {saveAs} from 'file-saver'
+import {ref} from 'vue'
 
-export default defineComponent({
-  name: 'StableDiffusionUI',
+
+export default {
+  name: "StableDiffusionUI",
   setup(){
     const visible = ref(false)
     const showSimulatedReturnData = ref(false)
@@ -245,7 +245,7 @@ export default defineComponent({
   beforeUnmount() {
     this.$q.loading.hide()
   },
-})
+}
 </script>
 
 <style scoped>
