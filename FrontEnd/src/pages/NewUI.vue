@@ -16,6 +16,7 @@
                 </q-select>
               </q-card-section>
             </q-card>
+
           </div>
         </div>
       </div>
@@ -79,8 +80,10 @@
                     <q-img  :src="image" style="max-width: 40vw"></q-img>
               </q-card-section>
               <q-card-section class="self-center">
-                <q-btn color="primary" label="generate" :disable="generating" @click="generate,showImageLoading"/>
+                <q-btn color="primary" class="q-mr-md" label="generate" :disable="generating" @click="generate,showImageLoading"/>
+                <q-btn color="primary" class="q-ml-md" label="save"  @click="saveImage"/>
               </q-card-section>
+
 
             </q-card>
           </div>
@@ -134,9 +137,11 @@ export default defineComponent({
   },
   methods: {
 
-    SaveFile (){
-      let FileSaver = require('file-saver')
-      FileSaver.saveAs(this.image, "image_name");
+    saveImage () {
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(this.image)
+      link.download = 'image.jpeg'
+      link.click()
     },
     async sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
