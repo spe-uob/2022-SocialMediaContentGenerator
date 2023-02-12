@@ -53,6 +53,13 @@
           <q-item-section>Home</q-item-section>
         </q-item>
 
+        <q-item clickable v-ripple class="text-grey-6" :to="/StablediffusionUI" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="crop_din" />
+          </q-item-section>
+          <q-item-section>SD UI</q-item-section>
+        </q-item>
+
         <q-item clickable v-ripple class="text-grey-6" to="/TwitterView" active-class="menu-link">
           <q-item-section avatar>
             <q-icon name="crop_din" />

@@ -10,6 +10,7 @@ const routes = [
       { path: '', component: Home },
       { path: '/home' , name: 'home', component: Home},
       {path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
+      { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
     ]
   },
 

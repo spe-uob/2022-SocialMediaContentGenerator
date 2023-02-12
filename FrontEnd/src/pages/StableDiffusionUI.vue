@@ -100,7 +100,7 @@ import {defineComponent,ref} from 'vue'
 import {saveAs} from 'file-saver'
 
 export default defineComponent({
-  name: 'NewUI',
+  name: 'StableDiffusionUI',
   setup(){
     const visible = ref(false)
     const showSimulatedReturnData = ref(false)
