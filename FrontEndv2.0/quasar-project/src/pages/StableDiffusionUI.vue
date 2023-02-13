@@ -97,7 +97,7 @@
 let PromptID = 0
 
 import {defineComponent,ref} from 'vue'
-import {saveAs} from 'file-saver'
+
 
 export default defineComponent({
   name: 'StableDiffusionUI',
