@@ -9,9 +9,10 @@ from omegaconf import OmegaConf
 
 
 class StableDiffusionModel:
-    def __init__(self, path, default_config, half=False, vae_half=False, map_location=None, show_global_state=False, opt_channelslast=False):
+    def __init__(self, path, default_config, device, half=False, vae_half=False, map_location=None, show_global_state=False, opt_channelslast=False):
         self.path = path
         self.default_config = default_config
+        self.device = device
         self.half = half
         self.vae_half = vae_half
         self.map_location = map_location
@@ -37,6 +38,7 @@ class StableDiffusionModel:
             raise ValueError(f"Model {model_name} not found")
         config = self.checkpoints[model_name]
         if config != self.default_config:
+            config = os.path.join(self.path, config)
             logger.info(f"Loading model with custom config: {os.path.join(self.path, config)}")
         model_config = OmegaConf.load(config)
         if not hasattr(model_config.model.params, "use_ema"):
@@ -48,6 +50,9 @@ class StableDiffusionModel:
         vae_name = os.path.basename(model_name) + ".vae.pt"
         if os.path.exists(os.path.join(self.path, vae_name)):
             self.load_vae(model, vae_name)
+        self.model = model
+        self.model.to(self.device)
+        self.model.eval()
 
     def unload_model(self):
         del self.model
@@ -57,7 +62,7 @@ class StableDiffusionModel:
         self.current_vae_file = None
 
     def load_model_weights(self, model_name, model):
-        pl_sd = torch.load(model_name, map_location=self.map_location)
+        pl_sd = torch.load(os.path.join(self.path, model_name), map_location=self.map_location)
         if self.show_global_state and "global_step" in pl_sd:
             print(f"Global Step: {pl_sd['global_step']}")
         pl_sd = pl_sd.pop("state_dict", pl_sd)
