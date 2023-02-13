@@ -11,6 +11,7 @@ const routes = [
       { path: '/home' , name: 'home', component: Home},
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
       { path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
+      { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
     ]
   },
 

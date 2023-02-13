@@ -2,8 +2,8 @@
   <q-page class="flex flex-center">
     <div class="column" style="width: 100vw">
       <div class="col flex flex-center">
-        <div class="row" style="width: 80%">
-          <div class="col-12 ">
+        <div class="row" style="width: 66.5vw">
+          <div class="col-sm-12 ">
             <q-card>
               <q-card-section>
                 <q-select filled bottom-slots v-model="model" :options="models" label="Models" counter maxlength="12" :loading="loading_model" @update:model-value="load_model">
@@ -16,18 +16,22 @@
                 </q-select>
               </q-card-section>
             </q-card>
+
           </div>
         </div>
       </div>
       <div class="col flex flex-center">
-        <div class="row q-pa-xl q-mr-xl" style="width: 80%">
-          <div class="col-4 q-pa-sm">
+        <div class="row q-pa-xl q-mr-xl" style="width: 85%">
+
+          <div class="col-sm-4 q-pa-sm">
             <q-card>
-
+              <q-bar>
               <q-card-section>
-                <div class="text-h7">Control Area</div>
-              </q-card-section>
 
+                <div class="text-h7">Control Area</div>
+
+              </q-card-section>
+              </q-bar>
               <q-card-section>
                 <div class="text-h9">Prompt:</div>
                 <q-input
@@ -60,40 +64,26 @@
                 <q-slider v-model="height" :min="64" :max="2048" :step="64"/>
               </q-card-section>
 
-              <q-card-section>
-                <q-btn color="primary" label="generate" :disable="generating" @click="generate,showImageLoading"/>
-              </q-card-section>
+
             </q-card>
 
           </div>
           <div class="col-8 q-pa-sm">
             <q-card>
+              <q-bar>
               <q-card-section>
-                <div class="text-h3">Image Show</div>
+                <div class="text-h7">Image Show</div>
+              </q-card-section>
+              </q-bar>
+              <q-card-section>
+
+                    <q-img  :src="image" style="max-width: 40vw"></q-img>
+              </q-card-section>
+              <q-card-section class="self-center">
+                <q-btn color="primary" class="q-mr-md" label="generate" :disable="generating" @click="generate,showImageLoading"/>
+                <q-btn color="primary" class="q-ml-md" label="save"  @click="saveImage"/>
               </q-card-section>
 
-              <q-card-section>
-                <transition
-                  appear
-                  enter-active-class="animated fadeIn"
-                  leave-active-class="animated fadeOut"
-                >
-
-                    <q-img v-show="showSimulatedReturnData" :src="image" style="max-width: 40vw"></q-img>
-
-                </transition>
-              </q-card-section>
-
-              <q-inner-loading
-                :showing="visible"
-                label="Please wait..."
-                label-class="text-teal"
-                label-style="font-size: 1.1em"
-              />
-
-              <q-card-section>
-                <q-btn color="primary" label="save"  @click="SaveFile"/>
-              </q-card-section>
 
             </q-card>
           </div>
@@ -110,7 +100,7 @@ import {defineComponent,ref} from 'vue'
 import {saveAs} from 'file-saver'
 
 export default defineComponent({
-  name: 'NewUI',
+  name: 'StableDiffusionUI',
   setup(){
     const visible = ref(false)
     const showSimulatedReturnData = ref(false)
@@ -147,9 +137,11 @@ export default defineComponent({
   },
   methods: {
 
-    SaveFile (){
-      let FileSaver = require('file-saver')
-      FileSaver.saveAs(this.image, "image_name");
+    saveImage () {
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(this.image)
+      link.download = 'image.jpeg'
+      link.click()
     },
     async sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
