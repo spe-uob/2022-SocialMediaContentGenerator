@@ -93,13 +93,10 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {
-        dark: 'false'
-      },
-
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
-
+      components: [],
+      directives: [],
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),
       // you can manually specify Quasar components/directives to be available everywhere:
@@ -113,7 +110,7 @@ module.exports = configure(function (/* ctx */) {
 
     // animations: 'all', // --- includes all animations
     // https://v2.quasar.dev/options/animations
-    animations: [],
+    animations: 'all',
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#property-sourcefiles
     // sourceFiles: {
@@ -200,7 +197,8 @@ module.exports = configure(function (/* ctx */) {
         appId: 'socialmediacontentgenerator'
       }
     },
-
+    brand:{
+    },
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
     bex: {
       contentScripts: [

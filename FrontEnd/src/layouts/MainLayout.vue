@@ -48,12 +48,22 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/NewUI" active-class="q-item-no-link-highlighting">
+
+          <q-item to="/TestPage" active-class="q-item-no-link-highlighting">
             <q-item-section avatar>
               <q-icon name="dashboard" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>NewUI</q-item-label>
+              <q-item-label>Test</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item to="/StableDiffusionUI" active-class="q-item-no-link-highlighting">
+            <q-item-section avatar>
+              <q-icon name="dashboard" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>SD UI</q-item-label>
             </q-item-section>
           </q-item>
 
@@ -139,10 +149,6 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 export default defineComponent({
   name: 'MainLayout',
-  created(){
-    this.$q.dark.set(true)
-
-  },
   components: {
    // EssentialLink,
   },
