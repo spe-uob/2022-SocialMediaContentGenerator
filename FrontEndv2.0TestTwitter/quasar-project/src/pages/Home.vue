@@ -9,19 +9,25 @@
   </div>
   <div class="embedded-twitter-feed">
     <a class="twitter-timeline" data-width="1200" data-theme="dark" href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
-      Tweets by SpacenxtLabs
+    Tweets by SpacenxtLabs
     </a>
 
 
 
   </div>
+  <!--<a class="twitter-timeline" data-width="1200" data-theme="dark" href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
+    Tweets by SpacenxtLabs
+  </a>-->
   <!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
 
 </template>
 
+
 <script>
+import Timeline from 'components/Timeline.vue'
 export default {
   name: "Home",
+  components: {Timeline},
 }
 window.twttr = (function (d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
@@ -39,7 +45,6 @@ window.twttr = (function (d, s, id) {
 
   return t;
 }(document, "script", "twitter-wjs"));
-
 </script>
 
 <style scoped>
