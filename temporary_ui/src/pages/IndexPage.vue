@@ -28,11 +28,9 @@
               </q-card-section>
               <q-card-section>
                 <div class="text-h6">Prompt:</div>
-                <q-input
-                  v-model="prompts"
-                  filled
-                  autogrow
-                />
+                <q-input  v-model="prompts" filled autogrow />
+                <div class="text-h6">Negative Prompt:</div>
+                <q-input  v-model="negative_prompts" filled autogrow />
               </q-card-section>
               <q-card-section>
                 <q-badge color="secondary">
@@ -80,6 +78,7 @@ export default defineComponent({
       models: [],
       loading_model: false,
       prompts: '',
+      negative_prompts: '',
       generating: false,
       image: '',
       step: 20,
@@ -103,6 +102,7 @@ export default defineComponent({
         },
         body: JSON.stringify({
           prompt: this.prompts,
+          negative_prompts: this.negative_prompts,
           sample: "dpm",
           batch_size: 1,
           step: this.step,

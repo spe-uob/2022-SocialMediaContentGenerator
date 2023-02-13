@@ -44,8 +44,13 @@
                   </div>-->
                 </div>
                 <div class="q-pa-sm"></div>
-                <q-btn class="text-center full-width" color="light-blue" icon="fa-brands fa-twitter" label="sign in with twitter" type="submit" rounded></q-btn>
-              </div>
+                <AuthComponent />
+                <div class="q-pa-sm"></div>
+                <q-btn class="text-center full-width" color="red" icon="fa-brands fa-instagram" label="sign in with instagram" type="submit" rounded></q-btn>
+                <div class="q-pa-sm"></div>
+                <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" rounded></q-btn>
+                </div>
+
             </q-form>
           </q-card-section>
 
@@ -57,8 +62,11 @@
 </template>
 
 <script>
+import AuthComponent from "components/AuthComponent.vue"
+import firebase from 'boot/firebase.js'
 export default {
   name: "TwitterView",
+  components: { AuthComponent },
   data() {
     return{
       login:{
@@ -74,13 +82,8 @@ export default {
       }else{
         console.log('login')
       }
-
     }
-  },
-  components: {
-
   }
-
 }
 </script>
 

@@ -9,8 +9,13 @@ const routes = [
     children: [
       { path: '', component: Home },
       { path: '/home' , name: 'home', component: Home},
+<<<<<<< HEAD
       { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
       {path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
+=======
+      { path: '/twitter', component: () => import('pages/Twitter.vue')},
+      { path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
+>>>>>>> 5f1780183eb534b1769487e98f59fd2bb2d593e4
     ]
   },
 

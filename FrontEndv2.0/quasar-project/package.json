@@ -9,16 +9,23 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@quasar/extras": "^1.0.0",
     "quasar": "^2.6.0",
     "stylus": "^0.59.0",
+=======
+    "@quasar/extras": "^1.15.10",
+    "firebase": "^9.17.1",
+    "quasar": "^2.11.5",
+>>>>>>> 5f1780183eb534b1769487e98f59fd2bb2d593e4
     "vue": "^3.0.0",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.0",
     "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.14"
+    "postcss": "^8.4.14",
+    "stylus": "^0.59.0"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",

@@ -53,7 +53,7 @@
                   Steps: {{ step }} (0 to 150)
                 </q-badge>
                 <q-slider v-model="step" :min="0" :max="150"/>
-                <q-badge color="warning"> CFG: {{ cfg }} (1 to 30)</q-badge>
+                <q-badge color="vibrant-green"> CFG: {{ cfg }} (1 to 30)</q-badge>
                 <q-slider v-model="cfg" :min="1.0" :max="30.0" :step="0.5"/>
               </q-card-section>
 
@@ -248,6 +248,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="sass">
+@import 'src/css/quasar.variables'
 </style>
