@@ -37,7 +37,7 @@ class Txt2Img:
             x_samples_ddim = torch.stack(x_samples_ddim).float()
             x_samples_ddim = torch.clamp((x_samples_ddim + 1.0) / 2.0, min=0.0, max=1.0)
 
-
+        del samples_ddim
         results = []
         for i, x_sample in enumerate(x_samples_ddim):
             x_sample = 255. * np.moveaxis(x_sample.cpu().numpy(), 0, 2)
