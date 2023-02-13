@@ -33,6 +33,10 @@ class Txt2Img:
 
             samples_ddim = sampler.sample(x, c, uc, steps=steps, cfg_scale=cfg)
 
+            x_samples_ddim = [self.model.decode_first_stage(samples_ddim[i:i + 1].to(dtype=self.dtype_vae))[0].cpu() for i in range(samples_ddim.size(0))]
+            x_samples_ddim = torch.stack(x_samples_ddim).float()
+            x_samples_ddim = torch.clamp((x_samples_ddim + 1.0) / 2.0, min=0.0, max=1.0)
+
 
 
 
