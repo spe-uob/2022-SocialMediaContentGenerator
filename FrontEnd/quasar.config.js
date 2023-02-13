@@ -198,7 +198,6 @@ module.exports = configure(function (/* ctx */) {
       }
     },
     brand:{
-      dark:true
     },
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
     bex: {

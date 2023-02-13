@@ -1,16 +1,5 @@
 <template>
   <div>
-    <q-toggle
-      size="xl"
-      dark color="black"
-      keep-color
-      left-label
-      v-model="formData.theme"
-      false-value="light mode"
-      true-value="dark mode"
-      label="theme"
-      icon="light"
-    />
 
   </div>
 </template>
@@ -23,23 +12,14 @@ import DarkMode from "components/DarkMode.vue";
 export default {
   name: "AppSettings",
     setup () {
-      const $q = useQuasar()
 
       //watch(() => $q.dark.isActive, val => {
         //console.log(val ? 'On dark mode' : 'On light mode')
       //})
-
-      return {
-        formData: {
-          theme: false
-        }
-      }
     },
 
 
 }
-Dark.set(false)
-console.log(Dark.isActive)
 </script>
 
 
