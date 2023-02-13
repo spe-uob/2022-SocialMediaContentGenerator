@@ -38,6 +38,15 @@ class Txt2Img:
             x_samples_ddim = torch.clamp((x_samples_ddim + 1.0) / 2.0, min=0.0, max=1.0)
 
 
+        results = []
+        for i, x_sample in enumerate(x_samples_ddim):
+            x_sample = 255. * np.moveaxis(x_sample.cpu().numpy(), 0, 2)
+            x_sample = x_sample.astype(np.uint8)
+            image = Image.fromarray(x_sample)
+            results.append(image)
+
+        del x_samples_ddim
+        return results
 
 
     def create_random_tensors(self, shape, seeds, seed_resize_from_h=0, seed_resize_from_w=0, sampler=None):
