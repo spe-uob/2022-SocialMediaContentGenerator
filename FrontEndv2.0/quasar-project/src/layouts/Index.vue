@@ -17,6 +17,13 @@
           <span class="gt-sm text-subtitle2 text-h6 text-grey-6 vertical-middle">Social Media Content Generator</span>
 
         </q-toolbar-title>
+        <q-btn
+          class="q-mr-xs"
+          flat
+          round
+          @click="$q.dark.toggle()"
+          :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
+        />
       </q-toolbar>
     </div>
   </q-header>
@@ -33,7 +40,7 @@
     :width="240"
     no-swipe-open
     bordered
-    content-class="bg-grey-2 text-grey-6">
+    content-class="bg-primary text-white">
     <q-scroll-areac class="fit">
       <q-list dense>
         <q-item>
@@ -53,7 +60,7 @@
           <q-item-section>Home</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple class="text-grey-6" to="/StablediffusionUI" active-class="menu-link">
+        <q-item clickable v-ripple class="text-grey-6" to="/StableDiffusionUI" active-class="menu-link">
           <q-item-section avatar>
             <q-icon name="crop_din" />
           </q-item-section>
