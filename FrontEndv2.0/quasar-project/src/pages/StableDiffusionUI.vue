@@ -5,9 +5,9 @@
         <div class="row" style="width: 66.5vw">
           <div class="col-sm-12 ">
             <q-card>
-              <q-card-section>
-                <q-select filled bottom-slots v-model="model" :options="models" label="Models" counter maxlength="12" :loading="loading_model" @update:model-value="load_model">
-                  <template v-slot:hint>
+              <q-card-section class="text-white bg-blue-grey-14">
+                <q-select class="hint-white" filled bottom-slots v-model="model" :options="models" label="Models" label-color="white" counter maxlength="12" counter-color="white" :loading="loading_model" @update:model-value="load_model">
+                  <template v-slot:hint class="hint-white">
                     model loader
                   </template>
                   <template v-slot:after>
@@ -25,10 +25,10 @@
 
           <div class="col-sm-4 q-pa-sm">
             <q-card>
-              <q-bar>
+              <q-bar class="bg-blue-grey-14">
               <q-card-section>
 
-                <div class="text-h7">Control Area</div>
+                <div class="text-white text-h7">Control Area</div>
 
               </q-card-section>
               </q-bar>
@@ -36,6 +36,7 @@
                 <div class="text-h9">Prompt:</div>
                 <q-input
                   v-model="prompt"
+                  square outlined
                   filled
                   autogrow
                 />
@@ -43,25 +44,26 @@
 
               <q-card-section>
                 <div class="text-h8">Seed:</div>
-                <q-input
+                <q-input square outlined
+                         filled
                   v-model="seed"
                 />
               </q-card-section>
 
               <q-card-section>
-                <q-badge color="secondary">
+                <q-badge color="primary">
                   Steps: {{ step }} (0 to 150)
                 </q-badge>
-                <q-slider v-model="step" :min="0" :max="150"/>
-                <q-badge color="warning"> CFG: {{ cfg }} (1 to 30)</q-badge>
-                <q-slider v-model="cfg" :min="1.0" :max="30.0" :step="0.5"/>
+                <q-slider color="primary" v-model="step" :min="0" :max="150"/>
+                <q-badge color="secondary"> CFG: {{ cfg }} (1 to 30)</q-badge>
+                <q-slider color="secondary" v-model="cfg" :min="1.0" :max="30.0" :step="0.5"/>
               </q-card-section>
 
               <q-card-section>
-                <q-badge color="positive"> width: {{ width }}</q-badge>
-                <q-slider v-model="width" :min="64" :max="2048" :step="64"/>
-                <q-badge color="positive"> height: {{ height }}</q-badge>
-                <q-slider v-model="height" :min="64" :max="2048" :step="64"/>
+                <q-badge color="accent"> width: {{ width }}</q-badge>
+                <q-slider color="accent" v-model="width" :min="64" :max="2048" :step="64"/>
+                <q-badge color="accent"> height: {{ height }}</q-badge>
+                <q-slider color="accent" v-model="height" :min="64" :max="2048" :step="64"/>
               </q-card-section>
 
 
@@ -70,9 +72,9 @@
           </div>
           <div class="col-8 q-pa-sm">
             <q-card>
-              <q-bar>
-              <q-card-section>
-                <div class="text-h7">Image Show</div>
+              <q-bar class="bg-blue-grey-14">
+              <q-card-section >
+                <div class="text-white text-h7">Image Show</div>
               </q-card-section>
               </q-bar>
               <q-card-section>
@@ -80,8 +82,8 @@
                     <q-img  :src="image" style="max-width: 40vw"></q-img>
               </q-card-section>
               <q-card-section class="self-center">
-                <q-btn color="primary" class="q-mr-md" label="generate" :disable="generating" @click="generate,showImageLoading"/>
-                <q-btn color="primary" class="q-ml-md" label="save"  @click="saveImage"/>
+                <q-btn color="positive" class="q-mr-md" label="generate" :disable="generating" @click="generate,showImageLoading"/>
+                <q-btn color="positive" class="q-ml-md" label="save"  @click="saveImage"/>
               </q-card-section>
 
 
@@ -136,6 +138,7 @@ export default defineComponent({
     }
   },
   methods: {
+
 
     saveImage () {
       const link = document.createElement('a')
@@ -248,6 +251,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style>
+.hint-white {
+  color: white;
+}
 </style>
