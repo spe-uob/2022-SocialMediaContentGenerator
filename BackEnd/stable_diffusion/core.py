@@ -10,6 +10,7 @@ from rich.progress import Progress
 from diffusers.pipelines.stable_diffusion import StableDiffusionSafetyChecker
 from einops import rearrange
 from imwatermark import WatermarkEncoder
+from k_diffusion import sampling
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.dpm_solver import DPMSolverSampler
 from ldm.models.diffusion.plms import PLMSSampler
@@ -65,6 +66,8 @@ class Core:
             sampler = DPMSolverSampler(model)
         elif sample.lower() == "plms":
             sampler = PLMSSampler(model)
+        elif sample.lower() == "euler a":
+            sampling.sample_euler_ancestral()
 
         data = [batch_size * [prompt]]
         start_code = None
@@ -101,7 +104,7 @@ class Core:
                                 x_samples_ddim = model.decode_first_stage(samples_ddim)
                                 x_samples_ddim = torch.clamp((x_samples_ddim + 1.0) / 2.0, min=0.0, max=1.0)
                                 x_samples_ddim = x_samples_ddim.cpu().permute(0, 2, 3, 1).numpy()
-                                x_checked_image, has_nsfw_concept = self.check_safety(x_samples_ddim)
+                                # x_checked_image, has_nsfw_concept = self.check_safety(x_samples_ddim)
                                 x_checked_image = x_samples_ddim
                                 x_checked_image_torch = torch.from_numpy(x_checked_image).permute(0, 3, 1, 2)
 
