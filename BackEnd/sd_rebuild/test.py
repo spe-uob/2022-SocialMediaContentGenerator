@@ -1,7 +1,10 @@
+import os
 import random
+import re
 
 import torch
 
+from sd_rebuild.MemoryOptimizer import MemoryOptimizer, CorsAttentionOptimizationMode
 from sd_rebuild.model import StableDiffusionModel
 from sd_rebuild.txt2img import Txt2Img
 from matplotlib import pyplot as plt
@@ -18,7 +21,9 @@ def test():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model_path = r"W:\work\stable-diffusion-webui-old-dreambooth\models\Stable-diffusion"
     default_config = r"W:\work\stable-diffusion-webui-old-dreambooth\v1-inference.yaml"
-    model_loader = StableDiffusionModel(model_path, default_config, device)
+    memory_optimizer = MemoryOptimizer()
+    memory_optimizer.apply_memory_optimizations(CorsAttentionOptimizationMode.DEFAULT)
+    model_loader = StableDiffusionModel(model_path, default_config, device, half=True)
     print("available models:")
     for checkpoint in model_loader.checkpoint_list:
         print(f"    {checkpoint[0]}")
@@ -26,11 +31,28 @@ def test():
     model = model_loader.model
     txt2img = Txt2Img(model, device, model_loader.dtype_vae)
     result = []
-    for i in range(2):
-        result += txt2img.generate(prompt, nprompt, 512, 512, 2, random.randint(0, 100000000))
-    for image in result:
-        plt.imshow(image)
-        plt.show()
+    plt.figure(dpi=1200)
+    for i in range(4):
+        samples = txt2img.generate(prompt, nprompt, 960, 512, 4, random.randint(1000000, 1000000000), sample="DDIM", steps=35)
+        for img in samples:
+            result.append(img)
+            plt.figure(dpi=1200)
+            plt.imshow(img)
+            plt.show()
+
+    save_images(result)
+
+
+def save_images(images):
+    if not os.path.exists("images"):
+        os.mkdir("images")
+    existing = [x for x in os.listdir("images") if re.match(r"^[0-9]+.*\.png$", x)]
+    existing.sort(key=lambda x: int(re.search(r"^[0-9]+", x)[0]))
+    last = 0
+    if len(existing) > 0:
+        last = int(re.search(r"^[0-9]+", existing[-1])[0])
+    for i, image in enumerate(images):
+        image.save(f"images/{str(last + i + 1).zfill(5)}.png")
 
 
 if __name__ == "__main__":
