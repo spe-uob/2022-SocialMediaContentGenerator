@@ -48,7 +48,6 @@ class Txt2Img:
         del x_samples_ddim
         return results
 
-
     def create_random_tensors(self, shape, seeds, seed_resize_from_h=0, seed_resize_from_w=0, sampler=None):
         xs = []
 
