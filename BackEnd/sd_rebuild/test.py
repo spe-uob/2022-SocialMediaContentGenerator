@@ -12,7 +12,6 @@ from matplotlib import pyplot as plt
 prompt = """nsfw, masterpiece, best quality, highly detailed, extremely detailed CG unity 8k wallpaper, illustration,
 light and shadow,
 mudrock, 1girl, large_breasts, bare_shoulders, black_choker, choker, elite_ii_(arknights), horns, long_hair, mudrock_(arknights), oripathy_lesion_(arknights), silver_hair, solo, lookat_viewer, realistic,
-nsfw, boobs, nipples, pussy, cum, cum in pussy, cum on body, orgasm, rolling eyes, milk_breasts, torn clothes, naked,
 chinese architecture, chinese traditional buildings, chinese ancient buildings, outdoors,"""
 nprompt = "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad art, ugly, messy drawing, deformed, bad anatomy, disfigured, mutation, mutated, holding, see-through,"
 
