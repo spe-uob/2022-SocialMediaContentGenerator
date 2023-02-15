@@ -38,20 +38,6 @@ export default defineComponent({
     }
   },
   methods: {
-    async addNewTweet() {
-      console.log(AuthComponent.data())
-      let tweet = this.text
-      const url = `/tweet?status=${encodeURIComponent(tweet)}&consumer_key=${encodeURIComponent(AuthComponent.data().apiKey)}&consumer_secret=${encodeURIComponent(AuthComponent.data().apiSecret)}&access_token=${encodeURIComponent(AuthComponent.data().token)}&access_token_secret=${encodeURIComponent(AuthComponent.data().secret)}&image=${encodeURIComponent(this.image)}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-
-      let newTweet = {
-        content: this.text,
-        date: Date.now()
-      }
-      this.text = ''
-    },
     async addNewTweetPost(){
       let tweet = this.text
       const url = `/api/v1/tweet`
