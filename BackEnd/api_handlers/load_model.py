@@ -2,11 +2,14 @@ from typing import Optional, Awaitable
 
 import tornado.web
 
+from stable_diffusion.core import Core
+
 
 class LoadModel(tornado.web.RequestHandler):
     router = r"/load_model"
 
     def __init__(self, application, request, **kwargs):
+        self.core = None
         self.on_load_model = lambda model_name: None
         super().__init__(application, request, **kwargs)
 
@@ -21,13 +24,17 @@ class LoadModel(tornado.web.RequestHandler):
     def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
         pass
 
-    def initialize(self, on_load_model):
-        self.on_load_model = on_load_model
+    def initialize(self, core: Core):
+        self.core = core
 
     def get(self):
         model_name = self.get_argument('ModelName', None)
+        model_list = self.core.model_loader.checkpoints.keys()
+        if model_name not in model_list:
+            self.write({"error": f"Model {model_name} not found"})
+            return
         try:
-            self.on_load_model(model_name)
+            self.core.on_load_model(model_name)
             self.write({"status": 0})
         except Exception as e:
             self.write({"error": str(e)})

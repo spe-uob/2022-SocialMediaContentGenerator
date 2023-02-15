@@ -43,7 +43,7 @@ class Sample(tornado.web.RequestHandler):
                 step=data['step'],
                 cfg=data['cfg'],
                 width=data['width'],
-                height=data['height']
+                height=data['height'],
                 image=data['image']
             )
 
