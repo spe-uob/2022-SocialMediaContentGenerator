@@ -31,11 +31,11 @@ def test():
     txt2img = Txt2Img(model, device, model_loader.dtype_vae)
     result = []
     plt.figure(dpi=1200)
-    for i in range(4):
-        samples = txt2img.generate(prompt, nprompt, 960, 512, 4, random.randint(1000000, 1000000000), sample="DDIM", steps=35)
+    for i in range(2):
+        samples = txt2img.generate(prompt, nprompt, 512, 512, 2, random.randint(1000000, 1000000000), sample="DDIM", steps=35)
         for img in samples:
             result.append(img)
-            plt.figure(dpi=1200)
+            plt.figure(dpi=600)
             plt.imshow(img)
             plt.show()
 
