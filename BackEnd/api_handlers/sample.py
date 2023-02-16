@@ -3,6 +3,7 @@ import json
 from typing import Optional, Awaitable
 
 import cv2
+import numpy as np
 import tornado.web
 
 from stable_diffusion.core import Core
@@ -46,10 +47,12 @@ class Sample(tornado.web.RequestHandler):
                 width=data.get('width', 512),
                 height=data.get('height', 512),
             )
-
-            retval, buffer = cv2.imencode('.jpg', cv2.cvtColor(result, cv2.COLOR_RGB2BGR))
-            pic_str = base64.b64encode(buffer)
-            pic_str = pic_str.decode()
-            self.write({"status": 0, "image": f"data:image/jpg;base64,{pic_str}"})
+            response = {"status": 0, "images": []}
+            for image in result:
+                retval, buffer = cv2.imencode('.jpg', cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
+                pic_str = base64.b64encode(buffer)
+                pic_str = pic_str.decode()
+                response["images"].append(f"data:image/jpg;base64,{pic_str}")
+            self.write(response)
         except Exception as e:
             self.write({"error": str(e)})

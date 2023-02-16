@@ -2,3 +2,6 @@
 .idea/
 .idea/*
 /BackEnd/stable_diffusion/models/
+/BackEnd_Rebuild/images/
+/BackEnd/out/samples/
+/BackEnd/sd_rebuild/images/

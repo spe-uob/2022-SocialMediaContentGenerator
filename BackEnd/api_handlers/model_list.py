@@ -2,13 +2,15 @@ from typing import Optional, Awaitable
 
 import tornado.web
 
-from stable_diffusion.model import Model
+from stable_diffusion.core import Core
+from stable_diffusion.model import StableDiffusionModel
 
 
 class ModelList(tornado.web.RequestHandler):
     router = r"/model_list"
 
     def __init__(self, application, request, **kwargs):
+        self.core = None
         self.model_list = []
         self.model_dir = ""
         super().__init__(application, request, **kwargs)
@@ -24,9 +26,9 @@ class ModelList(tornado.web.RequestHandler):
     def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
         pass
 
-    def initialize(self, model_dir):
-        self.model_dir = model_dir
+    def initialize(self, core: Core):
+        self.core = core
 
     def get(self):
-        self.model_list = Model.find_model(self.model_dir)
+        self.model_list = list(self.core.model_loader.checkpoints.keys())
         self.write({"mode_list": self.model_list})

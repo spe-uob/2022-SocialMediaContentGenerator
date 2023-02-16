@@ -42,8 +42,8 @@ class Txt2Img:
         for i, x_sample in enumerate(x_samples_ddim):
             x_sample = 255. * np.moveaxis(x_sample.cpu().numpy(), 0, 2)
             x_sample = x_sample.astype(np.uint8)
-            image = Image.fromarray(x_sample)
-            results.append(image)
+            # image = Image.fromarray(x_sample)
+            results.append(x_sample)
 
         del x_samples_ddim
         return results

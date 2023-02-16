@@ -7,5 +7,5 @@ class InformationProvider:
 
     def get_info(self):
         return {
-            "current_model": self.core.model.current_model_name,
+            "current_model": self.core.model_loader.current_model,
         }

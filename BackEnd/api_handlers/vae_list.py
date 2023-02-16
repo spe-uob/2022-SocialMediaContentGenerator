@@ -2,7 +2,6 @@ from typing import Optional, Awaitable
 
 import tornado.web
 
-from stable_diffusion.model import Model
 
 
 class VAEList(tornado.web.RequestHandler):
@@ -28,5 +27,5 @@ class VAEList(tornado.web.RequestHandler):
         self.model_dir = model_dir
 
     def get(self):
-        self.vae_list = Model.find_vae(self.model_dir)
+        # self.vae_list = Model.find_vae(self.model_dir)
         self.write({"mode_list": self.vae_list})

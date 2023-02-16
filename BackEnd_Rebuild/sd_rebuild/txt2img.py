@@ -24,7 +24,7 @@ class Txt2Img:
         self.samplers["PLMS"] = TypicalStableDiffusionSampler(PLMSSampler, self.model)
 
     def generate(self, prompt, negative_prompt, height, width, batch_size, seed, sample="DDIM", steps=20, cfg=7.5):
-        with torch.autocast("cuda"):
+        with torch.autocast("cuda" if self.device.type == "cuda" else "cpu"):
             sampler = self.samplers[sample]
             x = self.create_random_tensors([self.opt_C, height // self.opt_f, width // self.opt_f], seeds=[seed + i for i in range(batch_size)], seed_resize_from_h=0, seed_resize_from_w=0,
                                            sampler=sampler)
@@ -40,12 +40,14 @@ class Txt2Img:
         del samples_ddim
         results = []
         for i, x_sample in enumerate(x_samples_ddim):
-            x_sample = 255. * np.moveaxis(x_sample.cpu().numpy(), 0, 2)
-            x_sample = x_sample.astype(np.uint8)
-            image = Image.fromarray(x_sample)
+            x_sample_cpu = 255. * np.moveaxis(x_sample.cpu().numpy(), 0, 2)
+            x_sample_cpu = x_sample_cpu.astype(np.uint8)
+            image = Image.fromarray(x_sample_cpu)
             results.append(image)
+            del x_sample
 
         del x_samples_ddim
+        self.torch_gc()
         return results
 
     def create_random_tensors(self, shape, seeds, seed_resize_from_h=0, seed_resize_from_w=0, sampler=None):
@@ -88,3 +90,10 @@ class Txt2Img:
 
         x = torch.stack(xs).to(self.device)
         return x
+
+    @staticmethod
+    def torch_gc():
+        if torch.cuda.is_available():
+            with torch.cuda.device("cuda:0"):
+                torch.cuda.empty_cache()
+                torch.cuda.ipc_collect()

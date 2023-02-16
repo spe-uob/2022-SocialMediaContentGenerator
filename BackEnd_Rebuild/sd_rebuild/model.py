@@ -1,6 +1,7 @@
 import os
 import re
 from copy import deepcopy
+import safetensors.torch
 
 import torch
 from loguru import logger
@@ -49,12 +50,14 @@ class StableDiffusionModel:
             model_config.model.params.unet_config.params.use_fp16 = False
         model = instantiate_from_config(model_config.model)
         self.load_model_weights(model_name, model)
-        vae_name = os.path.basename(model_name) + ".vae.pt"
+        vae_name = re.sub(r"\.ckpt", "", model_name) + ".vae.pt"
+        vae_name = "Anything-V3.0.vae.pt"
         if os.path.exists(os.path.join(self.path, vae_name)):
             self.load_vae(model, vae_name)
         self.model = model
         self.model.to(self.device)
         self.model.eval()
+        self.current_model = model_name
 
     def unload_model(self):
         del self.model
@@ -64,7 +67,11 @@ class StableDiffusionModel:
         self.current_vae_file = None
 
     def load_model_weights(self, model_name, model):
-        pl_sd = torch.load(os.path.join(self.path, model_name), map_location=self.map_location)
+        _, extension = os.path.splitext(model_name)
+        if extension.lower() == ".safetensors":
+            pl_sd = safetensors.torch.load_file(os.path.join(self.path, model_name), device=self.map_location)
+        else:
+            pl_sd = torch.load(os.path.join(self.path, model_name), map_location=self.map_location)
         if self.show_global_state and "global_step" in pl_sd:
             print(f"Global Step: {pl_sd['global_step']}")
         pl_sd = pl_sd.pop("state_dict", pl_sd)
@@ -93,7 +100,6 @@ class StableDiffusionModel:
         self.dtype = torch.float16 if self.half else torch.float32
         self.dtype_vae = torch.float16 if not self.vae_half or not self.half else torch.float32
         model.first_stage_model.to(self.dtype_vae)
-        self.current_model = model_name
 
     def load_vae(self, model, vae):
         vae_path = os.path.join(self.path, vae)
@@ -124,7 +130,7 @@ class StableDiffusionModel:
 
     def sync_checkpoint_list(self):
         self.checkpoint_list = []
-        checkpoint_list = list(filter(lambda x: x.endswith(".ckpt"), os.listdir(self.path)))
+        checkpoint_list = list(filter(lambda x: x.endswith(".ckpt") or x.endswith(".safetensors"), os.listdir(self.path)))
         config_list = list(filter(lambda x: x.endswith(".yaml"), os.listdir(self.path)))
         for checkpoint in checkpoint_list:
             basename = os.path.basename(checkpoint)
