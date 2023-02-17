@@ -1,6 +1,6 @@
 ---
 name: New Feature
-about: 
+about: Any new features about to be added
 title: 'New Feature'
 labels: 'enhancement'
 assignees: ''
