@@ -28,3 +28,4 @@ jobs:
     - run: npm install
     - run: npm i -g @quasar/cli
     - run: quasar build
+    - run: npm test

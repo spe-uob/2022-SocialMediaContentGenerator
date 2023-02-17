@@ -4,7 +4,7 @@
       <!--<q-btn class="flex flex-center q-px-lg q-py-sm q-mb-md" color="primary" size="md"  label="Twitter"
         @click="twitter"
       />-->
-      <q-btn class="text-center full-width" color="light-blue" icon="fa-brands fa-twitter" label="sign in with twitter" type="submit" rounded @click="twitter"/>
+      <q-btn ref="button" class="text-center full-width" color="light-blue" icon="fa-brands fa-twitter" label="sign in with twitter" type="submit" rounded @click="twitter"/>
     </div>
   </div>
 </template>
