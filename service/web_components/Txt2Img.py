@@ -1,6 +1,7 @@
 import base64
 
 import cv2
+import numpy as np
 from flask import request
 
 from utility import TaskStatus
@@ -39,13 +40,13 @@ class Txt2ImgResult(Component):
         task = self.env.scheduler.get_task(uuid_str)
         if task is None:
             return {"status": 1}
-        if task.status == TaskStatus.Pending:
+        if task.task_status == TaskStatus.Pending:
             return {"status": 0, "images": []}
         result = task.result
         response = {"status": 0, "images": []}
-        for image in result[loaded:len(result)]:
+        for image, seed in result[loaded:len(result)]:
             retval, buffer = cv2.imencode('.jpg', cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR))
             pic_str = base64.b64encode(buffer)
             pic_str = pic_str.decode()
-            response['images'].append(pic_str)
+            response['images'].append(f"data:image/jpg;base64,{pic_str}")
         return response
