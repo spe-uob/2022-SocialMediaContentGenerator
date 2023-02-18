@@ -45,9 +45,9 @@ class Core:
 
     def get_sampler_list(self):
         if self.txt2img is None:
-            return {"sampler_list": ["DDIM", "PLMS"]}
+            return ["DDIM", "PLMS"]
         else:
-            return {"sampler_list": list(self.txt2img.samplers.keys())}
+            return list(self.txt2img.samplers.keys())
 
     def get_model_list(self):
         return list(self.model_loader.checkpoint_list.keys())
