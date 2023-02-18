@@ -3,10 +3,9 @@ import threading
 
 from loguru import logger
 
-import numpy as np
 from core import Core
+from utility import Environment
 from rich.progress import Progress
-from utility.environment import Environment
 from utility import Task, TaskType, TaskStatus
 
 
@@ -17,6 +16,7 @@ class Scheduler:
         self.tasks = queue.Queue()
         self.current_task = None
         self.tasks_completed = {}
+        self.tasks_table = {}
         self.schedule_thread = threading.Thread(target=self.schedule_loop)
         self.schedule_loop_flag = True
         self.progress = Progress()
@@ -25,10 +25,6 @@ class Scheduler:
     def schedule_loop(self):
         logger.info("Scheduler started...")
         while self.schedule_loop_flag:
-            with Progress() as progress:
-                task = progress.add_task("Processing...", total=100)
-                while self.current_task is not None:
-                    progress.update(task, advance=self.current_task.progress)
             self.current_task: Task = self.tasks.get()
             self.current_task.progress_task = self.progress.add_task(f"Processing task: [{self.current_task.task_type}]...", total=self.current_task.total_progress[0])
             self.current_task.task_status = TaskStatus.Running
@@ -51,14 +47,11 @@ class Scheduler:
         }, func=self.core.sample_txt2img, total_progress=[n_iter, batch_size])
         task.function_args["task"] = task
         self.tasks.put(task)
+        self.tasks_table[task.task_id] = task
         return task.task_id
 
     def get_task(self, task_id):
-        if task_id in self.tasks_completed:
-            return self.tasks_completed[task_id]
+        if task_id in self.tasks_table:
+            return self.tasks_table[task_id]
         else:
-            queue_copy = list(self.tasks.queue)
-            for task in queue_copy:
-                if task.task_id == task_id:
-                    return task
             return None
