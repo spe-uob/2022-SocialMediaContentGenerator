@@ -1,8 +1,9 @@
 import abc
+from environment import Environment
 
 
 class Component:
-    def __init__(self, env, url, name, methods=['GET']):
+    def __init__(self, env: Environment, url, name, methods=['GET']):
         self.env = env
         self.url = url
         self.name = name
