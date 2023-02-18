@@ -1,5 +1,5 @@
 import abc
-from .environment import Environment
+from utility.environment import Environment
 
 
 class Component:
