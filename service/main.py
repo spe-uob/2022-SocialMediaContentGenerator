@@ -6,6 +6,7 @@ from loguru import logger
 
 from config import Config
 from core import Core
+from scheduler import Scheduler
 from utility import Environment
 import server_initializer
 
@@ -15,6 +16,8 @@ def main(args):
     logger.info(f"Loaded config from {args.config}")
     core = Core(config)
     environment = Environment(config, core)
+    scheduler = Scheduler(core, environment)
+    environment.scheduler = scheduler
     api_server, components = server_initializer.initialize(environment, config['api_server']['static_folder'])
     api_server.run(args.host, args.port)
 
