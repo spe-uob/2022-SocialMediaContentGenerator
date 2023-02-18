@@ -6,7 +6,7 @@ from loguru import logger
 
 from config import Config
 from core import Core
-from environment import Environment
+from utility import Environment
 import server_initializer
 
 

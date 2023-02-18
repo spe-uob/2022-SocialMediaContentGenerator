@@ -1,7 +1,7 @@
 from web_server import ApiServer
-from environment import Environment
-from component import Component
 from web_components import *
+
+from utility import Environment, Component
 
 init_web_components: [Component] = [Index]
 

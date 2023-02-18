@@ -1,8 +1,7 @@
 import random
 
 import torch
-
-from stable_diffusion import StableDiffusionModel, txt2img, MemoryOptimizer, CorsAttentionOptimizationMode
+from stable_diffusion import StableDiffusionModel, Txt2Img, MemoryOptimizer, CorsAttentionOptimizationMode
 
 
 class Core:
@@ -15,7 +14,7 @@ class Core:
 
         self.memory_optimizer = MemoryOptimizer()
         self.model_loader = StableDiffusionModel(self.model_path, self.default_model_config, self.device, half=True, map_location=self.map_location)
-        self.txt2img: txt2img.Txt2Img = None
+        self.txt2img: Txt2Img = None
         self.optimize_memory()
 
     def optimize_memory(self):
@@ -23,7 +22,7 @@ class Core:
 
     def load_model(self, model_name: str, vae_name: str = None):
         self.model_loader.load_model(model_name, vae_name)
-        self.txt2img: txt2img.Txt2Img = txt2img.Txt2Img(self.model_loader.model, self.device, dtype_vae=self.model_loader.dtype_vae)
+        self.txt2img: Txt2Img = Txt2Img(self.model_loader.model, self.device, dtype_vae=self.model_loader.dtype_vae)
 
     def sample_txt2img(self, prompt: str, negative_prompt: str, step: int, width: int, height: int, sampler: str = "DDIM", n_iter: int = 1, batch_size: int = 1, cfg: float = 7, seed: int = -1,
                        progress_callback=lambda x1, x2: None):
