@@ -15,9 +15,9 @@ import tweepy
 from flask import Flask, request, redirect, jsonify
 from flask_cors import CORS, cross_origin
 
-from sd_rebuild.MemoryOptimizer import MemoryOptimizer, CorsAttentionOptimizationMode
-from sd_rebuild.model import StableDiffusionModel
-from sd_rebuild.txt2img import Txt2Img
+from stable_diffusion.memoryOptimizer import MemoryOptimizer, CorsAttentionOptimizationMode
+from stable_diffusion.model import StableDiffusionModel
+from stable_diffusion.txt2img import Txt2Img
 
 app = Flask(__name__, static_url_path='', static_folder=r"D:\projects\2022-SocialMediaContentGenerator\FrontEndv2.0\quasar-project\dist\spa")
 app.config['CORS_HEADERS'] = 'Content-Type'
