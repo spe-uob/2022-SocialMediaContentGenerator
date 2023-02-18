@@ -36,7 +36,7 @@ class StableDiffusionModel:
         self.vae_ignore_keys = {"model_ema.decay", "model_ema.num_updates"}
         self.sync_checkpoint_list()
 
-    def load_model(self, model_name):
+    def load_model(self, model_name, vae_name=None):
         if model_name not in self.checkpoints:
             raise ValueError(f"Model {model_name} not found")
         config = self.checkpoints[model_name]
@@ -50,8 +50,7 @@ class StableDiffusionModel:
             model_config.model.params.unet_config.params.use_fp16 = False
         model = instantiate_from_config(model_config.model)
         self.load_model_weights(model_name, model)
-        vae_name = re.sub(r"\.ckpt", "", model_name) + ".vae.pt"
-        vae_name = "Anything-V3.0.vae.pt"
+        vae_name = re.sub(r"\.ckpt", "", model_name) + ".vae.pt" if vae_name is None else vae_name
         if os.path.exists(os.path.join(self.path, vae_name)):
             self.load_vae(model, vae_name)
         self.model = model
