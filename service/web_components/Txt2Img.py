@@ -29,7 +29,7 @@ class Txt2Img(Component):
 
 class Txt2ImgResult(Component):
     def __init__(self, env: Environment):
-        super().__init__(env, '/api/v1/get_sample_result', 'Txt2Img', ['GET'])
+        super().__init__(env, '/api/v1/get_sample_result', 'Txt2ImgResult', ['GET'])
         self.env = env
 
     def view(self):
