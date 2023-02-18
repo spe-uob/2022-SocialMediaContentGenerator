@@ -1,6 +1,8 @@
 import argparse
 
 from config import Config
+from core import Core
+from environment import Environment
 from loguru import logger
 import json
 import os
@@ -8,7 +10,9 @@ import os
 
 def main(args):
     config = load_config(args.config)
-    logger.info(f"Loaded config: {config}")
+    logger.info(f"Loaded config from {args.config}")
+    core = Core(config)
+    environment = Environment(config, core)
 
 
 def load_config(path):
