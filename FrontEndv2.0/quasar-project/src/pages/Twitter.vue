@@ -34,7 +34,11 @@ export default defineComponent({
   data() {
     return {
       text: '',
-      image: ''
+      image: '',
+      consumer_key: AuthComponent.data().apiKey,
+      consumer_secret: AuthComponent.data().apiSecret,
+      access_token: AuthComponent.data().token,
+      access_token_secret: AuthComponent.data().secret,
     }
   },
   methods: {
@@ -48,21 +52,16 @@ export default defineComponent({
         },
         body: JSON.stringify({
           status: tweet,
-          consumer_key: AuthComponent.data().apiKey,
-          consumer_secret: AuthComponent.data().apiSecret,
-          access_token: AuthComponent.data().token,
-          access_token_secret: AuthComponent.data().secret,
+          consumer_key: this.consumer_key,
+          consumer_secret: this.consumer_secret,
+          access_token: this.access_token,
+          access_token_secret: this.access_token_secret,
           image: this.image
         }),
         mode: 'cors',
       })
       const data = await response.json()
       console.log(data)
-
-      let newTweet = {
-        content: this.text,
-        date: Date.now()
-      }
       this.text = ''
     },
     getBase64(file) {

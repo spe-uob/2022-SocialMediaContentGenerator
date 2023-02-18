@@ -25,10 +25,10 @@
           </q-card-section>
           <q-card-section>
             <q-form class="q-gutter-md" @submit.prevent="submitForm">
-              <q-input label="Username" v-model="login.username">
+              <q-input label="Username">
 
               </q-input>
-              <q-input label="Password" type="password" v-model="login.password">
+              <q-input label="Password" type="password">
 
               </q-input>
               <div>
@@ -63,27 +63,14 @@
 
 <script>
 import AuthComponent from "components/AuthComponent.vue"
-import firebase from 'boot/firebase.js'
 export default {
   name: "TwitterView",
   components: { AuthComponent },
   data() {
     return{
-      login:{
-        username: '',
-        password: ''
-      }
     }
   },
-  methods: {
-    submitForm(){
-      if(! this.login.username || ! this.login.password){
-        console.log('error')
-      }else{
-        console.log('login')
-      }
-    }
-  }
+  methods: {}
 }
 </script>
 

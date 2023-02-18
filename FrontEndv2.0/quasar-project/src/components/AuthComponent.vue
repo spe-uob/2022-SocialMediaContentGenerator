@@ -19,17 +19,13 @@
 
   export default {
     name: "AuthComponent",
-    props: ['tab'],
+    props: [],
     data: function(){
       return {
-        formData: {
-        email: '',
-        password: '',
-      },
       apiKey: apiKey,
       apiSecret: apiSecret,
       token: token,
-      secret: secret
+      secret: secret,
     }
     },
     methods: {
@@ -46,7 +42,7 @@
             const user = result.user;
             // ...
             this.$router.push("/twitter")
-            return [token, secret]
+            return [token,secret]
           }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
