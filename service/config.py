@@ -1,7 +1,10 @@
 class Config(dict):
     def __init__(self, **kwargs):
+        api_server_config = kwargs.get("api_server", {})
         dict_body = {
-            "api_server": {},
+            "api_server": {
+                "static_folder": api_server_config.get("static_folder", "static"),
+            },
             "model_path": kwargs.get("model_path", "models"),
             "default_model_config": kwargs.get("default_model_config", "v1-inference.yaml"),
             "force_cpu": kwargs.get("force_cpu", False),

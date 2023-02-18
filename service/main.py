@@ -1,11 +1,13 @@
 import argparse
+import json
+import os
+
+from loguru import logger
 
 from config import Config
 from core import Core
 from environment import Environment
-from loguru import logger
-import json
-import os
+import server_initializer
 
 
 def main(args):
@@ -13,6 +15,8 @@ def main(args):
     logger.info(f"Loaded config from {args.config}")
     core = Core(config)
     environment = Environment(config, core)
+    api_server, components = server_initializer.initialize(environment, config['api_server']['static_folder'])
+    api_server.run(args.host, args.port)
 
 
 def load_config(path):
