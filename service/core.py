@@ -1,6 +1,8 @@
 import random
 
+import numpy as np
 import torch
+from utility import Task
 from stable_diffusion import StableDiffusionModel, Txt2Img, MemoryOptimizer, CorsAttentionOptimizationMode
 
 
@@ -25,15 +27,17 @@ class Core:
         self.txt2img: Txt2Img = Txt2Img(self.model_loader.model, self.device, dtype_vae=self.model_loader.dtype_vae)
 
     def sample_txt2img(self, prompt: str, negative_prompt: str, step: int, width: int, height: int, sampler: str = "DDIM", n_iter: int = 1, batch_size: int = 1, cfg: float = 7, seed: int = -1,
-                       progress_callback=lambda x1, x2: None):
+                       task: Task = None):
         if seed == -1:
             seed = random.randint(1000000, 1000000000)
         results = []
+        task.result = []
         for i in range(n_iter):
             temp_result = self.txt2img.generate(prompt, negative_prompt, height, width, batch_size, seed, sample=sampler, steps=step, cfg=cfg)
             seeds = [seed + i for i in range(batch_size)]
             results += zip(temp_result, seeds)
-            progress_callback(i, 0)
+            task.progress = np.array(i, 0)
+            task.result += temp_result
         return results
 
     def refresh_model_list(self):
