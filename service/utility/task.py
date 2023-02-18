@@ -40,3 +40,12 @@ class Task:
         if self.progress_task is not None:
             self.progress_task.update(advance=progress[0])
         return self.get_progress()
+
+    def to_dict(self):
+        return {
+            "task_id": self.task_id,
+            "task_type": self.task_type.value,
+            "task_status": self.task_status.value,
+            "progress": self.get_progress().tolist(),
+            "result": self.result,
+        }
