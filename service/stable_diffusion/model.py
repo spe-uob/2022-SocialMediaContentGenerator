@@ -138,3 +138,6 @@ class StableDiffusionModel:
                 config = self.default_config
             self.checkpoint_list.append((checkpoint, config))
         self.checkpoints = {k: v for k, v in self.checkpoint_list}
+
+    def get_available_vae_list(self):
+        return list(filter(lambda x: x.endswith(".vae.pt"), os.listdir(self.path)))
