@@ -1,47 +1,85 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+    <q-header bordered>
+      <div class="row no-wrap">
+        <q-toolbar shrink class="bg-grey-3" style="max-width:240px">
+          <q-btn flat round dense icon="apps" class="text-grey-6" @click="drawerMenu = !drawerMenu">
+            <q-avatar square size="28px">
+              <img src="~assets/spaceNXT.svg" class="responsive" alt = "login-image" >
+            </q-avatar>
+            <q-toolbar-title>
+              <span class="text-h6 text-grey-6">Space</span><span class="text-orange-5">.NXT</span>
+            </q-toolbar-title>
+          </q-btn>
+        </q-toolbar>
+        <q-toolbar class="bg-grey-5">
+          <q-toolbar-title>
+            <span class="gt-sm text-subtitle2 text-h6 text-grey-6 vertical-middle">Social Media Content Generator</span>
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
+          </q-toolbar-title>
+          <q-btn
+            class="q-mr-xs"
+            flat
+            round
+            @click="$q.dark.toggle()"
+            :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
+          />
+        </q-toolbar>
+      </div>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
+    <q-footer bordered>
+      <q-bar class="bg-grey-3 text-h6 text-grey-6 q-pa-sm">
+        <span class="text caption">Social Media Content Generator: Benjamin, Gene, David, Stephen</span>
+      </q-bar>
+    </q-footer>
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-drawer
+      v-model="drawerMenu"
+      :width="240"
+      no-swipe-open
+      bordered
+      content-class="bg-primary text-white">
+      <q-scroll-areac class="fit">
+        <q-list dense>
+          <q-item>
+            <q-item-section class="text-grey-5 text-weight-medium">
+              MAIN MENU
+            </q-item-section>
+            <q-item-section avatar>
+              <q-icon name="crop_din" class="text-grey-5"/>
+            </q-item-section>
+          </q-item>
+        </q-list>
+        <q-list dense>
+          <q-item  v-ripple class="text-grey-6" :to="{name:'home'}" active-class="menu-link">
+            <q-item-section avatar>
+              <q-icon name="crop_din" />
+            </q-item-section>
+            <q-item-section>Home</q-item-section>
+          </q-item>
+
+          <q-item  v-ripple class="text-grey-6" to="/StableDiffusionUI" active-class="menu-link">
+            <q-item-section avatar>
+              <q-icon name="crop_din" />
+            </q-item-section>
+            <q-item-section>SD UI</q-item-section>
+          </q-item>
+
+          <q-item  v-ripple class="text-grey-6" to="/TwitterView" active-class="menu-link">
+            <q-item-section avatar>
+              <q-icon name="crop_din" />
+            </q-item-section>
+            <q-item-section>Twitter Page</q-item-section>
+          </q-item>
+        </q-list>
+
+
+
+      </q-scroll-areac>
+
+    </q-drawer>
   </q-layout>
 </template>
 
@@ -49,68 +87,28 @@
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
 
 export default defineComponent({
   name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+  data: () => ({
+    drawerMenu: true,
+    essentialLinks: [
+      {
+        name: 'Home',
+        icon: 'home',
+        to: '/'
+      },
+      {
+        name: 'SD UI',
+        icon: 'home',
+        to: '/StableDiffusionUI'
+      },
+      {
+        name: 'Twitter Page',
+        icon: 'home',
+        to: '/TwitterView'
       }
-    }
-  }
+    ]
+  }),
 })
 </script>
