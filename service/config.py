@@ -3,7 +3,7 @@ class Config(dict):
         api_server_config = kwargs.get("api_server", {})
         dict_body = {
             "api_server": {
-                "static_folder": api_server_config.get("static_folder", "static"),
+                "static_folder": api_server_config.get("static_folder", "../web/dist/spa"),
             },
             "model_path": kwargs.get("model_path", "models"),
             "default_model_config": kwargs.get("default_model_config", "v1-inference.yaml"),
