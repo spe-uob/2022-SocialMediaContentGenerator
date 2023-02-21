@@ -1,14 +1,11 @@
-import Index from "layouts/Index.vue";
-import Home from "pages/Home.vue";
-import TwitterView from "pages/TwitterView.vue";
 
 const routes = [
   {
     path: '/',
-    component: Index,
+    component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: Home },
-      { path: '/home' , name: 'home', component: Home},
+      { path: '', component: import('pages/HomePage.vue') },
+      { path: '/home' , name: 'home', component: import('pages/HomePage.vue')},
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
       { path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
       { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},

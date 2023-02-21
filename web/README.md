@@ -1,6 +1,6 @@
-# temporary_ui (temporary_ui)
+# SocialMediaContentGenerator (smcg)
 
-temporary_ui
+SocialMediaContentGenerator
 
 ## Install the dependencies
 ```bash

@@ -9,7 +9,7 @@
                 <q-select class="hint-white" filled bottom-slots :disable="task_rows.length > 0" v-model="model" :options="models" label="Models" label-color="white" counter maxlength="12"
                           counter-color="white"
                           :loading="loading_model" @update:model-value="load_model">
-                  <template v-slot:hint class="hint-white">
+                  <template v-slot:hint>
                     model loader
                   </template>
                   <template v-slot:after>

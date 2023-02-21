@@ -30,7 +30,7 @@ import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
 
 export default defineComponent({
-  name: "Twitter",
+  name: "TwitterComp",
   data() {
     return {
       text: '',
