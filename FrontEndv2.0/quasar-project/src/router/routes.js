@@ -12,6 +12,7 @@ const routes = [
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
       { path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
       { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
+      { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
     ]
   },
 

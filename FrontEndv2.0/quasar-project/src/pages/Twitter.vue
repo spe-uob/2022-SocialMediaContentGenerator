@@ -28,6 +28,10 @@
 import {data} from 'browserslist';
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
+import authComponent from "components/AuthComponent.vue";
+
+console.log(AuthComponent.data().token);
+console.log(AuthComponent.data().displayName);
 
 export default defineComponent({
   name: "Twitter",
@@ -57,7 +61,8 @@ export default defineComponent({
         mode: 'cors',
       })
       const data = await response.json()
-      console.log(data)
+
+      console.log(AuthComponent.data().displayName)
 
       let newTweet = {
         content: this.text,
@@ -77,6 +82,7 @@ export default defineComponent({
       this.image = await this.getBase64(files)
     },
   }
+
 })
 </script>
 

@@ -16,20 +16,23 @@
   const apiSecret = 'qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw'
   var token = ''
   var secret = ''
+  var displayName = ''
 
   export default {
     name: "AuthComponent",
-    props: ['tab'],
+    props: ['tab', 'screenName'],
     data: function(){
       return {
         formData: {
         email: '',
         password: '',
+          displayName:'',
       },
       apiKey: apiKey,
       apiSecret: apiSecret,
       token: token,
-      secret: secret
+      secret: secret,
+      displayName: displayName
     }
     },
     methods: {
@@ -42,11 +45,17 @@
             const credential = TwitterAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
             const secret = credential.secret;
+            //const displayName = result.additionalUserInfo
             // The signed-in user info.
             const user = result.user;
+            console.log(user.displayName)
+
+            displayName = user.displayName
+            console.log(displayName)
+            console.log(secret)
             // ...
             this.$router.push("/twitter")
-            return [token, secret]
+            return [token, secret, displayName]
           }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
@@ -58,8 +67,10 @@
             const credential = TwitterAuthProvider.credentialFromError(error);
             // ...
           })
+          console.log(displayName);
           token = t[0]
           secret = t[1]
+          //displayName = t[2]
         },
     }
   }
