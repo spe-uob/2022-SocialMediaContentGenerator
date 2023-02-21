@@ -11,14 +11,16 @@
   </div>
 </template>-->
 <template>
+
   <div class="q-pa-none">
     <q-toolbar class="bg-grey-2 text-grey-8" style="min-height:50px">
-      <q-toolbar-title class="text-subtitle2 text-grey-5">Timeline</q-toolbar-title>
+      <q-toolbar-title class="text-subtitle2 text-grey-5">Timeline {{temp}}</q-toolbar-title>
     </q-toolbar>
+
   </div>
 
   <a class="twitter-timeline"
-     href="https://twitter.com/Flgodd"
+     href= {{temp}}
      data-aria-polite="assertive">
      <!--data-chrome="nofooter"-->
     Tweets by @TwitterDev
@@ -39,18 +41,25 @@ console.log(AuthComponent.data().displayName);
 console.log(AuthComponent.data().secret);
 //console.log(AuthComponent.methods.twitter())
 
-console.log(d);
+
+console.log("https://twitter.com/" + AuthComponent.data().displayName);
+const temp = "https://twitter.com/" + AuthComponent.data().displayName;
 export default {
   components: { AuthComponent},
   name: "TimelineView",
-  props: ['screenName'],
+  props: ['screenName', temp],
   data() {
     return {
       tweets: null,
-      screenName: AuthComponent.data().displayName,
+      screenName: temp,
       //displayUser: ''
     };
   },
+  setup(){
+    return {
+      temp,
+    }
+  }
 
   /*created() {
     this.getTweets();
