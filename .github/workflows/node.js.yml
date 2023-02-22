@@ -11,7 +11,7 @@ on:
 
 defaults:
  run:
-  working-directory: ./FrontEnd
+  working-directory: ./web
 
 jobs:
   build:
