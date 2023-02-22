@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 defaults:
  run:
@@ -15,7 +15,6 @@ defaults:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,8 +23,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - run: npm install
-    - run: npm i -g @quasar/cli
-    - run: quasar build
-    - run: npm test
+      - uses: actions/checkout@v2
+      - run: yarn
+      - run: npm test
