@@ -37,7 +37,11 @@ export default defineComponent({
   data() {
     return {
       text: '',
-      image: ''
+      image: '',
+      consumer_key: AuthComponent.data().apiKey,
+      consumer_secret: AuthComponent.data().apiSecret,
+      access_token: AuthComponent.data().token,
+      access_token_secret: AuthComponent.data().secret,
     }
   },
   methods: {
