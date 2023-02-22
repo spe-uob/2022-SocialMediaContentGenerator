@@ -9,7 +9,7 @@
                 <q-select class="hint-white" filled bottom-slots :disable="task_rows.length > 0" v-model="model" :options="models" label="Models" label-color="white" counter maxlength="12"
                           counter-color="white"
                           :loading="loading_model" @update:model-value="load_model">
-                  <template v-slot:hint class="hint-white">
+                  <template v-slot:hint>
                     model loader
                   </template>
                   <template v-slot:after>
@@ -179,7 +179,7 @@ export default defineComponent({
       height: 512,
       n_iter: 1,
       batch_size: 1,
-      base_url: '',
+      base_url: 'http://localhost:8888',
       sampler: 'DDIM',
       sampler_options: [],
       images_buffer: [],
@@ -286,7 +286,7 @@ export default defineComponent({
       this.generating = false
     },
     async syncTasks() {
-      let request = await fetch(this.getUrl(`/api/v1/get_task_info`), {
+      let request = await fetch(this.getUrl(`/api/v1/get_txt2img_task_info`), {
         method: 'GET',
         mode: 'cors'
       });
@@ -365,7 +365,7 @@ export default defineComponent({
       this.model = info['current_model']
     },
     async getInfo() {
-      let request = await fetch(this.getUrl('/api/v1/get_info'), {method: 'GET', mode: 'cors'});
+      let request = await fetch(this.getUrl('/api/v1/current_model'), {method: 'GET', mode: 'cors'});
       return request.json();
     },
 
