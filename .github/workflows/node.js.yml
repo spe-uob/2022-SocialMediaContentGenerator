@@ -25,5 +25,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn
-      - run: quasar build
       - run: npm test
