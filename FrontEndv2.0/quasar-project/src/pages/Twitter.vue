@@ -28,7 +28,6 @@
 import {data} from 'browserslist';
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
-import authComponent from "components/AuthComponent.vue";
 
 console.log(AuthComponent.data().token);
 console.log(AuthComponent.data().displayName);
