@@ -1,4 +1,15 @@
 # 2022-SocialMediaContentGenerator
+
+## Table of Contents
+  - [About the project](#about-the-project)
+  - [Our client](#our-client)
+  - [Our group members](#our-group-members)
+  - [Stakeholders and User Stories](#stakeholders-and-user-stories)
+  - [Dev env](#dev-env)
+  - [Front end](#front-end)
+  - [Back end](#back-end)
+  
+
 ## About the project
 An autonomous AI assistant to generate content for social media based on recent trends designed for companies that aim to extend their social media presence. 
 Metrics that will be taking into consideration are key words, hashtags, geography, demography, international observances, trending topics etc. in order to keep up to date with trends using a Pytorch infrastructure.
