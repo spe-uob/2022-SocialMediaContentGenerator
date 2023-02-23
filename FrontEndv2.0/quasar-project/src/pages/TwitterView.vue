@@ -49,6 +49,8 @@
                 <q-btn class="text-center full-width" color="red" icon="fa-brands fa-instagram" label="sign in with instagram" type="submit" rounded></q-btn>
                 <div class="q-pa-sm"></div>
                 <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" rounded></q-btn>
+                <div class="q-pa-sm"></div>
+                <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-linkedin" label="sign in with linkedIn" type="submit" rounded></q-btn>
                 </div>
 
             </q-form>
