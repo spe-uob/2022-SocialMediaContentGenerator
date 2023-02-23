@@ -2,23 +2,20 @@
 <q-layout view="hHh Lpr FfF">
   <q-header bordered>
     <div class="row no-wrap">
-      <q-toolbar shrink class="bg-grey-3" style="max-width:240px">
-        <q-btn flat round dense icon="apps" class="text-grey-6" @click="drawerMenu = !drawerMenu">
-          <q-avatar square size="28px">
-            <img src="~assets/spaceNXT.svg" class="responsive" alt = "login-image" >
-          </q-avatar>
+      <q-toolbar shrink
+                 :class="$q.dark.isActive ? 'bg-grey-1' : 'bg-white'" style="max-width:240px">
+        <q-btn flat icon="apps" class="text-grey-6" @click="drawerMenu = !drawerMenu">
         <q-toolbar-title>
-          <span class="text-h6 text-grey-6">Space</span><span class="text-orange-5">.NXT</span>
+          <span class="text-h6 text-grey-5">Space</span><span class="text-orange-5">.NXT</span>
         </q-toolbar-title>
         </q-btn>
       </q-toolbar>
-      <q-toolbar class="bg-grey-5">
+      <q-toolbar :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
         <q-toolbar-title>
-          <span class="gt-sm text-subtitle2 text-h6 text-grey-6 vertical-middle">Social Media Content Generator</span>
-
+          <span class="gt-sm text-h4 text-grey-5 absolute-center">Social Media Content Generator</span>
         </q-toolbar-title>
         <q-btn
-          class="q-mr-xs"
+          class="bg-grey-5 q-mr-xs"
           flat
           round
           @click="$q.dark.toggle()"
@@ -28,7 +25,7 @@
     </div>
   </q-header>
   <q-footer bordered>
-    <q-bar class="bg-grey-3 text-h6 text-grey-6 q-pa-sm">
+    <q-bar :class="$q.dark.isActive ? 'bg-grey-3' : 'bg-white'" class="text-h6 text-grey-5 q-pa-sm">
       <span class="text caption">Social Media Content Generator: Benjamin, Gene, David, Stephen</span>
     </q-bar>
   </q-footer>
@@ -40,6 +37,7 @@
     :width="240"
     no-swipe-open
     bordered
+    :class="$q.dark.isActive ? 'bg-grey-1' : 'bg-white'"
     content-class="bg-primary text-white">
     <q-scroll-areac class="fit">
       <q-list dense>
@@ -47,34 +45,31 @@
           <q-item-section class="text-grey-5 text-weight-medium">
             MAIN MENU
           </q-item-section>
-          <q-item-section avatar>
-            <q-icon name="crop_din" class="text-grey-5"/>
-          </q-item-section>
         </q-item>
       </q-list>
       <q-list dense>
-        <q-item clickable v-ripple class="text-grey-6" :to="{name:'home'}" active-class="menu-link">
+        <q-item clickable v-ripple class="text-grey-5" :to="{name:'home'}" active-class="menu-link">
           <q-item-section avatar>
-            <q-icon name="crop_din" />
+            <q-icon name="fa-solid fa-house" />
           </q-item-section>
           <q-item-section>Home</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple class="text-grey-6" to="/stablediffusionUI" active-class="menu-link">
+        <q-item clickable v-ripple class="text-grey-5" to="/signin" active-class="menu-link">
           <q-item-section avatar>
-            <q-icon name="crop_din" />
+            <q-icon name="fa-solid fa-user" />
+          </q-item-section>
+          <q-item-section>Sign In</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple class="text-grey-5" to="/stablediffusionUI" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="fa-solid fa-sliders" />
           </q-item-section>
           <q-item-section>SD UI</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple class="text-grey-6" to="/signin" active-class="menu-link">
-          <q-item-section avatar>
-            <q-icon name="crop_din" />
-          </q-item-section>
-          <q-item-section>Twitter Page</q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple class="text-grey-6" to="/TimelineView" active-class="menu-link">
+        <q-item clickable v-ripple class="text-grey-5" to="/TimelineView" active-class="menu-link">
           <q-item-section avatar>
             <q-icon name="crop_din" />
           </q-item-section>
@@ -105,5 +100,5 @@ export default {
 <style lang="stylus">
 .menu-link
   color #1da1f2
-  background #2f353a
+  //background #2f353a
 </style>
