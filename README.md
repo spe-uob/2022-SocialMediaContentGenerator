@@ -8,6 +8,7 @@
   - [Dev env](#dev-env)
   - [Front end](#front-end)
   - [Back end](#back-end)
+  - [Project Requirements](#project-requirements)
   
 
 ## About the project
@@ -145,3 +146,8 @@ As a general consumer of social media content, I want to see the newest trends t
 ## Software tools
 
 jetbrain pycharm
+
+## Project Requirements
+
+  - Need to have access to the internet.
+  - Need to have either a twitter, facebook or linkedIn account to be able to use the website.
