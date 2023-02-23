@@ -1,5 +1,7 @@
 <template>
-  <q-btn @click="handleLinkedInLogin" label="Login with LinkedIn" />
+ <!-- <q-btn @click="handleLinkedInLogin" label="Login with LinkedIn" />-->
+  <q-btn class="text-center full-width" @click="handleLinkedInLogin" color="blue" icon="fa-brands fa-linkedin" label="sign in with linkedIn" type="submit" rounded></q-btn>
+
 </template>
 
 
