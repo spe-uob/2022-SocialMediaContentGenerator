@@ -50,7 +50,12 @@
                 <div class="q-pa-sm"></div>
                 <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" rounded></q-btn>
                 <div class="q-pa-sm"></div>
-                <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-linkedin" label="sign in with linkedIn" type="submit" rounded></q-btn>
+                <!--<q-btn class="text-center full-width" color="blue" icon="fa-brands fa-linkedin" label="sign in with linkedIn" type="submit" rounded></q-btn>-->
+                <div>
+                  <!-- Render the LinkedIn login button component -->
+                  <linked-in-login-button></linked-in-login-button>
+
+                </div>
                 </div>
 
             </q-form>
@@ -65,10 +70,12 @@
 
 <script>
 import AuthComponent from "components/AuthComponent.vue"
+import LinkedInLoginButton from 'components/LinkedInLoginButton.vue';
+
 import firebase from 'boot/firebase.js'
 export default {
   name: "TwitterView",
-  components: { AuthComponent },
+  components: { AuthComponent, LinkedInLoginButton},
   data() {
     return{
       login:{
