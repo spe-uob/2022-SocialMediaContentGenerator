@@ -37,12 +37,22 @@ export default defineComponent({
   data() {
     return {
       text: '',
-      image: ''
+      image: '',
+      consumer_key: AuthComponent.data().apiKey,
+      consumer_secret: AuthComponent.data().apiSecret,
+      access_token: AuthComponent.data().token,
+      access_token_secret: AuthComponent.data().secret,
     }
   },
   methods: {
     async addNewTweetPost(){
       let tweet = this.text
+      const url = `http://localhost:5000/tweet?status=${encodeURIComponent(tweet)}&consumer_key=${encodeURIComponent(AuthComponent.data().apiKey)}&consumer_secret=${encodeURIComponent(AuthComponent.data().apiSecret)}&access_token=${encodeURIComponent(AuthComponent.data().token)}&access_token_secret=${encodeURIComponent(AuthComponent.data().secret)}`
+      const response = await fetch(url)
+      const data = await response.json()
+      console.log(data)
+
+      /*let tweet = this.text
       const url = `/api/v1/tweet`
       const response = await fetch(url, {
         method: 'POST',
@@ -67,7 +77,7 @@ export default defineComponent({
         content: this.text,
         date: Date.now()
       }
-      this.text = ''
+      this.text = ''*/
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
