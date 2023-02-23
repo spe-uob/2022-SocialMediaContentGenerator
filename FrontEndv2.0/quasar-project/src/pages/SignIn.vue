@@ -65,7 +65,7 @@
 import AuthComponent from "components/AuthComponent.vue"
 import firebase from 'boot/firebase.js'
 export default {
-  name: "TwitterView",
+  name: "SignIn",
   components: { AuthComponent },
   data() {
     return{
@@ -76,13 +76,6 @@ export default {
     }
   },
   methods: {
-    submitForm(){
-      if(! this.login.username || ! this.login.password){
-        console.log('error')
-      }else{
-        console.log('login')
-      }
-    }
   }
 }
 </script>
