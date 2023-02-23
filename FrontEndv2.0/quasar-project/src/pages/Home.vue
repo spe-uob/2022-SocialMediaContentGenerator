@@ -2,13 +2,12 @@
   <div class="col-0 col-md-6 flex justify-center content-center">
     <img src="~assets/spaceNXT.png" class="responsive" alt = "login-image" >
   </div>
-  <div class="embedded-twitter-feed">
-    <a class="twitter-timeline" data-width="1200" data-theme="dark" href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
+  <div id="twitter-timeline-feed" class="embedded-twitter-feed">
+    <v-container fluid>
+    <a class="twitter-timeline" data-theme='dark' href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
       Tweets by SpacenxtLabs
     </a>
-
-
-
+    </v-container>
   </div>
   <!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
 
