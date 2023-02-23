@@ -48,7 +48,7 @@
                 <div class="q-pa-sm"></div>
                 <q-btn class="text-center full-width" color="red" icon="fa-brands fa-instagram" label="sign in with instagram" type="submit" rounded></q-btn>
                 <div class="q-pa-sm"></div>
-                <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" rounded></q-btn>
+                <FaceBookLogin />
                 </div>
 
             </q-form>
@@ -64,9 +64,15 @@
 <script>
 import AuthComponent from "components/AuthComponent.vue"
 import firebase from 'boot/firebase.js'
+import FaceBookLogin from "components/FaceBookLogin.vue";
 export default {
+<<<<<<< HEAD:FrontEndv2.0/quasar-project/src/pages/SignIn.vue
   name: "SignIn",
   components: { AuthComponent },
+=======
+  name: "TwitterView",
+  components: { AuthComponent ,FaceBookLogin},
+>>>>>>> c91d77b0f46f9ee481bd9dfee57de4abcabc9c46:FrontEndv2.0/quasar-project/src/pages/TwitterView.vue
   data() {
     return{
       login:{
