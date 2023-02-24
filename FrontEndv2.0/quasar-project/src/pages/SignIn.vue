@@ -66,8 +66,13 @@ import AuthComponent from "components/AuthComponent.vue"
 import firebase from 'boot/firebase.js'
 import FaceBookLogin from "components/FaceBookLogin.vue";
 export default {
+<<<<<<< HEAD:FrontEndv2.0/quasar-project/src/pages/SignIn.vue
+  name: "SignIn",
+  components: { AuthComponent },
+=======
   name: "TwitterView",
   components: { AuthComponent ,FaceBookLogin},
+>>>>>>> c91d77b0f46f9ee481bd9dfee57de4abcabc9c46:FrontEndv2.0/quasar-project/src/pages/TwitterView.vue
   data() {
     return{
       login:{
@@ -77,13 +82,6 @@ export default {
     }
   },
   methods: {
-    submitForm(){
-      if(! this.login.username || ! this.login.password){
-        console.log('error')
-      }else{
-        console.log('login')
-      }
-    }
   }
 }
 </script>
