@@ -54,9 +54,21 @@
                 <div>
                   <!-- Render the LinkedIn login button component -->
                   <linked-in-login-button></linked-in-login-button>
+                <!--https://www.linkedin.com/oauth/v2/authorization?response_type=code&state=987654321&scope=r_liteprofile%20r_emailaddress&client_id=78sme225fsy5by-->
+                <!--/auth/linkedin-->
+                </div>
+                <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&state=987654321&scope=r_liteprofile%20r_emailaddress&client_id=78sme225fsy5by&redirect_uri=http%3A%2F%2Flocalhost%3A9000">
+                  <img src="/path/to/linkedin-icon.png" alt="Log in with LinkedIn" />
+                </a>
+                </div>
 
+              <q-page class="q-pa-md">
+                <div>
+                  <button v-on:click="$auth.login('linkedin')">Login with LinkedIn</button>
                 </div>
-                </div>
+              </q-page>
+
+
 
             </q-form>
           </q-card-section>
@@ -71,6 +83,7 @@
 <script>
 import AuthComponent from "components/AuthComponent.vue"
 import LinkedInLoginButton from 'components/LinkedInLoginButton.vue';
+//import VueLinkedinLogin from 'vue-linkedin-login'
 
 import firebase from 'boot/firebase.js'
 export default {
@@ -85,14 +98,25 @@ export default {
     }
   },
   methods: {
-    submitForm(){
-      if(! this.login.username || ! this.login.password){
+    onAuthSuccess({provider, res}) {
+      // Handle the successful login response
+      console.log('LinkedIn login successful', res);
+    },
+    onAuthError({provider, err}) {
+      // Handle the login error
+      console.log('LinkedIn login error', err);
+    },
+
+
+    submitForm() {
+      if (!this.login.username || !this.login.password) {
         console.log('error')
-      }else{
+      } else {
         console.log('login')
       }
     }
   }
+
 }
 </script>
 
