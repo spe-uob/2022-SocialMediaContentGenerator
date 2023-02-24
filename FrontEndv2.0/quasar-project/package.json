@@ -12,6 +12,7 @@
     "@quasar/extras": "^1.15.10",
     "@vue/test-utils": "^2.2.10",
     "babel": "^6.23.0",
+    "facebook-js-sdk": "^0.3.4",
     "firebase": "^9.17.1",
     "quasar": "^2.11.5",
     "vue": "^3.0.0",
