@@ -164,9 +164,9 @@ class KDiffusionSampler:
         self.sampler_noises = None
         self.eta = 0
 
-    def initialize(self, p):
-        self.model_wrap_cfg.mask = p.mask if hasattr(p, 'mask') else None
-        self.model_wrap_cfg.nmask = p.nmask if hasattr(p, 'nmask') else None
+    def initialize(self):
+        self.model_wrap_cfg.mask = None
+        self.model_wrap_cfg.nmask = None
         self.model_wrap.step = 0
         self.eta = 0
 
@@ -192,7 +192,7 @@ class KDiffusionSampler:
 
         x = x * sigmas[0]
 
-        extra_params_kwargs = self.initialize(p)
+        extra_params_kwargs = self.initialize()
         if 'sigma_min' in inspect.signature(self.func).parameters:
             extra_params_kwargs['sigma_min'] = self.model_wrap.sigmas[0].item()
             extra_params_kwargs['sigma_max'] = self.model_wrap.sigmas[-1].item()
