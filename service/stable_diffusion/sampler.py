@@ -17,8 +17,9 @@ class TypicalStableDiffusionSampler:
         self.last_latent = None
         self.step = 0
         self.eta = 0.0
+        self.conditioning_key = model.model.conditioning_key
 
-    def sample(self, x, conditioning, unconditional_conditioning, steps, cfg_scale=7.5):
+    def sample(self, x, conditioning, unconditional_conditioning, steps, cfg_scale=7.5, image_conditioning=None, eta=0.0):
         self.init_latent = None
         self.last_latent = x
         self.step = 0
@@ -163,6 +164,7 @@ class KDiffusionSampler:
         self.device = device
         self.sampler_noises = None
         self.eta = 0
+        self.conditioning_key = model.model.conditioning_key
 
     def initialize(self):
         self.model_wrap_cfg.mask = None
@@ -207,6 +209,6 @@ class KDiffusionSampler:
             'image_cond': image_conditioning,
             'uncond': unconditional_conditioning,
             'cond_scale': cfg_scale
-        }, disable=False, callback=lambda **kwargs: None, **extra_params_kwargs)
+        }, disable=False, callback=None, **extra_params_kwargs)
 
         return samples
