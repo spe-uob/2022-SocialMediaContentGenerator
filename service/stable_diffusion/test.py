@@ -4,9 +4,9 @@ import re
 
 import torch
 
-from sd_rebuild.MemoryOptimizer import MemoryOptimizer, CorsAttentionOptimizationMode
-from sd_rebuild.model import StableDiffusionModel
-from sd_rebuild.txt2img import Txt2Img
+from stable_diffusion.memoryOptimizer import MemoryOptimizer, CorsAttentionOptimizationMode
+from stable_diffusion.model import StableDiffusionModel
+from stable_diffusion.txt2img import Txt2Img
 from matplotlib import pyplot as plt
 
 prompt = """nsfw, masterpiece, best quality, highly detailed, extremely detailed CG unity 8k wallpaper, illustration,
@@ -18,7 +18,7 @@ nprompt = "lowres, bad anatomy, bad hands, text, error, missing fingers, extra d
 
 def test():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model_path = r"W:\work\stable-diffusion-webui-old-dreambooth\models\Stable-diffusion"
+    model_path = r"S:\ckpt\mix_model\Mudrock768"
     default_config = r"W:\work\stable-diffusion-webui-old-dreambooth\v1-inference.yaml"
     memory_optimizer = MemoryOptimizer()
     memory_optimizer.apply_memory_optimizations(CorsAttentionOptimizationMode.DEFAULT)
@@ -32,7 +32,7 @@ def test():
     result = []
     plt.figure(dpi=1200)
     for i in range(2):
-        samples = txt2img.generate(prompt, nprompt, 512, 512, 2, random.randint(1000000, 1000000000), sample="DDIM", steps=35)
+        samples = txt2img.generate(prompt, nprompt, 512, 512, 2, random.randint(1000000, 1000000000), sample="Euler A", steps=35)
         for img in samples:
             result.append(img)
             plt.figure(dpi=600)

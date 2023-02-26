@@ -1,9 +1,10 @@
 import numpy as np
 import torch
 
-from .sampler import TypicalStableDiffusionSampler
+from .sampler import TypicalStableDiffusionSampler, KDiffusionSampler
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
+import k_diffusion.sampling
 from PIL import Image
 
 
@@ -22,6 +23,7 @@ class Txt2Img:
     def load_sampler(self):
         self.samplers["DDIM"] = TypicalStableDiffusionSampler(DDIMSampler, self.model)
         self.samplers["PLMS"] = TypicalStableDiffusionSampler(PLMSSampler, self.model)
+        self.samplers["Euler A"] = KDiffusionSampler(k_diffusion.sampling.sample_euler_ancestral, self.model, self.device)
 
     def generate(self, prompt, negative_prompt, height, width, batch_size, seed, sample="DDIM", steps=20, cfg=7.5):
         with torch.autocast("cuda" if self.device.type == "cuda" else "cpu"):
@@ -50,11 +52,11 @@ class Txt2Img:
         self.torch_gc()
         return results
 
-    def create_random_tensors(self, shape, seeds, seed_resize_from_h=0, seed_resize_from_w=0, sampler=None):
+    def create_random_tensors(self, shape, seeds, seed_resize_from_h=0, seed_resize_from_w=0, sampler=None, steps=20):
         xs = []
 
         if sampler is not None and (len(seeds) > 1 and self.enable_batch_seeds or self.noise_seed_delta > 0):
-            sampler_noises = [[] for _ in range(sampler.number_of_needed_noises(None))]
+            sampler_noises = [[] for _ in range(sampler.number_of_needed_noises(steps))]
         else:
             sampler_noises = None
 
