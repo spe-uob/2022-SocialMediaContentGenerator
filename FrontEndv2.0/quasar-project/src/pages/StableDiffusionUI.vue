@@ -5,7 +5,8 @@
         <div class="row" style="width: 66.5vw">
           <div class="col-sm-12 ">
             <q-card>
-              <q-card-section class="text-white bg-blue-grey-14">
+              <q-card-section class="text-white"
+                              :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
                 <q-select class="hint-white" filled bottom-slots :disable="task_rows.length > 0" v-model="model" :options="models" label="Models" label-color="white" counter maxlength="12"
                           counter-color="white"
                           :loading="loading_model" @update:model-value="load_model">
@@ -48,7 +49,7 @@
 
           <div class="col-sm-4 q-pa-sm">
             <q-card>
-              <q-bar class="bg-blue-grey-14">
+              <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
                 <q-card-section>
 
                   <div class="text-white text-h7">Control Area</div>
@@ -103,7 +104,7 @@
           </div>
           <div class="col-8 q-pa-sm">
             <q-card>
-              <q-bar class="bg-blue-grey-14">
+              <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
                 <q-card-section>
                   <div class="text-white text-h7">Image Show</div>
                 </q-card-section>
