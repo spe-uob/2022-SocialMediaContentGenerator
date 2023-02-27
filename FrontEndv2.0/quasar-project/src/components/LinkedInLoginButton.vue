@@ -25,7 +25,7 @@ export default {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       };
-
+      console.log(apiUrl);
       // Send the GET request to the LinkedIn API
       axios.get(apiUrl, {
         params: queryParams,

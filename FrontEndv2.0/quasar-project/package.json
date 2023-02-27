@@ -15,7 +15,8 @@
     "firebase": "^9.17.1",
     "quasar": "^2.11.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
+    "vue-router": "^4.0.0",
+    "vue-social-auth": "^1.4.9"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",

@@ -1,6 +1,6 @@
 import Index from "layouts/Index.vue";
 import Home from "pages/Home.vue";
-import TwitterView from "pages/TwitterView.vue";
+import TwitterView from "pages/SignIn.vue";
 
 const routes = [
   {
@@ -10,7 +10,7 @@ const routes = [
       { path: '', component: Home },
       { path: '/home' , name: 'home', component: Home},
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
-      { path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
+      { path:  '/TwitterView', component: () => import('pages/SignIn.vue')},
       { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
       { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
     ]
