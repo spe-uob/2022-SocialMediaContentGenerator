@@ -14,3 +14,4 @@ safetensors==0.2.8
 service==0.6.0
 torch==1.11.0
 tweepy==4.12.1
+diffusers==0.10.2
