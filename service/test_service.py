@@ -24,6 +24,9 @@ def load_config(path):
 def test_service():
     try:
         config = load_config("config.json")
+        config["api_server"]["static_folder"] = "./"
+        config["model_path"] = "./"
+        config["default_model_config"] = "./v1-inference.yaml"
         core = Core(config)
         environment = Environment(config, core)
         scheduler = Scheduler(core, environment)
