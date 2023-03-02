@@ -1,7 +1,7 @@
 <template>
  <div class="q-pa-md">
-  <div class="q-gutter-md" style="max-width: 300px">
-    <q-input rounded outlined v-model="message" label="Rounded outlined" />
+  <div class="q-gutter-md" style="max-width: 1800px">
+    <q-input rounded outlined v-model="message" label="Text" />
   </div>
  </div>
 </template>
