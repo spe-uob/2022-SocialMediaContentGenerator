@@ -25,18 +25,40 @@ export default {
     };
   },
   methods: {
-    postToFacebook() {
-      const access_token='EAAJKxVJZAnoUBANeAl5XZCZCp0BN0PMAkUZABYzodsOXZCKY10Eqy5czitMf0gzp7ouMBcO3ZCCw938pkF3lnVEjSGT42T6LIibuZAauMZBNrx2IS6WTXM2vPll17y04X5uh0bF4iVqQp4qaRE1pm9fg90WrRsE6axycks5lyI2NJ2dDRnWa5qLxCkboTBUrFmfEWKxBlYS8zm4nutQqrjWelD1WVWJTHxMZD'
-      axios.post('https://graph.facebook.com/me/feed?message=${message}&access_token=${access_token}'
-      )
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    async logInWithFacebook() {
+      await this.loadFacebookSDK(document, "script", "facebook-jssdk");
+      await this.initFacebook();
+      window.FB.login(function(response) {
+        if (response.authResponse) {
+          alert("login successfully");
+        } else {
+          alert("login failed");
+        }
+      });
+      this.$router.push("/twitter")
+      return false;
     },
-  },
+    async initFacebook() {
+      window.fbAsyncInit = function() {
+        window.FB.init({
+          appId: "645161304039045",
+          cookie: true,
+          version: "v16.0"
+        });
+      };
+    },
+    async loadFacebookSDK(d, s, id) {
+      let js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_UK/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }
+  }
 }
 
 </script>
