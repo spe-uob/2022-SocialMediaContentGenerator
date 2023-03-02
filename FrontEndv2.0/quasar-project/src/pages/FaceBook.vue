@@ -15,22 +15,20 @@
 
 <script>
 import axios from 'axios'
-import {ref} from 'vue'
 export default {
   name: "FaceBook",
 
 
   data() {
     return {
-      message: ref(''),
+      message: ''
     };
   },
   methods: {
     postToFacebook() {
-      axios.post('https://graph.facebook.com/me/feed', {
-        message: this.message,
-        access_token: 'EAAJKxVJZAnoUBANeAl5XZCZCp0BN0PMAkUZABYzodsOXZCKY10Eqy5czitMf0gzp7ouMBcO3ZCCw938pkF3lnVEjSGT42T6LIibuZAauMZBNrx2IS6WTXM2vPll17y04X5uh0bF4iVqQp4qaRE1pm9fg90WrRsE6axycks5lyI2NJ2dDRnWa5qLxCkboTBUrFmfEWKxBlYS8zm4nutQqrjWelD1WVWJTHxMZD',
-      })
+      const access_token='EAAJKxVJZAnoUBANeAl5XZCZCp0BN0PMAkUZABYzodsOXZCKY10Eqy5czitMf0gzp7ouMBcO3ZCCw938pkF3lnVEjSGT42T6LIibuZAauMZBNrx2IS6WTXM2vPll17y04X5uh0bF4iVqQp4qaRE1pm9fg90WrRsE6axycks5lyI2NJ2dDRnWa5qLxCkboTBUrFmfEWKxBlYS8zm4nutQqrjWelD1WVWJTHxMZD'
+      axios.post('https://graph.facebook.com/me/feed?message=${message}&access_token=${access_token}'
+      )
         .then(response => {
           console.log(response);
         })
