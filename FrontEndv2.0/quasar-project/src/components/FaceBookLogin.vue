@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-center">
-      <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="FaceBookLogin" rounded></q-btn>
+      <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="redirect" rounded></q-btn>
       </div>
   </div>
 </template>
@@ -18,20 +18,11 @@ export default {
     };
   },
   methods: {
-    postToFacebook() {
-      axios.post('https://graph.facebook.com/me/feed', {
-        message: this.message,
-        access_token: 'your-access-token',
-      })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-  },
+    redirect() {
+      this.$router.push("/FaceBook")
+    }
   }
+}
 </script>
 
 <style scoped>
