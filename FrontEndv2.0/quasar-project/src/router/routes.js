@@ -13,6 +13,7 @@ const routes = [
       { path:  '/TwitterView', component: () => import('pages/TwitterView.vue')},
       { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
       { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
+      {path:'/FaceBook', component: () => import('pages/FaceBook.vue')}
     ]
   },
 
