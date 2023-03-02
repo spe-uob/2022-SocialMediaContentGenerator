@@ -6,60 +6,31 @@
   </div>
 </template>
 
+import axios from 'axios'
+
 <script>
 export default {
   name: "FaceBookLogin",
 
   data() {
     return {
-      FB: window.FB,
-      response: {
-        status: 'connected',
-        authResponse:
-          {
-            accessToken: '...',
-            expiresIn:
-              '...',
-            signedRequest:
-              '...',
-            userID:
-              '...'
-          }
-      }
-    }
+      message: '',
+    };
   },
-
-      methods:{
-      FaceBookLogin () {
-        this.FB.getLoginStatus(function (response) {
-          statusChangeCallback(response);
+  methods: {
+    postToFacebook() {
+      axios.post('https://graph.facebook.com/me/feed', {
+        message: this.message,
+        access_token: 'your-access-token',
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
         });
-
-
-        window.fbAsyncInit = function () {
-          this.FB.init({
-            appId: '{645161304039045}',
-            cookie: true,
-            xfbml: true,
-            version: '{api-version}'
-          });
-
-          FB.AppEvents.logPageView();
-
-        },
-
-          (function (d, s, id) {
-            let js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-              return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));
-      }
     },
+  },
   }
 </script>
 
