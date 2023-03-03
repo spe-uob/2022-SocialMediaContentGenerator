@@ -19,3 +19,22 @@ export function loadFBSDK(appId, version) {
     }(document, 'script', 'facebook-jssdk'));
   });
 }
+
+export function getFBLoginStatus() {
+  return new Promise(resolve => {
+    window.FB.getLoginStatus(responseStatus => {
+      resolve(responseStatus);
+    });
+  });
+}
+
+export function FBLogin(options) {
+  return new Promise(resolve => {
+    window.FB.login(response => resolve(response), options);
+  });
+}
+export function FBLogout() {
+  return new Promise(resolve => {
+    window.FB.logout(response => resolve(response));
+  });
+}
