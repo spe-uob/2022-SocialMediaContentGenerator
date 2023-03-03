@@ -1,0 +1,17 @@
+einops
+Flask==2.2.2
+Flask_Cors==3.0.10
+k_diffusion==0.0.12
+lark
+loguru
+matplotlib
+numpy
+omegaconf
+opencv_python_headless==4.6.0.66
+Pillow
+rich
+safetensors
+service
+torch==1.11.0
+tweepy==4.12.1
+diffusers==0.10.2

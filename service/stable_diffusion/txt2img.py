@@ -1,9 +1,12 @@
 import numpy as np
 import torch
+import torch.nn.functional
 
-from .sampler import TypicalStableDiffusionSampler
+from . import prompt_parser
+from .sampler import TypicalStableDiffusionSampler, KDiffusionSampler
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
+import k_diffusion.sampling
 from PIL import Image
 
 
@@ -22,16 +25,20 @@ class Txt2Img:
     def load_sampler(self):
         self.samplers["DDIM"] = TypicalStableDiffusionSampler(DDIMSampler, self.model)
         self.samplers["PLMS"] = TypicalStableDiffusionSampler(PLMSSampler, self.model)
+        self.samplers["Euler A"] = KDiffusionSampler(k_diffusion.sampling.sample_euler_ancestral, self.model, self.device)
 
     def generate(self, prompt, negative_prompt, height, width, batch_size, seed, sample="DDIM", steps=20, cfg=7.5):
         with torch.autocast("cuda" if self.device.type == "cuda" else "cpu"):
             sampler = self.samplers[sample]
             x = self.create_random_tensors([self.opt_C, height // self.opt_f, width // self.opt_f], seeds=[seed + i for i in range(batch_size)], seed_resize_from_h=0, seed_resize_from_w=0,
                                            sampler=sampler)
-            uc = self.model.get_learned_conditioning(batch_size * [negative_prompt])
-            c = self.model.get_learned_conditioning(batch_size * [prompt])
+            # uc = self.model.get_learned_conditioning(batch_size * [negative_prompt])
+            # c = self.model.get_learned_conditioning(batch_size * [prompt])
+            uc = prompt_parser.get_learned_conditioning(self.model, batch_size * [negative_prompt], steps)
+            c = prompt_parser.get_multicond_learned_conditioning(self.model, batch_size * [prompt], steps)
+            image_conditioning = self.txt2img_image_conditioning(sampler, x, width, height)
 
-            samples_ddim = sampler.sample(x, c, uc, steps=steps, cfg_scale=cfg)
+            samples_ddim = sampler.sample(x, c, uc, steps=steps, cfg_scale=cfg, image_conditioning=image_conditioning)
 
             x_samples_ddim = [self.model.decode_first_stage(samples_ddim[i:i + 1].to(dtype=self.dtype_vae))[0].cpu() for i in range(samples_ddim.size(0))]
             x_samples_ddim = torch.stack(x_samples_ddim).float()
@@ -50,11 +57,11 @@ class Txt2Img:
         self.torch_gc()
         return results
 
-    def create_random_tensors(self, shape, seeds, seed_resize_from_h=0, seed_resize_from_w=0, sampler=None):
+    def create_random_tensors(self, shape, seeds, seed_resize_from_h=0, seed_resize_from_w=0, sampler=None, steps=20):
         xs = []
 
         if sampler is not None and (len(seeds) > 1 and self.enable_batch_seeds or self.noise_seed_delta > 0):
-            sampler_noises = [[] for _ in range(sampler.number_of_needed_noises(None))]
+            sampler_noises = [[] for _ in range(sampler.number_of_needed_noises(steps))]
         else:
             sampler_noises = None
 
@@ -78,7 +85,7 @@ class Txt2Img:
                 noise = x
 
             if sampler_noises is not None:
-                cnt = sampler.number_of_needed_noises(None)
+                cnt = sampler.number_of_needed_noises(steps)
                 if self.noise_seed_delta > 0:
                     torch.manual_seed(seed + self.noise_seed_delta)
                 for j in range(cnt):
@@ -90,6 +97,25 @@ class Txt2Img:
 
         x = torch.stack(xs).to(self.device)
         return x
+
+    def txt2img_image_conditioning(self, sampler, x, width, height):
+        if sampler.conditioning_key not in {'hybrid', 'concat'}:
+            # Dummy zero conditioning if we're not using inpainting model.
+            # Still takes up a bit of memory, but no encoder call.
+            # Pretty sure we can just make this a 1x1 image since its not going to be used besides its batch size.
+            return x.new_zeros(x.shape[0], 5, 1, 1)
+
+        # self.is_using_inpainting_conditioning = True
+
+        # The "masked-image" in this case will just be all zeros since the entire image is masked.
+        image_conditioning = torch.zeros(x.shape[0], 3, height, width, device=x.device)
+        image_conditioning = self.model.get_first_stage_encoding(self.model.encode_first_stage(image_conditioning))
+
+        # Add the fake full 1s mask to the first dimension.
+        image_conditioning = torch.nn.functional.pad(image_conditioning, (0, 0, 0, 0, 1, 0), value=1.0)
+        image_conditioning = image_conditioning.to(x.dtype)
+
+        return image_conditioning
 
     @staticmethod
     def torch_gc():
