@@ -13,6 +13,7 @@ const routes = [
       { path:  '/signin', component: () => import('src/pages/SignIn.vue')},
       { path: '/stablediffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
       { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
+      {path:'/FaceBook', component: () => import('pages/FaceBook.vue')}
     ]
   },
 
