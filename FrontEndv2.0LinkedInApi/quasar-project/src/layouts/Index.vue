@@ -80,6 +80,13 @@
           </q-item-section>
           <q-item-section>TimeLine View</q-item-section>
         </q-item>
+
+        <q-item clickable v-ripple class="text-grey-6" to="/MyLinkedInPage" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="crop_din" />
+          </q-item-section>
+          <q-item-section>LinkedIn Page</q-item-section>
+        </q-item>
       </q-list>
 
 
