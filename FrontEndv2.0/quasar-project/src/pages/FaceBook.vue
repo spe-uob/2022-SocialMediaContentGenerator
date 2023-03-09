@@ -14,18 +14,36 @@
 </template>
 
 <script>
+import FaceBookLogin from "components/FaceBookLogin";
 import axios from 'axios'
 export default {
   name: "FaceBook",
   data() {
     return {
+      access_token:FaceBookLogin.data().access_token,
       message: ''
     };
   },
+  methods:{
+    async postToFacebook() {
+      const params = {
+        access_token: this.accessToken,
+        message: this.message
+      };
+
+      try {
+        const response = await axios.post('https://graph.facebook.com/v16.0/me/feed', params);
+        console.log('Post was successful!');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 
 }
 
 </script>
+
 
 <style scoped>
 
