@@ -12,15 +12,14 @@
       </div>
       <div v-bind:class="{'justify-center': $q.screen.md || $q.screen.sm || $q.screen.xs}" class="col-12 col-md-6 flex content-center">
         <q-card v-bind:style="$q.screen.lt.sm ? {'width': '80%'} : {'width': '50%'} ">
-          <q-card-section>
-            <q-avatar size="103px" class="absolute-center shadow-10">
+          <q-card-section class="flex justify-center">
+            <q-avatar size="103px" class="shadow-10">
               <img src="~assets/undraw_male_avatar_g98d.svg" alt="avatar">
             </q-avatar>
           </q-card-section>
-          <q-card-section>
+          <q-card-section class="flex justify-center">
             <div class="q-pt-lg">
-              <div class="col text-h6 ellipsis flex justify-center"/>
-              <h2 class="text-h2 text-uppercase q-my-none text-weight-regular">Login</h2>
+              <h2 class="text-h2 q-my-none">Sign In</h2>
             </div>
           </q-card-section>
           <q-card-section>
