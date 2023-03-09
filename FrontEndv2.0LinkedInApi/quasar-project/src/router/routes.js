@@ -15,6 +15,7 @@ const routes = [
       { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
       { path: '/MyLinkedInPage', component: () => import('pages/MyLinkedInPage.vue')},
       { path: '/loginWithLinkedIn', component: () => import('pages/loginWithLinkedIn.vue')},
+      { path: '/linkedInA', component: () => import('pages/linkedInA.vue')},
     ]
   },
 

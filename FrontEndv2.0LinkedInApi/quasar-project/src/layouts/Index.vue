@@ -94,6 +94,13 @@
           </q-item-section>
           <q-item-section>LinkedIn login</q-item-section>
         </q-item>
+
+        <q-item clickable v-ripple class="text-grey-6" to="/linkedInA" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="crop_din" />
+          </q-item-section>
+          <q-item-section>LinkedInA</q-item-section>
+        </q-item>
       </q-list>
 
 
