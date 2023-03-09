@@ -28,7 +28,7 @@ export default {
     async FB_firebase(){
       const auth = getAuth();
       const provider = new FacebookAuthProvider();
-      signInWithPopup(auth, provider)
+      let fb = await signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
           const credential = FacebookAuthProvider.credentialFromResult(result);
@@ -39,6 +39,8 @@ export default {
           console.log(accessToken)
           console.log(secret)
           this.access_token = accessToken
+          this.$router.push("/FaceBook")
+          return accessToken,secret,displayName
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -46,8 +48,8 @@ export default {
           const email = error.customData.email;
           const credential = FacebookAuthProvider.credentialFromError(error);
           console.log(errorCode,errorMessage)
-        },
-      this.$router.push("/FaceBook"));
+        })
+
 
     },
     FB_fbsdk(){
@@ -67,7 +69,7 @@ export default {
 
     },
 
-    mounted() {
+    /*mounted() {
       loadFBSDK(this.appId, this.version)
         .then(loadingResult => {
         })
@@ -82,7 +84,7 @@ export default {
             FB: window.FB
           })
         });
-    }
+    }*/
   }
 }
 </script>
