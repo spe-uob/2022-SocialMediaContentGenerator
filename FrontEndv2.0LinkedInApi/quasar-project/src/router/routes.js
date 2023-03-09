@@ -10,10 +10,11 @@ const routes = [
       { path: '', component: Home },
       { path: '/home' , name: 'home', component: Home},
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
-      { path:  '/TwitterView', component: () => import('pages/SignIn.vue')},
+      { path:  '/SignIn', component: () => import('pages/SignIn.vue')},
       { path: '/StableDiffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
       { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
       { path: '/MyLinkedInPage', component: () => import('pages/MyLinkedInPage.vue')},
+      { path: '/loginWithLinkedIn', component: () => import('pages/loginWithLinkedIn.vue')},
     ]
   },
 

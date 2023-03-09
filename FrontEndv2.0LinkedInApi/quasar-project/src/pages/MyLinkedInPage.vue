@@ -1,4 +1,9 @@
 <template>
+  <div>
+  <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&state=987654321&scope=r_liteprofile%20r_emailaddress&client_id=78sme225fsy5by&redirect_uri=http%3A%2F%2Flocalhost%3A9000">
+    <img src="/path/to/linkedin-icon.png" alt="Log in with LinkedIn" />
+  </a>
+  </div>
   <q-page>
     <q-card class="q-mb-md">
       <q-card-section>
