@@ -25,24 +25,7 @@
           </q-card-section>
           <q-card-section>
             <q-form class="q-gutter-md" @submit.prevent="submitForm">
-              <q-input label="Username" v-model="login.username">
-
-              </q-input>
-              <q-input label="Password" type="password" v-model="login.password">
-
-              </q-input>
               <div>
-                <q-btn class="full-width" color="primary" label="login" type="submit" rounded></q-btn>
-                <div class="text-center q-mt-sm q-gutter-lg">
-                  <router-link class="text-blue" to="/">Forgotten password?</router-link>
-                  <router-link class="text-blue" to="/">sign up</router-link>
-<!--                  <q-btn class="text-center full-width" color="light-blue" label="sign in with twitter" type="submit" rounded></q-btn>-->
-<!--                  <div>
-                    <button>
-                      <img src="~assets/MicrosoftTeams-image.png" width="240">
-                    </button>
-                  </div>-->
-                </div>
                 <div class="q-pa-sm"></div>
                 <AuthComponent />
                 <div class="q-pa-sm"></div>
