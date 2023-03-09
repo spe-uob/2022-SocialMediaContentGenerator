@@ -22,6 +22,12 @@
       </template>
     </q-file>
   </div>
+  <a class="twitter-timeline"
+     href= "https://twitter.com/Flgodd"
+     data-aria-polite="assertive">
+    <!--data-chrome="nofooter"-->
+    Tweets by @TwitterDev
+  </a>
 </template>
 
 <script>
