@@ -86,10 +86,25 @@ import LinkedInLoginButton from 'components/LinkedInLoginButton.vue';
 //import VueLinkedinLogin from 'vue-linkedin-login'
 
 import firebase from 'boot/firebase.js'
+/*var request = require('request');
+
+var access_token =
+
+function callAPI(accessToken, done){
+
+  request.get({url:"https://api.lindedin.com/v2/me", headers:{"Authorization": "Bearer" + accessToken }}, function (err, res, responseBody){
+    if(err){
+      console.log(err);
+      done(err, null);
+    }else{
+      done(null, JSON.parse(responseBody));
+    }
+  });
+}*/
 export default {
   name: "TwitterView",
   components: { AuthComponent, LinkedInLoginButton},
-  data() {
+ /* data() {
     return{
       login:{
         username: '',
@@ -115,7 +130,7 @@ export default {
         console.log('login')
       }
     }
-  }
+  }*/
 
 }
 </script>
