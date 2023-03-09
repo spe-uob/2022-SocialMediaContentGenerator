@@ -20,6 +20,7 @@ export default {
       version:"v16.0",
       isConnected:false,
       message: '',
+      access_token:''
     };
   },
 
@@ -27,7 +28,7 @@ export default {
     async FB_firebase(){
       const auth = getAuth();
       const provider = new FacebookAuthProvider();
-      let fb = await signInWithPopup(auth, provider)
+      signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
           const credential = FacebookAuthProvider.credentialFromResult(result);
@@ -37,7 +38,7 @@ export default {
           console.log(displayName)
           console.log(accessToken)
           console.log(secret)
-          return accessToken,secret,displayName
+          this.access_token = accessToken
         })
         .catch((error) => {
           const errorCode = error.code;
