@@ -26,17 +26,25 @@ export default {
   methods: {
     async FB_firebase(){
       const auth = getAuth();
-      signInWithPopup(auth, provider)
+      const provider = new FacebookAuthProvider();
+      let fb = await signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
           const credential = FacebookAuthProvider.credentialFromResult(result);
           const accessToken = credential.accessToken;
+          const secret = credential.secret
+          const displayName = user.displayName
+          console.log(displayName)
+          console.log(accessToken)
+          console.log(secret)
+          return accessToken,secret,displayName
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           const email = error.customData.email;
           const credential = FacebookAuthProvider.credentialFromError(error);
+          console.log(errorCode,errorMessage)
         },
       this.$router.push("/FaceBook"));
 
