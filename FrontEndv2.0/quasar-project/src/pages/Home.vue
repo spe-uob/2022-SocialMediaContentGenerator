@@ -1,6 +1,6 @@
 <template>
   <div class="col-0 col-md-6 flex justify-center content-center">
-    <q-btn>
+    <q-btn flat>
       <img src="~assets/spaceNXT.png" class="responsive" alt = "login-image" @click="hyperlink"/>
     </q-btn>
   </div>
