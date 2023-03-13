@@ -67,11 +67,11 @@
           <q-item-section>SD UI</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple class="text-grey-6" to="/TwitterView" active-class="menu-link">
+        <q-item clickable v-ripple class="text-grey-6" to="/SignIn" active-class="menu-link">
           <q-item-section avatar>
             <q-icon name="crop_din" />
           </q-item-section>
-          <q-item-section>Twitter Page</q-item-section>
+          <q-item-section>SignIn</q-item-section>
         </q-item>
 
         <q-item clickable v-ripple class="text-grey-6" to="/TimelineView" active-class="menu-link">
@@ -79,6 +79,27 @@
             <q-icon name="crop_din" />
           </q-item-section>
           <q-item-section>TimeLine View</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple class="text-grey-6" to="/MyLinkedInPage" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="crop_din" />
+          </q-item-section>
+          <q-item-section>LinkedIn Page</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple class="text-grey-6" to="/loginWithLinkedIn" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="crop_din" />
+          </q-item-section>
+          <q-item-section>LinkedIn login</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple class="text-grey-6" to="/linkedInA" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="crop_din" />
+          </q-item-section>
+          <q-item-section>LinkedInA</q-item-section>
         </q-item>
       </q-list>
 

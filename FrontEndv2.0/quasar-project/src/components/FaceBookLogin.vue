@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="flex flex-center">
+
       <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="FB_firebase" rounded></q-btn>
+
       </div>
   </div>
 </template>
