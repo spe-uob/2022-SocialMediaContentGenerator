@@ -30,6 +30,9 @@
                 <div class="q-pa-sm"></div>
                 <div class="q-pa-none"></div>
                 <FaceBookLogin />
+                <div class="q-pa-sm"></div>
+                <div class="q-pa-none"></div>
+                <LinkedInLogin />
                 </div>
 
             </q-form>
@@ -46,9 +49,10 @@
 import AuthComponent from "components/AuthComponent.vue"
 import firebase from 'boot/firebase.js'
 import FaceBookLogin from "components/FaceBookLogin.vue";
+import LinkedInLogin from "components/LinkedInLogin.vue";
 export default {
   name: "SignIn",
-  components: { AuthComponent,FaceBookLogin },
+  components: { AuthComponent,FaceBookLogin, LinkedInLogin },
   data() {
     return{
       login:{
