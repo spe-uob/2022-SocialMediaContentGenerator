@@ -23,23 +23,30 @@
     </q-file>
   </div>
   <a class="twitter-timeline"
-     href= "https://twitter.com/Flgodd"
+     href = "https://twitter.com/${this.twitterUsername}"
      data-aria-polite="assertive">
+  <!--:href = "'https://twitter.com/' + temp">{{temp}}-->
     <!--data-chrome="nofooter"-->
-    Tweets by @TwitterDev
+    Tweets by @{{temp}}
   </a>
+  <a v-html="twitterTimelineLink"></a>
+
 </template>
 
-<script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
 import {data} from 'browserslist';
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
 
 console.log(AuthComponent.data().token);
 console.log(AuthComponent.data().displayName);
+const temp =  AuthComponent.data().displayName;
+const test = "https://twitter.com/" + temp;
+console.log(test)
 
 export default defineComponent({
   name: "Twitter",
+  props: [test, temp],
   data() {
     return {
       text: '',
@@ -48,9 +55,12 @@ export default defineComponent({
       consumer_secret: AuthComponent.data().apiSecret,
       access_token: AuthComponent.data().token,
       access_token_secret: AuthComponent.data().secret,
+      twitterUsername: AuthComponent.data().displayName,
     }
   },
   methods: {
+
+
     async addNewTweetPost(){
       let tweet = this.text
       const url = `http://localhost:5000/tweet?status=${encodeURIComponent(tweet)}&consumer_key=${encodeURIComponent(AuthComponent.data().apiKey)}&consumer_secret=${encodeURIComponent(AuthComponent.data().apiSecret)}&access_token=${encodeURIComponent(AuthComponent.data().token)}&access_token_secret=${encodeURIComponent(AuthComponent.data().secret)}`
@@ -96,6 +106,13 @@ export default defineComponent({
     async uploadImage(files) {
       this.image = await this.getBase64(files)
     },
+  },
+
+  setup(){
+    return {
+      test,
+      temp,
+    }
   }
 
 })
