@@ -21,7 +21,7 @@ const client_secret = 'J3xg14qRTV87viVq'
 const redirect_uri = 'http://localhost:9000'
 const scope = 'r_liteprofile r_emailaddress'
 export default {
-  name: "linkedInA",
+  name: "linkedInLogin",
   data() {
     return {
       authorized: false,
