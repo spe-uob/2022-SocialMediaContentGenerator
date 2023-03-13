@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>LinkedIn API Authorization</h1>
+    <!--<h1>LinkedIn API Authorization</h1>-->
     <div v-if="!authorized">
-      <p>Click the button to authorize this app to access your LinkedIn profile:</p>
-      <q-btn label="Authorize" @click="authorize" />
+      <!--<p>Click the button to authorize this app to access your LinkedIn profile:</p>-->
+      <q-btn class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-linkedin" label="sign in with LinkedIn" @click="authorize" rounded/>
     </div>
     <div v-else>
       <p>You are authorized to access the LinkedIn API.</p>
