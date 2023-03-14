@@ -25,6 +25,7 @@ class ConceptLoader:
         self.loading_mode = concept_loader_args.get("loading_mode", ConceptLoadingMode.Dict)
         self.dict_mode_dict_list = concept_loader_args.get("dict_mode_dict_list", [])
         self.loading_target_path = concept_loader_args.get("loading_target_path", "")
+        self.default_concept_config = concept_loader_args.get("default_concept_config", {})
         self.concepts = []
         if self.loading_mode == ConceptLoadingMode.Dict:
             self.load_concept_dict_mode()
@@ -53,6 +54,7 @@ class ConceptLoader:
             concept_config = {
                 "instance_data_dir": instance_image_dir,
                 "class_data_dir": class_image_dir,
+                **self.default_concept_config
             }
             self.concepts.append(Concept(**concept_config))
 
