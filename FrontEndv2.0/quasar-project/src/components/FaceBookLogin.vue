@@ -1,66 +1,45 @@
 <template>
   <div>
     <div class="flex flex-center">
-      <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="FaceBookLogin" rounded></q-btn>
+      <q-btn class="flex justify-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="FaceBook" rounded></q-btn>
       </div>
   </div>
 </template>
 
+
 <script>
+import {getAuth,  FacebookAuthProvider, signInWithPopup} from "firebase/auth"
+const provider = new FacebookAuthProvider();
 export default {
   name: "FaceBookLogin",
 
   data() {
     return {
-      FB: window.FB,
-      response: {
-        status: 'connected',
-        authResponse:
-          {
-            accessToken: '...',
-            expiresIn:
-              '...',
-            signedRequest:
-              '...',
-            userID:
-              '...'
-          }
-      }
-    }
+      isConnected:false,
+      message: '',
+    };
   },
 
-      methods:{
-      FaceBookLogin () {
-        this.FB.getLoginStatus(function (response) {
-          statusChangeCallback(response);
-        });
-
-
-        window.fbAsyncInit = function () {
-          this.FB.init({
-            appId: '{645161304039045}',
-            cookie: true,
-            xfbml: true,
-            version: '{api-version}'
-          });
-
-          FB.AppEvents.logPageView();
-
+  methods: {
+    async FaceBook(){
+      const auth = getAuth();
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          const credential = FacebookAuthProvider.credentialFromResult(result);
+          const accessToken = credential.accessToken;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          const email = error.customData.email;
+          const credential = FacebookAuthProvider.credentialFromError(error);
         },
+      this.$router.push("/FaceBook"));
 
-          (function (d, s, id) {
-            let js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-              return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));
-      }
     },
   }
+}
 </script>
 
 <style scoped>
