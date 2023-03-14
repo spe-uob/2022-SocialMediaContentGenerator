@@ -1,3 +1,4 @@
+from service.dreambooth.concept import ConceptLoader
 from service.dreambooth.dreambooth_config import DreamboothConfig
 
 
@@ -7,5 +8,6 @@ class Dreambooth:
             self.config = DreamboothConfig(**kwargs)
         else:
             self.config = config
-
+        self.concept_loader = ConceptLoader(concept_loader_args)
+        self.concepts = self.concept_loader.concepts
 
