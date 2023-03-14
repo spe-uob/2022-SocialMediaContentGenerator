@@ -1,4 +1,5 @@
 import enum
+import os
 
 
 class Concept(dict):
@@ -29,10 +30,31 @@ class ConceptLoader:
             self.load_concept_dict_mode()
 
     def load_concept_dict_mode(self):
-        pass
+        for concept_dict in self.dict_mode_dict_list:
+            self.concepts.append(Concept(**concept_dict))
 
     def load_concept_path_mode(self):
-        pass
+        # dir structure:
+        # - target_path
+        #   - concept1
+        #     - instance_image
+        #       - 1.png
+        #       - 1.txt
+        #       - .....
+        #     - class_image
+        #       - hash.png
+        #   - concept2
+        #     ...
+        #   - ...
+        concept_dirs = [x for x in os.listdir(self.loading_target_path) if os.path.isdir(os.path.join(self.loading_target_path, x))]
+        for concept_dir in concept_dirs:
+            instance_image_dir = os.path.join(self.loading_target_path, concept_dir, "instance_image")
+            class_image_dir = os.path.join(self.loading_target_path, concept_dir, "class_image")
+            concept_config = {
+                "instance_data_dir": instance_image_dir,
+                "class_data_dir": class_image_dir,
+            }
+            self.concepts.append(Concept(**concept_config))
 
 
 class ConceptLoadingMode(enum.Enum):
