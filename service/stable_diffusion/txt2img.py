@@ -26,6 +26,16 @@ class Txt2Img:
         self.samplers["DDIM"] = TypicalStableDiffusionSampler(DDIMSampler, self.model)
         self.samplers["PLMS"] = TypicalStableDiffusionSampler(PLMSSampler, self.model)
         self.samplers["Euler A"] = KDiffusionSampler(k_diffusion.sampling.sample_euler_ancestral, self.model, self.device)
+        self.samplers["Euler"] = KDiffusionSampler(k_diffusion.sampling.sample_euler, self.model, self.device)
+        self.samplers["LMS"] = KDiffusionSampler(k_diffusion.sampling.sample_lms, self.model, self.device)
+        self.samplers["Heun"] = KDiffusionSampler(k_diffusion.sampling.sample_heun, self.model, self.device)
+        self.samplers["DPM2"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_2, self.model, self.device)
+        self.samplers["DPM2 a"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_2_ancestral, self.model, self.device)
+        self.samplers["DPM++ 2S a"] = KDiffusionSampler(k_diffusion.sampling.sample_dpmpp_2s_ancestral, self.model, self.device)
+        self.samplers["DPM++ 2M"] = KDiffusionSampler(k_diffusion.sampling.sample_dpmpp_2m, self.model, self.device)
+        self.samplers["DPM++ SDE"] = KDiffusionSampler(k_diffusion.sampling.sample_dpmpp_sde, self.model, self.device)
+        self.samplers["DPM fast"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_fast, self.model, self.device)
+        self.samplers["DPM adaptive"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_adaptive, self.model, self.device)
 
     def generate(self, prompt, negative_prompt, height, width, batch_size, seed, sample="DDIM", steps=20, cfg=7.5):
         with torch.autocast("cuda" if self.device.type == "cuda" else "cpu"):

@@ -18,8 +18,11 @@ nprompt = "lowres, bad anatomy, bad hands, text, error, missing fingers, extra d
 
 def test():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model_path = r"S:\ckpt\mix_model\Mudrock768"
-    default_config = r"W:\work\stable-diffusion-webui-old-dreambooth\v1-inference.yaml"
+    print(f"device: {device}")
+    # model_path = r"S:\ckpt\mix_model\Mudrock768"
+    # default_config = r"W:\work\stable-diffusion-webui-old-dreambooth\v1-inference.yaml"
+    model_path = r"/mnt/s/ckpt/mix_model/Mudrock768"
+    default_config = r"/mnt/w/work/stable-diffusion-webui-old-dreambooth/v1-inference.yaml"
     memory_optimizer = MemoryOptimizer()
     memory_optimizer.apply_memory_optimizations(CorsAttentionOptimizationMode.DEFAULT)
     model_loader = StableDiffusionModel(model_path, default_config, device, half=True)
@@ -34,6 +37,7 @@ def test():
     for i in range(2):
         samples = txt2img.generate(prompt, nprompt, 512, 512, 2, random.randint(1000000, 1000000000), sample="Euler A", steps=35)
         for img in samples:
+            print("show image...")
             result.append(img)
             plt.figure(dpi=600)
             plt.imshow(img)
