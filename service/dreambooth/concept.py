@@ -19,3 +19,22 @@ class Concept(dict):
             self[key] = value
 
 
+class ConceptLoader:
+    def __init__(self, concept_loader_args):
+        self.loading_mode = concept_loader_args.get("loading_mode", ConceptLoadingMode.Dict)
+        self.dict_mode_dict_list = concept_loader_args.get("dict_mode_dict_list", [])
+        self.loading_target_path = concept_loader_args.get("loading_target_path", "")
+        self.concepts = []
+        if self.loading_mode == ConceptLoadingMode.Dict:
+            self.load_concept_dict_mode()
+
+    def load_concept_dict_mode(self):
+        pass
+
+    def load_concept_path_mode(self):
+        pass
+
+
+class ConceptLoadingMode(enum.Enum):
+    Dict = "dict"
+    Path = "path"
