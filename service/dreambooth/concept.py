@@ -1,3 +1,6 @@
+import enum
+
+
 class Concept(dict):
     def __init__(self, **kwargs):
         super().__init__()
@@ -14,3 +17,5 @@ class Concept(dict):
         self.class_guidance_scale = kwargs.get("class_guidance_scale", 7.5)
         for key, value in kwargs.items():
             self[key] = value
+
+
