@@ -33,7 +33,7 @@
 
 </template>
 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
+<script >
 import {data} from 'browserslist';
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
