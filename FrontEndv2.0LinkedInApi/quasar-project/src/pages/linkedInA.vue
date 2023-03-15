@@ -76,17 +76,22 @@ export default {
           .then(response => {
             this.authorized = true
             this.access_token = response.data.access_token
+            this.userId = response.data.id // set the userId property to the user's LinkedIn ID
+            //this.firstName = response.data.localizedFirstName
+            //this.email = response.data.emailAddress
           })
           .catch(error => console.error(error))
       }
     },
+
     postToLinkedIn() {
       const message = 'Hello, world!'; // the message to post
       const visibility = {
         'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC' // the visibility of the post
       };
-
-      axios.post('https://api.linkedin.com/v2/ugcPosts', {
+      //`https://api.linkedin.com/v2/ugcPosts?oauth2_access_token=".${this.access_token}`,
+      //https://api.linkedin.com/v2/ugcPosts
+      axios.post(`https://api.linkedin.com/v2/ugcPosts`, {
         author: `urn:li:person:${this.userId}`,
         lifecycleState: 'PUBLISHED',
         specificContent: {
@@ -100,7 +105,7 @@ export default {
         visibility: visibility
       }, {
         headers: {
-          'Authorization': `Bearer ${this.accessToken}`,
+          'Authorization': `Bearer ${this.access_token}`,
           'Content-Type': 'application/json'
         }
       })
@@ -109,6 +114,7 @@ export default {
         })
         .catch(error => {
           console.log('Error posting to LinkedIn:', error);
+          console.log(this.access_token)
         });
     }
   },
