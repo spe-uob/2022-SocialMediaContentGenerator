@@ -6,7 +6,7 @@
         <q-icon name="close" @click="message = ''" class="cursor-pointer"/>
       </template>
       <template v-slot:after>
-        <q-icon name="send"  color="primary" class="cursor-pointer" :disable="!message"/>
+        <q-icon name="send"  @click="postToFacebook" :color="primary" class="cursor-pointer" :disable="!message"/>
       </template>
       </q-input>
   </div>

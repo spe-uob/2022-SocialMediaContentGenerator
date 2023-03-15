@@ -1,4 +1,4 @@
-export function loadFBSDK(appID,version) {
+export function InitSDK(appID,version) {
   return new Promise(resolve => {
     window.fbAsyncInit = function () {
       FB.init({
@@ -7,9 +7,15 @@ export function loadFBSDK(appID,version) {
         version:version,
         cookie: true
       });
-      FB.AppEvents.logPageView();
-      resolve('SDK Loaded!');
     };
+    FB.getLoginStatus(({ authResponse }) => {
+      if (authResponse) {
+        accountService.apiAuthenticate(authResponse.accessToken).then(resolve);
+      } else {
+        resolve();
+      }
+    });
+
     (function (d, s, id) {
       const fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) { return; }
@@ -17,14 +23,6 @@ export function loadFBSDK(appID,version) {
       js.src = '//connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-  });
-}
-
-export function getFBLoginStatus() {
-  return new Promise(resolve => {
-    window.FB.getLoginStatus(responseStatus => {
-      resolve(responseStatus);
-    });
   });
 }
 
