@@ -6,7 +6,14 @@
 
 
 <script>
-import axios from 'axios'
+import axios, {isCancel, AxiosError} from 'axios';
+//import { LinkedIn } from 'vue-linkedin-oauth2';
+
+
+/*const linkedin = new LinkedIn({
+  clientId: 'your_client_id_here',
+  clientSecret: 'your_client_secret_here',
+});*/
 export default {
   name: "LinkedInLoginButton",
   methods: {
