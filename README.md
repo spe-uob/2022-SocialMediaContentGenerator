@@ -1,3 +1,5 @@
+Python CI: ![python ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python.yml/badge.svg) Node JS CI: ![node ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/node.js.yml/badge.svg)
+
 # 2022-SocialMediaContentGenerator
 
 ## Working Time:
