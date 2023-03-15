@@ -75,6 +75,13 @@
           </q-item-section>
           <q-item-section>TimeLine View</q-item-section>
         </q-item>
+
+        <q-item clickable v-ripple class="text-grey-5" to="/LinkedInPost" active-class="menu-link">
+          <q-item-section avatar>
+            <q-icon name="fa-brands fa-linkedin" />
+          </q-item-section>
+          <q-item-section>LinkedIn Post</q-item-section>
+        </q-item>
       </q-list>
 
 
