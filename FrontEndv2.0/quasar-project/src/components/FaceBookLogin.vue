@@ -11,7 +11,7 @@
 
 <script>
 import {getAuth,  FacebookAuthProvider, signInWithPopup} from "firebase/auth"
-import {FBLogin, getFBLoginStatus, loadFBSDK} from "boot/FB"
+import {FBLogin, getFBLoginStatus, loadFBSDK} from "../boot/FB"
 const provider = new FacebookAuthProvider();
 export default {
   name: "FaceBookLogin",
