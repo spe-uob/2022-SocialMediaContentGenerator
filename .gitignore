@@ -9,3 +9,5 @@
 /web/node_modules
 /web/.quasar
 /web/dist/spa
+/service/__pycache__/*
+/service/ldm/__pycache__
