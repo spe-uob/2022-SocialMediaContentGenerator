@@ -6,7 +6,7 @@
         <q-icon name="close" @click="message = ''" class="cursor-pointer"/>
       </template>
       <template v-slot:after>
-        <q-icon name="send"  color="primary" class="cursor-pointer" :disable="!message"/>
+        <q-icon name="send"  @click="postToFacebook" :color="primary" class="cursor-pointer" :disable="!message"/>
       </template>
       </q-input>
   </div>
@@ -14,18 +14,36 @@
 </template>
 
 <script>
+import FaceBookLogin from "components/FaceBookLogin";
 import axios from 'axios'
 export default {
   name: "FaceBook",
   data() {
     return {
+      access_token:FaceBookLogin.data().access_token,
       message: ''
     };
   },
+  methods:{
+    async postToFacebook() {
+      const params = {
+        access_token: this.accessToken,
+        message: this.message
+      };
+
+      try {
+        const response = await axios.post('https://graph.facebook.com/v16.0/me/feed', params);
+        console.log('Post was successful!');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 
 }
 
 </script>
+
 
 <style scoped>
 
