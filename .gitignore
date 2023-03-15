@@ -9,11 +9,4 @@
 /web/node_modules
 /web/.quasar
 /web/dist/spa
-/service/__pycache__/*
-/service/ldm/__pycache__
-service/ldm/models/diffusion/__pycache__
-service/ldm/modules/__pycache__
-service/stable_diffusion/__pycache__/
-service/utility/__pycache__/
-service/web_components/__pycache__/
-service/ldm/modules/diffusionmodules/__pycache__/
+*.pyc
