@@ -8,14 +8,6 @@ export function InitSDK(appID,version) {
         cookie: true
       });
     };
-    FB.getLoginStatus(({ authResponse }) => {
-      if (authResponse) {
-        accountService.apiAuthenticate(authResponse.accessToken).then(resolve);
-      } else {
-        resolve();
-      }
-    });
-
     (function (d, s, id) {
       const fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) { return; }
