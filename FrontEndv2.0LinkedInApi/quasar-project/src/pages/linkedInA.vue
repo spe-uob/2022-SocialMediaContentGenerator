@@ -10,6 +10,29 @@
       <p>Your access token is: {{ access_token }}</p>
     </div>
   </div>
+  <div>
+    <q-input
+      rounded
+      outlined
+      v-model="text"
+      class="q-pa-md"
+      autogrow
+      maxlength="100"
+    >
+      <template v-slot:append>
+        <q-icon name="close" @click="text = ''" class="cursor-pointer"/>
+      </template>
+      <template v-slot:after>
+        <q-icon name="send" @click="postToLinkedIn" color="primary" class="cursor-pointer" :disable="!text"/>
+      </template>
+    </q-input>
+    <q-img :src="image" style="max-width: 40vw"></q-img>
+    <q-file color="purple-12" @update:model-value="uploadImage($event)" label="Add images">
+      <template v-slot:prepend>
+        <q-icon name="attach_file"/>
+      </template>
+    </q-file>
+  </div>
 </template>
 
 <script>
@@ -57,6 +80,37 @@ export default {
           .catch(error => console.error(error))
       }
     },
+    postToLinkedIn() {
+      const message = 'Hello, world!'; // the message to post
+      const visibility = {
+        'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC' // the visibility of the post
+      };
+
+      axios.post('https://api.linkedin.com/v2/ugcPosts', {
+        author: `urn:li:person:${this.userId}`,
+        lifecycleState: 'PUBLISHED',
+        specificContent: {
+          'com.linkedin.ugc.ShareContent': {
+            shareCommentary: {
+              text: message
+            },
+            shareMediaCategory: 'NONE'
+          }
+        },
+        visibility: visibility
+      }, {
+        headers: {
+          'Authorization': `Bearer ${this.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          console.log('Post was successful!');
+        })
+        .catch(error => {
+          console.log('Error posting to LinkedIn:', error);
+        });
+    }
   },
   mounted() {
     this.retrieveAccessToken()

@@ -22,18 +22,31 @@
       </template>
     </q-file>
   </div>
+  <a class="twitter-timeline"
+     href = "https://twitter.com/${this.twitterUsername}"
+     data-aria-polite="assertive">
+  <!--:href = "'https://twitter.com/' + temp">{{temp}}-->
+    <!--data-chrome="nofooter"-->
+    Tweets by @{{temp}}
+  </a>
+  <a v-html="twitterTimelineLink"></a>
+
 </template>
 
-<script>
+<script >
 import {data} from 'browserslist';
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
 
 console.log(AuthComponent.data().token);
 console.log(AuthComponent.data().displayName);
+const temp =  AuthComponent.data().displayName;
+const test = "https://twitter.com/" + temp;
+console.log(test)
 
 export default defineComponent({
   name: "Twitter",
+  props: [test, temp],
   data() {
     return {
       text: '',
@@ -42,18 +55,21 @@ export default defineComponent({
       consumer_secret: AuthComponent.data().apiSecret,
       access_token: AuthComponent.data().token,
       access_token_secret: AuthComponent.data().secret,
+      twitterUsername: AuthComponent.data().displayName,
     }
   },
   methods: {
+
+
     async addNewTweetPost(){
-      let tweet = this.text
+      /*let tweet = this.text
       const url = `http://localhost:5000/tweet?status=${encodeURIComponent(tweet)}&consumer_key=${encodeURIComponent(AuthComponent.data().apiKey)}&consumer_secret=${encodeURIComponent(AuthComponent.data().apiSecret)}&access_token=${encodeURIComponent(AuthComponent.data().token)}&access_token_secret=${encodeURIComponent(AuthComponent.data().secret)}`
       const response = await fetch(url)
       const data = await response.json()
-      console.log(data)
+      console.log(data)*/
 
-      /*let tweet = this.text
-      const url = `/api/v1/tweet`
+      let tweet = this.text
+      const url = `http://localhost:8888/api/v1/twitter`
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -70,14 +86,7 @@ export default defineComponent({
         mode: 'cors',
       })
       const data = await response.json()
-
-      console.log(AuthComponent.data().displayName)
-
-      let newTweet = {
-        content: this.text,
-        date: Date.now()
-      }
-      this.text = ''*/
+      this.text = ''
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -90,6 +99,13 @@ export default defineComponent({
     async uploadImage(files) {
       this.image = await this.getBase64(files)
     },
+  },
+
+  setup(){
+    return {
+      test,
+      temp,
+    }
   }
 
 })

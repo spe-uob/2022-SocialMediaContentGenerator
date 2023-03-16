@@ -2,7 +2,7 @@ import random
 
 import numpy as np
 import torch
-from service.utility import Task
+from utility import Task
 from stable_diffusion import StableDiffusionModel, Txt2Img, MemoryOptimizer, CorsAttentionOptimizationMode
 
 

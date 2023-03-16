@@ -1,4 +1,16 @@
+Python CI: ![python ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python.yml/badge.svg) Node JS CI: ![node ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/node.js.yml/badge.svg)
+
 # 2022-SocialMediaContentGenerator
+
+## Working Time:
+
+### Benjamin Aram
+
+### David Yan
+
+### Gene Ding
+
+### Stephen Chen [![wakatime](https://wakatime.com/badge/user/23381c4b-372b-46eb-b687-994db38af858/project/f95e8755-5e2c-42fe-b093-687599dfb8b1.svg)](https://wakatime.com/badge/user/23381c4b-372b-46eb-b687-994db38af858/project/f95e8755-5e2c-42fe-b093-687599dfb8b1)
 
 ## Table of Contents
   - [About the project](#about-the-project)

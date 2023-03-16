@@ -21,6 +21,7 @@ def main(args):
     scheduler.start()
     api_server, components = server_initializer.initialize(environment, config['api_server']['static_folder'])
     api_server.run(args.host, args.port)
+    logger.info("Stopping scheduler...")
     scheduler.stop()
 
 
