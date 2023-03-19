@@ -7,9 +7,10 @@ export default {
       try {
         const result = await firebase.auth().signInWithPopup(provider)
         const user = result.user
+        const displayName = user.displayName
         const credential = FacebookAuthProvider.credentialFromResult(result)
         const accessToken = credential.accessToken
-        return [user.displayName, accessToken]
+        return [displayName, accessToken]
         // User is signed in
       } catch (error) {
         // Handle error
