@@ -9,11 +9,11 @@
 <script>
 import { getAuth, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'
 import { defineComponent } from 'vue'
+const provider = new FacebookAuthProvider()
 export default defineComponent({
   name: 'FaceBook',
   methods: {
     async loginWithFacebook () {
-      const provider = new FacebookAuthProvider()
       try {
         const auth = getAuth()
         const result = await signInWithPopup(auth, provider)
