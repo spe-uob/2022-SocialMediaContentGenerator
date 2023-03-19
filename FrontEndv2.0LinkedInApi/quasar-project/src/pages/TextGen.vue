@@ -1,10 +1,46 @@
 <template>
-
+  <div>
+    <button @click="generateText">Generate Text</button>
+    <p>{{ generatedText }}</p>
+    <!--<p v-if="generatedText">{{ generatedText }}</p>-->
+  </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: "TextGen"
+  name: "TextGen",
+  data() {
+    return {
+      generatedText: ''
+    };
+  },
+  methods: {
+    async generateText() {
+      const prompt = 'Once upon a time';
+      const apiKey = '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';
+      const url = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+
+      try {
+        const response = await axios.post(url, {
+          prompt: prompt,
+          max_tokens: 50,
+          n: 1,
+          stop: '\n',
+          temperature: 0.5
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          }
+        });
+
+        this.generatedText = response.data.choices[0].text;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 }
 </script>
 
