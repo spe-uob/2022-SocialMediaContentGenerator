@@ -1,5 +1,7 @@
 <template>
   <div>
+    <label for="prompt-input">Enter a prompt:</label>
+    <input id="prompt-input" type="text" v-model="prompt">
     <button @click="generateText">Generate Text</button>
     <p>{{ generatedText }}</p>
     <!--<p v-if="generatedText">{{ generatedText }}</p>-->
