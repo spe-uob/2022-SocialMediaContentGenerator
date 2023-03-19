@@ -18,4 +18,21 @@ firebase.getCurrentUser = () => {
     }, reject)
   })
 }
+
+window.fbAsyncInit = function () {
+  // eslint-disable-next-line no-undef
+  FB.init({
+    appId: '645161304039045',
+    xfbml: false,
+    version: 'v16.0',
+    cookie: true
+  })
+};
+(function (d, s, id) {
+  const fjs = d.getElementsByTagName(s)[0]
+  if (d.getElementById(id)) { return }
+  const js = d.createElement(s); js.id = id
+  js.src = '//connect.facebook.net/en_US/sdk.js'
+  fjs.parentNode.insertBefore(js, fjs)
+}(document, 'script', 'facebook-jssdk'))
 export default firebase
