@@ -9376,6 +9376,16 @@ vue-eslint-parser@^9.0.1:
     lodash "^4.17.21"
     semver "^7.3.6"
 
+vue-facebook-login-component-next@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-facebook-login-component-next/-/vue-facebook-login-component-next-1.0.4.tgz#7283298b2a981a810fb7689e041ef16d481b28f4"
+  integrity sha512-yKVcBxpQ57pt8Vh/1asuJxzZ3Dx0yy2fWXZy/fTWkoJMBFI6sG4yhdfK5pSxFGExDoyOoiTsD4EKv3GG5XEcvw==
+
+vue-facebook-login-component@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vue-facebook-login-component/-/vue-facebook-login-component-4.0.2.tgz#0049e14be20549de25e4592cc8acaa700d867a65"
+  integrity sha512-VjFtropjHoEj+p2/bbM2NXTNWqMFU4uk/HUoOeoTiyg7Is9YvOGmjtFZEvfXWmnoSC3WFrtOL4xOb4/x5+0LpQ==
+
 vue-loader@17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-17.0.1.tgz#c0ee8875e0610a0c2d13ba9b4d50a9c8442e7a3a"
