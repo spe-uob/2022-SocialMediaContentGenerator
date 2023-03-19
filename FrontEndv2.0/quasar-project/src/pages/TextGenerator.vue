@@ -22,7 +22,9 @@ export default {
     async generateText() {
       const prompt = this.prompt;
       const apiKey = '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';
-      const url = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+      //GPT-2 'https://api.openai.com/v1/engines/davinci-codex/completions'
+      //GPT-3 'https://api.openai.com/v1/engines/davinci/completions'
+      const url = 'https://api.openai.com/v1/engines/davinci/completions';
 
       try {
         const response = await axios.post(url, {
