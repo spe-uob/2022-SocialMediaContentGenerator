@@ -18,7 +18,7 @@ export default {
     return {
       prompt: '',
       generatedText: '',
-
+      temperature: 0.5
 
     };
   },
@@ -36,7 +36,7 @@ export default {
           max_tokens: 50,
           n: 1,
           stop: '\n',
-          temperature: 0.5
+          temperature: this.temperature
         }, {
           headers: {
             'Content-Type': 'application/json',
