@@ -7,9 +7,13 @@
     >
     <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="login" rounded></q-btn>
     <v-facebook-login app-id="645161304039045">
-      <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit"  rounded></q-btn>
+      <template v-slot:button>
+        <button class="custom-facebook-button">Login with Facebook</button>
+      </template>
     </v-facebook-login>
-    <FaceBook @login="handleFacebookLogin"></FaceBook>
+    <div>
+    <FaceBook></FaceBook>
+    </div>
 
   </q-page>
 </template>
