@@ -10,6 +10,22 @@ const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?respons
 let accessToken = 'AQVgVkduTETUtblERvunIpMxrw2jDeJfFldADa68vEZHjdUOfiRgSKhle6chBxOjclV8gHyYlFCTc-aWLrOV5QfuvMNw8qbFl5FFVMhpHFY8vbMU86nw9Ws4XrYKyh9jPaQ7ptqZ_cOKT5DD3qp4T6wWs5H9Lmnrx22vK--YxrHJ35RzlHJfinUi57zwBfr4S3x_f-7yiHpglEtpWDE9FyFKE2T83AYsl0N2oRCY_vNTgK78-CC31nY3lfhMHejVKTM7ozLmfIvD2Myjtqr9V4fBLRK4BdvKpU_loHxjAEYn-GoFzYxzBJRNr-pw9iImVk6kiWCW15ak-HGerLoJwoBYIsyKXg'
 let userId = ''
 
+async function checkAccessToken() {
+  const headers = {
+    'Authorization': `Bearer ${accessToken}`,
+    'cache-control': 'no-cache',
+    'X-Restli-Protocol-Version': '2.0.0'
+  }
+
+  try {
+    let response = await axios.get('https://api.linkedin.com/v2/me', {headers})
+    userId = response.data.id;
+    console.log(`Access token is still valid. User ID: ${userId}`);
+  } catch (error) {
+    console.log(`Access token is invalid or has expired. Error: ${error}`);
+  }
+}
+
 async function retrieveAccessToken() {
   /* const code = new URLSearchParams(linkedinAuthUrl).get('code')
    if (code) {
@@ -105,6 +121,7 @@ async function postToLinkedIn() {
 
 async function run() {
   console.log("start")
+  await checkAccessToken()
   await retrieveAccessToken()
   console.log("second")
   await postToLinkedIn()
@@ -113,3 +130,8 @@ async function run() {
 
 run()
 //await postToLinkedIn();
+
+export {
+  retrieveAccessToken,
+  postToLinkedIn
+}

@@ -23,7 +23,10 @@
         <q-icon name="close" @click="text = ''" class="cursor-pointer"/>
       </template>
       <template v-slot:after>
-        <q-icon name="send" @click="postToLinkedIn" color="primary" class="cursor-pointer" :disable="!text"/>
+        <q-icon name="send" @click="post" color="primary" class="cursor-pointer" :disable="!text"/>
+        <div v-if="postResponse">
+          <p>{{ postResponse }}</p>
+        </div>
       </template>
     </q-input>
     <q-img :src="image" style="max-width: 40vw"></q-img>
@@ -36,8 +39,10 @@
 </template>
 
 <script>
+import { postToLinkedIn , retrieveAccessToken} from '../../LinkedInReq.js'
 import axios from 'axios'
 import qs from 'qs'
+
 
 const client_id = '78sme225fsy5by'
 const client_secret = 'J3xg14qRTV87viVq'
@@ -49,15 +54,30 @@ export default {
     return {
       authorized: false,
       access_token: '',
+      postText: '',
+      postLink: '',
+      userId: '',
+      postResponse: ''
     }
   },
   methods: {
-    authorize() {
-      const state = Math.random().toString(36).substring(7)
-      const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&state=${state}&scope=${scope}`
-      window.location.href = linkedinAuthUrl
+    //postToLinkedIn(){},
+    async authorize() {
+      /* const state = Math.random().toString(36).substring(7)
+       const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&state=${state}&scope=${scope}`
+       window.location.href = linkedinAuthUrl*/
+      this.access_token = await retrieveAccessToken();
+      console.log(`access token : ${this.access_token}`);
+      this.userId = await retrieveAccessToken();
     },
-    retrieveAccessToken() {
+    async post() {
+      // Post to LinkedIn
+      this.postResponse = await postToLinkedIn(this.accessToken, this.userId, this.postText, this.postLink);
+      console.log(`Post response: ${JSON.stringify(this.postResponse)}`);
+    }
+  }
+
+    /*retrieveAccessToken() {
       const code = new URLSearchParams(window.location.search).get('code')
       if (code) {
         const data = {
@@ -84,7 +104,7 @@ export default {
       }
     },
 
-    postToLinkedIn() {
+    postToLinkedin() {
       const message = 'Hello, world!'; // the message to post
       const visibility = {
         'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC' // the visibility of the post
@@ -120,7 +140,8 @@ export default {
   },
   mounted() {
     this.retrieveAccessToken()
-  },
+  },*/
+
 }
 </script>
 
