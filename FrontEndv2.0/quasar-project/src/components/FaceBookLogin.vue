@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-center">
 
-      <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="FB_firebase" rounded></q-btn>
+      <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="login" rounded></q-btn>
 
       </div>
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 import {getAuth,  FacebookAuthProvider, signInWithPopup} from "firebase/auth"
-
+import firebase from "firebase/compat/app"
 import {FBLogin,InitSDK} from "../boot/FB"
 
 const provider = new FacebookAuthProvider();
@@ -20,6 +20,7 @@ export default {
 
   data() {
     return {
+      fb:"",
       appID:"645161304039045",
       version:"v16.0",
       isConnected:false,
@@ -29,56 +30,41 @@ export default {
   },
 
   methods: {
-    async FB_firebase(){
-      const auth = getAuth();
-      const provider = new FacebookAuthProvider();
-      let fb = await signInWithPopup(auth, provider)
+    async login () {
+      const auth = getAuth()
+      const fb = await signInWithPopup(auth, provider)
         .then((result) => {
-          const user = result.user;
-          const credential = FacebookAuthProvider.credentialFromResult(result);
-          const accessToken = credential.accessToken;
-          const secret = credential.secret
-          const displayName = user.displayName
-          console.log(displayName)
-          console.log(accessToken)
-          console.log(secret)
-          this.access_token = accessToken
-          this.$router.push("/FaceBook")
-          return accessToken,secret,displayName
+          const credential = result.credential
+          const token = credential.accessToken
+          const user = result.user
+          console.log(token)
+          console.log(user)
+        }).catch((error) => {
+          console.log(error.code)
+          console.log(error.message)
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.customData.email;
-          const credential = FacebookAuthProvider.credentialFromError(error);
-          console.log(errorCode,errorMessage)
-        })
-
-
+      this.fb = fb
     },
-    FB_fbsdk(){
-      InitSDK(this.appID,this.version)
-      FBLogin()
-
-
-    },
-
-    /*mounted() {
-      loadFBSDK(this.appId, this.version)
-        .then(loadingResult => {
+    created () {
+      const firebaseConfig = {
+        apiKey: 'AIzaSyBDwO_OvSwRkQJ66A_OFo4cOR51DdnLHsY',
+        authDomain: 'test-b64fd.firebaseapp.com',
+        projectId: 'test-b64fd',
+        storageBucket: 'test-b64fd.appspot.com',
+        messagingSenderId: '888879762179',
+        appId: '1:888879762179:web:575028c2a264d7c8efb736',
+        measurementId: 'G-JS1VSJ2JEH'
+      }
+      firebase.initializeApp(firebaseConfig)
+      firebase.getCurrentUser = () => {
+        return new Promise((resolve, reject) => {
+          const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+            unsubscribe()
+            resolve(user)
+          }, reject)
         })
-        .then(() => getLoginStatus())
-        .then(response => {
-          if (response.status === 'connected') {
-            this.isConnected = true;
-          }
-          this.$emit('get-initial-status', response);
-          this.$emit('sdk-loaded', {
-            isConnected: this.isConnected,
-            FB: window.FB
-          })
-        });
-    }*/
+      }
+    }
   }
 }
 </script>
