@@ -12,7 +12,6 @@
 <script>
 import {getAuth,  FacebookAuthProvider, signInWithPopup} from "firebase/auth"
 import firebase from "firebase/compat/app"
-import {FBLogin,InitSDK} from "../boot/FB"
 
 const provider = new FacebookAuthProvider();
 export default {
@@ -47,13 +46,12 @@ export default {
     },
     created () {
       const firebaseConfig = {
-        apiKey: 'AIzaSyBDwO_OvSwRkQJ66A_OFo4cOR51DdnLHsY',
-        authDomain: 'test-b64fd.firebaseapp.com',
-        projectId: 'test-b64fd',
-        storageBucket: 'test-b64fd.appspot.com',
-        messagingSenderId: '888879762179',
-        appId: '1:888879762179:web:575028c2a264d7c8efb736',
-        measurementId: 'G-JS1VSJ2JEH'
+        apiKey: "AIzaSyAhLly_xBcWA2FTfeKe726EGCJmQD7mGHo",
+        authDomain: "socialmediacontentgenerator.firebaseapp.com",
+        projectId: "socialmediacontentgenerator",
+        storageBucket: "socialmediacontentgenerator.appspot.com",
+        messagingSenderId: "205591394295",
+        appId: "1:205591394295:web:474e8be42ce7a64edde0f2"
       }
       firebase.initializeApp(firebaseConfig)
       firebase.getCurrentUser = () => {
