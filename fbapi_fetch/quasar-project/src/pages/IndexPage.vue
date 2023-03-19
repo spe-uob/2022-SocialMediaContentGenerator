@@ -18,7 +18,8 @@
 import VFacebookLogin from 'vue-facebook-login-component-next'
 import { defineComponent } from 'vue'
 import FaceBook from 'components/FaceBook'
-
+import { getAuth, signInWithPopup, FacebookAuthProvider } from 'firebase/auth'
+const provider = new FacebookAuthProvider()
 export default defineComponent({
   components: {
     FaceBook,
@@ -37,6 +38,28 @@ export default defineComponent({
   methods: {
     handleFacebookLogin (user) {
       this.displayName = user.displayName
+    },
+    async login () {
+      const auth = getAuth()
+      const fb = await signInWithPopup(auth, provider)
+        .then((result) => {
+          const credential = result.credential
+          const token = credential.accessToken
+          const user = result.user
+          console.log(token)
+          console.log(user)
+        }).catch((error) => {
+          console.log(error.code)
+          console.log(error.message)
+        })
+      this.fb = fb
+    },
+    logout () {
+      const auth = getAuth()
+      auth.signOut()
+        .then(() => {
+          console.log('Logout Successful')
+        })
     }
   }
 })
