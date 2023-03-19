@@ -1,6 +1,7 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import 'firebase/auth'
-import FBAuthComponent from 'components/FBAuthComponent.vue'
+
+import AuthComponent from './../src/components/FBAuthComponent.vue'
 
 describe('AuthComponent Test', () => {
   it('should render a button with text: sign in with facebook', () => {
