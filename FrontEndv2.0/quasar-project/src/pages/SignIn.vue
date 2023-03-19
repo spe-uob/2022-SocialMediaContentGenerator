@@ -28,9 +28,11 @@
                 <div class="q-pa-sm"></div>
                 <AuthComponent />
                 <div class="q-pa-sm"></div>
+
                 <div class="q-pa-none"></div>
                 <FaceBookLogin />
                 <div class="q-pa-sm"></div>
+
                 <div class="q-pa-none"></div>
                 <LinkedInLogin />
                 </div>
