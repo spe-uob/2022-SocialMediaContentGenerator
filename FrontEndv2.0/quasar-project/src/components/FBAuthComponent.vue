@@ -12,20 +12,18 @@
 <script>
 import {getAuth,  FacebookAuthProvider, signInWithPopup} from "firebase/auth"
 import firebase from "firebase/compat/app"
-
 const provider = new FacebookAuthProvider();
 const user_token = 'EAAJKxVJZAnoUBAOCAT1gMW6XieimRCjMAEnYS2ZACH0iolQJe6Hbc9X7rWyN15UyGJVIZClKHADXRavPcpDljROcCaef3UihisvTyZA2hbDZCBkpCTjezzB0IuuAcXE834Q6ipa7FQojMBjWdRGK3lThQUHB5yiYFeqgXlf4ZAd6ePni2m7wTnmXJa7KaURQQtHYbOLw7iE4z29MXW1TvG'
 const page_token = 'EAAJKxVJZAnoUBAGbp87KcGG7wXX9voeP4diFHtgitKKDhVVWDLCPhfUK3i9dMfweA8ronmukO0pZCeuQXhpWZAnfJznXWYRQK50t0oBQZCtjusSUFSr90ylFBQxUNH62Yld8OrJwrUX3tstVD3AWyep2jTJoNxqp7wxqxucsafMpyTXFnsrvwMZCjIBDL4MOdZAZArscpxuwi0woRokIuuc'
 const page_id = '101969492843962'
 export default {
-  name: "FaceBookLogin",
+  name: "FBAuthComponent",
 
   data() {
     return {
       fb:"",
       appID:"645161304039045",
       version:"v16.0",
-      isConnected:false,
       message: '',
       access_token:''
     };
@@ -36,44 +34,17 @@ export default {
       const auth = getAuth()
       let fb = await signInWithPopup(auth, provider)
         .then((result) => {
-          const credential = result.credential
+          const credential = FacebookAuthProvider.credentialFromResult(result)
           const token = credential.accessToken
           const user = result.user
           console.log(token)
           console.log(user)
-          this.$router.push("/FaceBook")
+          this.$router.push("/FaceBookPost")
         }).catch((error) => {
           console.log(error.code)
           console.log(error.message)
         })
-      this.fb = fb
-      try {
-        const user = firebase.auth().currentUser;
-        if (!user) {
-          throw new Error('User not logged in');
-        }
-        const providerData = user.providerData.find((p) => p.providerId === 'facebook.com');
-        if (!providerData) {
-          throw new Error('Facebook account not linked to user');
-        }
-        const { accessToken } = providerData;
-        const response = await fetch(`https://graph.facebook.com/${page_id}/feed`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: 'Hello, Facebook!',
-            access_token: '',
-          }),
-        });
-        const data = await response.json();
-        console.log('Facebook post response:', data);
-      } catch (error) {
-        console.error('Facebook post error:', error);
-        // Handle post error here
-      }
-    },
+    }
   }
 }
 </script>
