@@ -21,4 +21,4 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
       - name: Deploy with rsync
         run:
-          rsync -avz ./dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:~/2022-SocialMediaContentGenerator/service/
+          rsync -avz ./dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:~/service/
