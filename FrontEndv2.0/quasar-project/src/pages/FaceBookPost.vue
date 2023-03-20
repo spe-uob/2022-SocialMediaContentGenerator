@@ -14,32 +14,34 @@
 </template>
 
 <script>
-import FBAuthComponent from "components/FBAuthComponent";
 import axios from "axios";
-const user_token = FBAuthComponent.data().user_token
-const page_token = FBAuthComponent.data().page_token
-console.log("hi")
-console.log(user_token)
-console.log(page_token)
-const page_id = '101969492843962'
+const page_id = '119057271096466'
 export default {
   name: "FaceBookPost",
   data(){
     return{
       message:"",
-      image:""
+      picture:"~src/quasar-logo-vertical.svg",
+      user_token:"",
+      page_token:""
     }
   },
   methods: {
     postToFacebook(){
-      console.log("hi")
-      console.log(user_token)
-      console.log(page_token)
+      console.log("user access token:", this.$route.query.user_token)
+      console.log("page access token:", this.$route.query.page_token)
+      this.page_token = this.$route.query.page_token
+      this.user_token = this.$route.query.user_token
       const formData = new FormData();
       formData.append('message', 'Hello, World!');
       formData.append('source', '~assets/quasar-logo-vertical.svg');
-
-      axios.post(`https://graph.facebook.com/${page_id}/photos?access_token=${page_token}`, formData)
+      console.log("message sent", this.message)
+      console.log("page token", this.page_token)
+      axios.post(`https://graph.facebook.com/${page_id}/feed`, {
+        message: this.message,
+        access_token: this.page_token,
+        picture:this.picture
+      })
         .then(response => {
           console.log('Response:', response);
         })
