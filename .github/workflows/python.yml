@@ -28,3 +28,12 @@ jobs:
       - name: Test with pytest
         run: |
           python -m pytest
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@5.2.1
+        with:
+          switches: -avzr --delete
+          path: ./service
+          remote_path: ~/2022-SocialMediaContentGenerator
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
