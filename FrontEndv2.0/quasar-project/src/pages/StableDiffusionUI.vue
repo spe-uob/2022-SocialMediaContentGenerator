@@ -180,7 +180,7 @@ export default defineComponent({
       height: 512,
       n_iter: 1,
       batch_size: 1,
-      base_url: '',
+      base_url: 'http://localhost:8888',
       sampler: 'DDIM',
       sampler_options: [],
       images_buffer: [],
@@ -366,7 +366,7 @@ export default defineComponent({
       this.model = info['current_model']
     },
     async getInfo() {
-      let request = await fetch(this.getUrl('/api/v1/get_info'), {method: 'GET', mode: 'cors'});
+      let request = await fetch(this.getUrl('/api/v1/current_model'), {method: 'GET', mode: 'cors'});
       return request.json();
     },
 
@@ -393,7 +393,7 @@ export default defineComponent({
     await this.getCurrentModel();
     await this.syncSamplerList();
     window.setInterval(this.syncTasks, 500);
-    window.setInterval(this.syncGPUInfo, 200);
+    // window.setInterval(this.syncGPUInfo, 200);
   },
   beforeUnmount() {
     this.$q.loading.hide()
