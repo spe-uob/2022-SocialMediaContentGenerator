@@ -35,4 +35,4 @@ jobs:
           remote_path: ~/test
           remote_host: 20.55.89.238
           remote_user: uobproj_admin
-          remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_key: ${{ secrets.DEPLOY }}
