@@ -7,12 +7,12 @@ defaults:
     working-directory: ./service
   only:
     refs:
-      - master
+      - main
 
 jobs:
   only:
     refs:
-      - master
+      - main
   build:
 
     runs-on: ubuntu-latest
