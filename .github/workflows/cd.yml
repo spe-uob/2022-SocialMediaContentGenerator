@@ -33,6 +33,6 @@ jobs:
           switches: -avzr --delete
           path: .
           remote_path: ~/test
-          remote_host: ${{ secrets.HOST }}
-          remote_user: ${{ secrets.USER }}
+          remote_host: 20.55.89.238
+          remote_user: uobproj_admin
           remote_key: ${{ secrets.DEPLOY_KEY }}
