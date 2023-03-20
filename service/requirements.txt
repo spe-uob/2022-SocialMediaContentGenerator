@@ -13,5 +13,10 @@ rich
 safetensors
 service
 torch==1.11.0
+torchmetrics==0.6.0
+transformers==4.19.2
 tweepy==4.12.1
 diffusers==0.10.2
+pytorch_lightning==1.4.2
+-e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers
+-e git+https://github.com/openai/CLIP.git@main#egg=clip
