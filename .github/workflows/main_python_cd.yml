@@ -3,7 +3,7 @@ name: Python Test and Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 defaults:
   run:
