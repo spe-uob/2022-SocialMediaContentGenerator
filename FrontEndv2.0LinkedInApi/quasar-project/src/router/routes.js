@@ -16,6 +16,7 @@ const routes = [
       { path: '/MyLinkedInPage', component: () => import('pages/MyLinkedInPage.vue')},
       { path: '/loginWithLinkedIn', component: () => import('pages/loginWithLinkedIn.vue')},
       { path: '/linkedInA', component: () => import('pages/linkedInA.vue')},
+      { path: '/TextGen', component: () => import('pages/TextGen.vue')},
     ]
   },
 
