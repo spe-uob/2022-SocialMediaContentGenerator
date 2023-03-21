@@ -1,6 +1,6 @@
 name: Python Test and Deploy
 
-on: [push, merge]
+on: [push]
 
 defaults:
   run:
