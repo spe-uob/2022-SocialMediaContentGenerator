@@ -1,6 +1,7 @@
 import Index from "layouts/Index.vue";
 import Home from "pages/Home.vue";
 import TwitterView from "src/pages/SignIn.vue";
+import FaceBookPost from "src/pages/FaceBookPost.vue";
 
 const routes = [
   {
@@ -10,10 +11,10 @@ const routes = [
       { path: '', component: Home },
       { path: '/home' , name: 'home', component: Home},
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
+      { path: '/FaceBookPost', name: 'FaceBookPost', component: FaceBookPost},
       { path:  '/signin', component: () => import('src/pages/SignIn.vue')},
       { path: '/stablediffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
       { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
-      { path: '/FaceBook', component: () => import('pages/FaceBook.vue')},
       { path: '/LinkedInPost', component: () => import('pages/LinkedInPost.vue')},
     ]
   },

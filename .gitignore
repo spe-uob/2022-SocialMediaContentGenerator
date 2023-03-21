@@ -9,3 +9,4 @@
 /web/node_modules
 /web/.quasar
 /web/dist/spa
+*.pyc
