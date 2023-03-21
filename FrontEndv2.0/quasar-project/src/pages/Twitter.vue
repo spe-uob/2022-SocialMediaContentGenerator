@@ -33,7 +33,7 @@
 
 </template>
 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
+<script >
 import {data} from 'browserslist';
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
@@ -62,14 +62,14 @@ export default defineComponent({
 
 
     async addNewTweetPost(){
-      let tweet = this.text
+      /*let tweet = this.text
       const url = `http://localhost:5000/tweet?status=${encodeURIComponent(tweet)}&consumer_key=${encodeURIComponent(AuthComponent.data().apiKey)}&consumer_secret=${encodeURIComponent(AuthComponent.data().apiSecret)}&access_token=${encodeURIComponent(AuthComponent.data().token)}&access_token_secret=${encodeURIComponent(AuthComponent.data().secret)}`
       const response = await fetch(url)
       const data = await response.json()
-      console.log(data)
+      console.log(data)*/
 
-      /*let tweet = this.text
-      const url = `/api/v1/tweet`
+      let tweet = this.text
+      const url = `http://localhost:8888/api/v1/twitter`
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -86,14 +86,7 @@ export default defineComponent({
         mode: 'cors',
       })
       const data = await response.json()
-
-      console.log(AuthComponent.data().displayName)
-
-      let newTweet = {
-        content: this.text,
-        date: Date.now()
-      }
-      this.text = ''*/
+      this.text = ''
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
