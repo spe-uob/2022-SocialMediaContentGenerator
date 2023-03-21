@@ -1,6 +1,6 @@
-name: Python package/CD
+name: Python Test and Deploy
 
-on: [push]
+on: [push, merge]
 
 defaults:
   run:
@@ -10,11 +10,7 @@ defaults:
       - main
 
 jobs:
-  only:
-    refs:
-      - main
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
