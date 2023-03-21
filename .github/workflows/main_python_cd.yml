@@ -1,13 +1,13 @@
 name: Python Test and Deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 defaults:
   run:
     working-directory: ./service
-  only:
-    refs:
-      - main
 
 jobs:
   build:
