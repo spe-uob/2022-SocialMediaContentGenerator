@@ -1,4 +1,4 @@
-Python CI: ![python ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python.yml/badge.svg) Node JS CI: ![node ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/node.js.yml/badge.svg) [![Python Test and Deploy](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml/badge.svg?event=deployment_status)](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml)
+Python CI: ![python ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python.yml/badge.svg) Node JS CI: ![node ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/node.js.yml/badge.svg) [![Python Test and Deploy](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml/badge.svg)](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml)
 
 # 2022-SocialMediaContentGenerator
 
