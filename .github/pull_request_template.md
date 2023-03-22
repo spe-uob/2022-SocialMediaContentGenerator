@@ -1,3 +1,7 @@
+---
+name: Pull Request Template
+about: A formal template for pull requests
+---
 
 # Pull Request
 
@@ -9,7 +13,7 @@
 - [ ] Plan a new feature
 - [ ] Implement a planed feature
 - [ ] Fix a bug
-- [ ] Organize folder (please include path below)
+- [ ] Organize folder (Please include path below)
 - [ ] Other (Please specify below)
 
 ## Did you test/debug it?
@@ -19,8 +23,8 @@
 
 ## Any strange behavior?
 
-please write it here if it exists
+Please write it here if it exists
 
 ## Any other description?
 
-please write it here if it exists
+Please write it here if it exists
