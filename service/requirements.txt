@@ -12,7 +12,7 @@ Pillow
 rich
 safetensors
 service
-torch==1.11.0
+torch==1.13.1
 torchmetrics==0.6.0
 transformers==4.19.2
 tweepy==4.12.1
