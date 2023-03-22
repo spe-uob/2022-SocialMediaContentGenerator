@@ -1,7 +1,3 @@
----
-name: Pull Request Template
-about: A formal template for pull requests
----
 
 # Pull Request
 
