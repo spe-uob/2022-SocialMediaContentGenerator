@@ -1,9 +1,13 @@
 
 # Pull Request
 
-#### *Please write "X" between "[X]" to check the checkbox*
+## Main description here:
+
+Please replace this line to your description
 
 ## What did the work do at this stage
+
+##### *Please write "X" between "[ ]" to check the checkbox, make sure replace the black to "X"*
 
 ### Program changes
 
