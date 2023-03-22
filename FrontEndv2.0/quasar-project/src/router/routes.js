@@ -1,6 +1,5 @@
 import Index from "layouts/Index.vue";
 import Home from "pages/Home.vue";
-import TwitterView from "src/pages/SignIn.vue";
 import FaceBookPost from "src/pages/FaceBookPost.vue";
 
 const routes = [
