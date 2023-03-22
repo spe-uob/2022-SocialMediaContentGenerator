@@ -29,6 +29,11 @@
 - [ ] Update a file
 - [ ] Remove a file
 
+### Other changes
+
+- [ ] This is a emergency fix or change, it should be merged ASAP(If check this, means it is not necessary to fill other blanks, but please don't abuse this option)
+- [ ] Other (Please specify below)
+
 ## Did you test/debug it?
 
 - [ ] Yes (Please include the steps below)
@@ -37,8 +42,8 @@
 
 ## Any strange behavior?
 
-Please write it here if it exists
+Please write it here if it exists or leave it blank
 
 ## Any other description?
 
-Please write it here if it exists
+Please write it here if it exists or leave it blank
