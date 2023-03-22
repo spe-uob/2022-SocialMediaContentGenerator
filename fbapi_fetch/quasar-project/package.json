@@ -15,7 +15,7 @@
     "core-js": "^3.6.5",
     "firebase": "^9.18.0",
     "firebase-tools": "^11.24.1",
-    "quasar": "^2.6.0",
+    "quasar": "^2.11.8",
     "vue": "^3.0.0",
     "vue-facebook-login-component": "^4.0.2",
     "vue-facebook-login-component-next": "^1.0.4",
