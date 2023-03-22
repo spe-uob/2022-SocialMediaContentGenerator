@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-left">
     <div class="col-sm-4 q-pa-sm">
       <q-card>
         <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
@@ -55,6 +55,7 @@
       </q-card>
 
     </div>
+
   </q-page>
   <div>
     <label for="prompt-input">Enter a prompt:</label>
