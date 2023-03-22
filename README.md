@@ -17,7 +17,6 @@ Python CI: ![python ci](https://github.com/spe-uob/2022-SocialMediaContentGenera
   - [Our client](#our-client)
   - [Our group members](#our-group-members)
   - [Stakeholders and User Stories](#stakeholders-and-user-stories)
-  - [Dev env](#dev-env)
   - [Front end](#front-end)
   - [Back end](#back-end)
   - [Project Requirements](#project-requirements)
