@@ -24,9 +24,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Install Node.js dependencies
+        run: npm ci
       - run: yarn
+      - run: yarn add eslint
       - run: yarn test
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
+
