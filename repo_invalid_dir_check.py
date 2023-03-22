@@ -11,13 +11,15 @@ invalid_dir_name = [
     'build'
 ]
 
+skip_path = []
+
 
 def check_invalid_dir():
     passed = True
     invalid_dirs = []
     for root, dirs, files in os.walk('.'):
         for folder in dirs:
-            if folder in invalid_dir_name:
+            if folder in invalid_dir_name and root not in skip_path:
                 print(f'Invalid directory: {os.path.join(root, folder)}')
                 invalid_dirs.append(os.path.join(root, folder))
                 passed = False
