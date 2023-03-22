@@ -4,11 +4,6 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
-updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/FrontEndv2.0/quasar-project" # Location of package manifests
-    schedule:
-      interval: "weekly"
       
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
@@ -19,5 +14,11 @@ updates:
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/fbapi_fetch/quasar-project" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      
+updates:
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/FrontEndv2.0/quasar-project" # Location of package manifests
     schedule:
       interval: "weekly"
