@@ -10,7 +10,7 @@ defaults:
     working-directory: ./service
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
