@@ -5,19 +5,19 @@
 
 version: 2
 updates:
-  - package-ecosystem: "yarn" # See documentation for possible values
+  - package-ecosystem: "npm" # See documentation for possible values
     directory: "/FrontEndv2.0/quasar-project" # Location of package manifests
     schedule:
       interval: "weekly"
       
 updates:
-  - package-ecosystem: "yarn" # See documentation for possible values
+  - package-ecosystem: "npm" # See documentation for possible values
     directory: "/FrontEndv2.0LinkedInApi/quasar-project" # Location of package manifests
     schedule:
       interval: "weekly"
       
 updates:
-  - package-ecosystem: "yarn" # See documentation for possible values
+  - package-ecosystem: "npm" # See documentation for possible values
     directory: "/fbapi_fetch/quasar-project" # Location of package manifests
     schedule:
       interval: "weekly"
