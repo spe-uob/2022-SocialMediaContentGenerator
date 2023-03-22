@@ -16,6 +16,7 @@ const routes = [
       { path: '/FaceBook', component: () => import('pages/FaceBook.vue')},
       { path: '/LinkedInPost', component: () => import('pages/LinkedInPost.vue')},
       { path: '/TextGenerator', component: () => import('pages/TextGenerator.vue')},
+      { path: '/Text', component: () => import('pages/Text.vue')},
     ]
   },
 
