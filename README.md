@@ -1,4 +1,4 @@
-Python CI: ![python ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python.yml/badge.svg) Node JS CI: ![node ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/node.js.yml/badge.svg)
+Python CI: ![python ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python.yml/badge.svg) Node JS CI: ![node ci](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/node.js.yml/badge.svg) [![Python Test and Deploy](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml/badge.svg)](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml)
 
 # 2022-SocialMediaContentGenerator
 
@@ -93,11 +93,6 @@ As a general consumer of social media content, I want to see the newest trends t
   2.5 use `yarn global bin` to find yarn bin path and add it to environment variables and then, goto the directory of front end. execute `quasar dev` to develop quasar projects
     
   2.6 if using yarn doesn't work do `sudo npm i -g @quasar/cli`
-    
-### 3. WebStorm 
-  3.1 check what type of core your mac has either Intel or Apple Silicon by going to "about this mac" after clicking the apple in the top left.
-    
-  3.2 go to https://www.jetbrains.com/webstorm/download/#section=mac
 
 ### Windows:
 
@@ -115,13 +110,12 @@ As a general consumer of social media content, I want to see the newest trends t
   2.5 install `vite plugin` by `yarn add quasar @quasar/extras`
   
   2.6 use `yarn global bin` to find yarn bin path and add it to environment variables and then, goto the directory of front end. execute `quasar dev` to develop quasar projects
-### 3. nginx
 
 ## Back end
 
 ---
 ### Mac:
-### 1. python >= 3.7 should already be installed on a mac os system but run `python --version` if not up to date do:
+### 1. python >= 3.9 should already be installed on a mac os system but run `python --version` if not up to date do:
   1.1 `brew install python` --> install the latest Python.
     
   1.2 ls -l /usr/local/bin/python* --> List all Python versions installed on your system.
@@ -144,18 +138,15 @@ As a general consumer of social media content, I want to see the newest trends t
       
     
 ### Windows:
-### 1. python >= 3.7
+### 1. python >= 3.9
   1.1 download the latest stable release of python from http://python.org/downloads/
 ### 2. pytorch
   2.1 install `pytorch` by `pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116`. pip should already be installed from python
   2.2 for more information, see https://pytorch.org/get-started/locally/ for different system specifications
-### 3. stable diffusion
 
 ## training
 
-1. deepbooru
-
-## Software tools
+1. deepbooru waiting for back end development implementation
 
 jetbrain pycharm
 
@@ -163,3 +154,4 @@ jetbrain pycharm
 
   - Need to have access to the internet.
   - Need to have either a twitter, facebook or linkedIn account to be able to use the website.
+  - It is better have a at least 4GB VRAM NVIDIA GPU to accelerate the generation process.
