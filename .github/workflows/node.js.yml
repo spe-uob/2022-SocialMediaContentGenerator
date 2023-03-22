@@ -26,3 +26,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn
       - run: yarn test
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
