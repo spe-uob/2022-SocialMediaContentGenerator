@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <!--<div class="container">-->
     <div class="left_container">
       <q-card>
         <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
@@ -64,11 +64,12 @@
         placeholder="generate content..."
         v-model="question"
     ></textarea>
-      <button type="submit">img src=</button>
+      <button @click="generateText"><img src="~assets/send.svg"></button>
+      <p>{{ generatedText }}</p>
     </form>
   </div>
   </div>
-  </div>
+  <!--</div>-->
  <!-- <div>
     <label for="prompt-input">Enter a prompt:</label>
     <input id="prompt-input" type="text" v-model="prompt">
@@ -158,13 +159,15 @@ body {
 .left_container{
   display: inline-block;
   float: left;
+  width: 30%;
+  height:30%;
 }
 
 .right_container{
   display: inline-block;
-  float: left;
-  width: 50%;
-  height: 50%;
+  float: right;
+  width: 70%;
+  height: 70%;
 }
 
 .chat_container {
