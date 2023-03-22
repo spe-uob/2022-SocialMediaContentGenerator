@@ -8,6 +8,7 @@ from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import k_diffusion.sampling
 from PIL import Image
+from contextlib import contextmanager, nullcontext
 
 
 class Txt2Img:
@@ -25,17 +26,30 @@ class Txt2Img:
     def load_sampler(self):
         self.samplers["DDIM"] = TypicalStableDiffusionSampler(DDIMSampler, self.model)
         self.samplers["PLMS"] = TypicalStableDiffusionSampler(PLMSSampler, self.model)
+        return
         self.samplers["Euler A"] = KDiffusionSampler(k_diffusion.sampling.sample_euler_ancestral, self.model, self.device)
+        self.samplers["Euler"] = KDiffusionSampler(k_diffusion.sampling.sample_euler, self.model, self.device)
+        self.samplers["LMS"] = KDiffusionSampler(k_diffusion.sampling.sample_lms, self.model, self.device)
+        self.samplers["Heun"] = KDiffusionSampler(k_diffusion.sampling.sample_heun, self.model, self.device)
+        self.samplers["DPM2"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_2, self.model, self.device)
+        self.samplers["DPM2 a"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_2_ancestral, self.model, self.device)
+        self.samplers["DPM++ 2S a"] = KDiffusionSampler(k_diffusion.sampling.sample_dpmpp_2s_ancestral, self.model, self.device)
+        self.samplers["DPM++ 2M"] = KDiffusionSampler(k_diffusion.sampling.sample_dpmpp_2m, self.model, self.device)
+        self.samplers["DPM++ SDE"] = KDiffusionSampler(k_diffusion.sampling.sample_dpmpp_sde, self.model, self.device)
+        self.samplers["DPM fast"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_fast, self.model, self.device)
+        self.samplers["DPM adaptive"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_adaptive, self.model, self.device)
 
     def generate(self, prompt, negative_prompt, height, width, batch_size, seed, sample="DDIM", steps=20, cfg=7.5):
-        with torch.autocast("cuda" if self.device.type == "cuda" else "cpu"):
+        with torch.autocast("cuda") if self.device.type == "cuda" else nullcontext():
+            if self.device.type != "cuda":
+                self.model.cond_stage_model.transformer.to(dtype=torch.float32)
             sampler = self.samplers[sample]
             x = self.create_random_tensors([self.opt_C, height // self.opt_f, width // self.opt_f], seeds=[seed + i for i in range(batch_size)], seed_resize_from_h=0, seed_resize_from_w=0,
                                            sampler=sampler)
-            # uc = self.model.get_learned_conditioning(batch_size * [negative_prompt])
-            # c = self.model.get_learned_conditioning(batch_size * [prompt])
-            uc = prompt_parser.get_learned_conditioning(self.model, batch_size * [negative_prompt], steps)
-            c = prompt_parser.get_multicond_learned_conditioning(self.model, batch_size * [prompt], steps)
+            uc = self.model.get_learned_conditioning(batch_size * [negative_prompt])
+            c = self.model.get_learned_conditioning(batch_size * [prompt])
+            # uc = prompt_parser.get_learned_conditioning(self.model, batch_size * [negative_prompt], steps)
+            # c = prompt_parser.get_multicond_learned_conditioning(self.model, batch_size * [prompt], steps)
             image_conditioning = self.txt2img_image_conditioning(sampler, x, width, height)
 
             samples_ddim = sampler.sample(x, c, uc, steps=steps, cfg_scale=cfg, image_conditioning=image_conditioning)
