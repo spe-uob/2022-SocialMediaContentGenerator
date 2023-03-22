@@ -26,6 +26,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install essential packages
         run: yarn --silent install
+      - name: Install quasar
+        run: yarn global add @quasar/cli
       - name: build
         run: quasar build
       - name: Run tests
