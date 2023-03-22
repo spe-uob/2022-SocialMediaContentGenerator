@@ -14,11 +14,20 @@ invalid_dir_name = [
 
 def check_invalid_dir():
     passed = True
+    invalid_dirs = []
     for root, dirs, files in os.walk('.'):
         for folder in dirs:
             if folder in invalid_dir_name:
                 print(f'Invalid directory: {os.path.join(root, folder)}')
+                invalid_dirs.append(os.path.join(root, folder))
                 passed = False
+    if not passed:
+        print('Please remove the invalid directories.')
+        print('and add them to the .gitignore file.')
+        print('Invalid directories:')
+        for invalid_dir in invalid_dirs:
+            print(invalid_dir)
+        print('Checking Failed!')
     return passed
 
 
