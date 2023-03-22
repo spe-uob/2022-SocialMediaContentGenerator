@@ -154,4 +154,4 @@ jetbrain pycharm
 
   - Need to have access to the internet.
   - Need to have either a twitter, facebook or linkedIn account to be able to use the website.
-  - It is better have a at least 4GB VRAM GPU to accelerate the generation process.
+  - It is better have a at least 4GB VRAM NVIDIA GPU to accelerate the generation process.
