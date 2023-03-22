@@ -27,7 +27,7 @@ jobs:
       - name: Install essential packages
         run: yarn --silent install
       - name: build
-        run: yarn build
+        run: quasar build
       - name: Run tests
         run: yarn test
       - name: Run eslint check
