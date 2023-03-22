@@ -19,7 +19,6 @@
   - [Our client](#our-client)
   - [Our group members](#our-group-members)
   - [Stakeholders and User Stories](#stakeholders-and-user-stories)
-  - [Dev env](#dev-env)
   - [Front end](#front-end)
   - [Back end](#back-end)
   - [Project Requirements](#project-requirements)
@@ -73,8 +72,6 @@ As a member of the general public, I want to keep up to date with social media t
 
 Member of the general public (consumer):
 As a general consumer of social media content, I want to see the newest trends to keep up with people around me.
-
-# Dev env
 
 ## Front end
 
