@@ -24,8 +24,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: pwd
       - run: yarn --silent install
-      - run: yarn add eslint
       - run: yarn test
       - name: Run linters
         uses: wearerequired/lint-action@v2
