@@ -19,16 +19,17 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v2
-      - run: pwd
-      - run: yarn --silent install
-      - run: yarn test
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          eslint: true
+      - name: Install essential packages
+        run: yarn --silent install
+      - name: build
+        run: yarn build
+      - name: Run tests
+        run: yarn test
+      - name: Run eslint check
+        run: yarn run lint
 
