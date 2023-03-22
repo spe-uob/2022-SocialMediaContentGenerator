@@ -1,4 +1,3 @@
-import { boot } from 'quasar/wrappers'
 import firebase from "firebase/compat/app"
 
 const firebaseConfig = {
