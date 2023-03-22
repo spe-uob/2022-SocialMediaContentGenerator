@@ -51,14 +51,14 @@
   </div>
   </div>
   <!--</div>-->
- <div>
+ <!--<div>
     <label for="prompt-input">Enter a prompt:</label>
     <input id="prompt-input" type="text" v-model="prompt">
     <label for="temperature-toggle">Temperature:</label>
     <input id="temperature-toggle" type="range" min="0" max="1" step="0.1" v-model="temperature">
     <button @click="generateText">Generate Text</button>
     <p>{{ generatedText }}</p>
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -83,7 +83,7 @@ export default {
 
       try {
         const response = await axios.post(url, {
-          model: 'text-davinci-003' ,
+          //model: 'text-davinci-003' ,
           prompt: prompt,
           max_tokens: 50,
           n: 1,

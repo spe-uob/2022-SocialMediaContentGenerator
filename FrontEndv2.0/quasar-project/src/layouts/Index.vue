@@ -90,12 +90,12 @@
           <q-item-section>Text Generator</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple class="text-grey-5" to="/Text" active-class="menu-link">
+        <!--<q-item clickable v-ripple class="text-grey-5" to="/Text" active-class="menu-link">
           <q-item-section avatar>
             <q-icon name="article" />
           </q-item-section>
           <q-item-section>Text</q-item-section>
-        </q-item>
+        </q-item>-->
       </q-list>
 
 
