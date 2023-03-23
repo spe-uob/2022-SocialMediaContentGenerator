@@ -14,5 +14,5 @@
 ./FrontEndv2.0/quasar-project/.vscode
 ./fbapi_fetch/quasar-project/.vscode
 ./FrontEndv2.0LinkedInApi/quasar-project/.vscode
-service/images/*
 
+/service/images/
