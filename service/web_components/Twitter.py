@@ -24,6 +24,8 @@ class TwitterBackEnd(Component):
         auth.set_access_token(access_token, access_token_secret)
 
         api = tweepy.API(auth)
-        #api.update_status(tweet_string)
-        api.update_status_with_media(tweet_string, '1.png', file=file)
+        if image_base64:
+            api.update_status_with_media(tweet_string, '1.png', file=file)
+        else:
+            api.update_status(tweet_string)
         return {'status': 'ok', 'tweet': tweet_string}
