@@ -28,20 +28,13 @@
                 <div class="q-pa-sm"></div>
                 <AuthComponent />
                 <div class="q-pa-sm"></div>
-
-                <div class="q-pa-sm"></div>
                 <FBAuthComponent />
                 <div class="q-pa-sm"></div>
-
-                <div class="q-pa-none"></div>
                 <LinkedInLogin />
                 </div>
-
             </q-form>
           </q-card-section>
-
         </q-card>
-
       </div>
     </div>
   </q-page>
@@ -49,7 +42,6 @@
 
 <script>
 import AuthComponent from "components/AuthComponent.vue"
-import firebase from 'boot/firebase.js'
 import LinkedInLogin from "components/LinkedInLogin.vue";
 import FBAuthComponent from "components/FBAuthComponent.vue";
 export default {

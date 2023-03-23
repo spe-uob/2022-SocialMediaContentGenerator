@@ -1,4 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import 'firebase/auth'
 import AuthComponent from './../src/components/AuthComponent.vue'
 

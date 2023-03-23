@@ -7,35 +7,24 @@
 </template>
 
 <script>
-  import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth"
-  const provider = new TwitterAuthProvider()
+  import { getAuth, signInWithPopup, TwitterAuthProvider, onAuthStateChanged } from "firebase/auth"
+  import { auth } from "./../boot/firebase.js"
+
+  const provider = new TwitterAuthProvider
   const apiKey = 'EzoH0w73hC3naY84U6NBHZHyz'
   const apiSecret = 'qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw'
-  var token = ''
-  var secret = ''
-  var displayName = ''
 
   export default {
     name: "AuthComponent",
-    props: ['tab', 'screenName'],
     data: function(){
       return {
-        formData: {
-        email: '',
-        password: '',
-          displayName:'',
-      },
       apiKey: apiKey,
       apiSecret: apiSecret,
-      token: token,
-      secret: secret,
-      displayName: displayName
     }
     },
     methods: {
       async twitter () {
-        const auth = getAuth()
-        var t = await signInWithPopup(auth, provider)
+        await signInWithPopup(auth, provider)
         .then((result) => {
             // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
             // You can use these server side with your app's credentials to access the Twitter API.
@@ -45,14 +34,14 @@
             //const displayName = result.additionalUserInfo
             // The signed-in user info.
             const user = result.user;
-            console.log(user.displayName)
-
-            displayName = user.displayName
-            console.log(displayName)
-            console.log(secret)
+            const displayName = user.displayName
+            const screenName = user.reloadUserInfo.screenName
             // ...
+            localStorage.setItem('token', token)
+            localStorage.setItem('secret', secret)
+            localStorage.setItem('screenName', screenName)
+            localStorage.setItem('displayName', displayName)
             this.$router.push("/twitter")
-            return [token, secret, displayName]
           }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
@@ -64,10 +53,6 @@
             const credential = TwitterAuthProvider.credentialFromError(error);
             // ...
           })
-          console.log(displayName);
-          token = t[0]
-          secret = t[1]
-          //displayName = t[2]
         },
     }
   }
