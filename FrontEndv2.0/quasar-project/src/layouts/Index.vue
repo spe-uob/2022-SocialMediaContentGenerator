@@ -138,15 +138,7 @@ export default {
     }
   },
   methods: {
-    signOut() {
-      auth.signOut().then(function() {
-        console.log('Signed Out')
-        localStorage.removeItem('token')
-        localStorage.removeItem('secret')
-      }, function(error) {
-        console.error('Sign Out Error', error);
-      });
-    }
+
   }
 }
 </script>

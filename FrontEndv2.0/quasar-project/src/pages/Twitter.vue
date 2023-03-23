@@ -3,7 +3,7 @@
     <q-toolbar
     :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
       <div class="col"></div>
-      <div class="justify-end">
+      <div>
         <span class="text-grey-5"> Signed in as {{ this.name }}</span>
         <q-btn class="q-mx-md text-grey-5" flat to="/signin" v-ripple @click="signOut()">
           <q-icon name="fa-solid fa-user" class="q-mr-xs"/>
@@ -72,6 +72,15 @@ export default defineComponent({
     }
   },
   methods: {
+    signOut() {
+      auth.signOut().then(function() {
+        console.log('Signed Out')
+        localStorage.removeItem('token')
+        localStorage.removeItem('secret')
+      }, function(error) {
+        console.error('Sign Out Error', error);
+      });
+    },
     async addNewTweetPost(){
       let tweet = this.text
       const url = `http://localhost:8888/api/v1/twitter`
