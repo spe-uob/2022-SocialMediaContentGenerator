@@ -4,9 +4,9 @@
     :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
       <div class="col"></div>
       <div>
-        <span class="text-grey-5"> Signed in as {{ this.name }}</span>
+        <span class="text-grey-5"> Signed in as {{ this.displayName }}</span>
         <q-btn class="q-mx-md text-grey-5" flat to="/signin" v-ripple @click="signOut()">
-          <q-icon name="fa-solid fa-user" class="q-mr-xs"/>
+          <q-icon name="fa-solid fa-sign-out" class="q-mr-xs"/>
           Sign Out
         </q-btn>
       </div>
@@ -36,7 +36,7 @@
   <a class="twitter-timeline"
      href = "https://twitter.com/${this.twitterUsername}"
      data-aria-polite="assertive">
-    Tweets by @{{this.name}}
+    Tweets by @{{this.screenName}}
   </a>
 
 </template>
@@ -48,7 +48,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 
 const token = localStorage.getItem('token')
 const secret = localStorage.getItem('secret')
-const name = localStorage.getItem('screenName')
+const displayName = localStorage.getItem('displayName')
+const screenName = localStorage.getItem('screenName')
 console.log("name:" + name)
 
 const auth = getAuth()
@@ -68,7 +69,8 @@ export default defineComponent({
     return {
       text: '',
       image: '',
-      name: name
+      displayName: displayName,
+      screenName: screenName,
     }
   },
   methods: {
@@ -77,6 +79,8 @@ export default defineComponent({
         console.log('Signed Out')
         localStorage.removeItem('token')
         localStorage.removeItem('secret')
+        localStorage.removeItem('displayName')
+        localStorage.removeItem('screenName')
       }, function(error) {
         console.error('Sign Out Error', error);
       });

@@ -13,9 +13,6 @@
   const provider = new TwitterAuthProvider
   const apiKey = 'EzoH0w73hC3naY84U6NBHZHyz'
   const apiSecret = 'qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw'
-  var token = ''
-  var secret = ''
-  var screenName = ''
 
   export default {
     name: "AuthComponent",
@@ -23,15 +20,11 @@
       return {
       apiKey: apiKey,
       apiSecret: apiSecret,
-      token: token,
-      secret: secret,
-      screenName: screenName
     }
     },
     methods: {
       async twitter () {
-        //const auth = getAuth()
-        var t = await signInWithPopup(auth, provider)
+        await signInWithPopup(auth, provider)
         .then((result) => {
             // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
             // You can use these server side with your app's credentials to access the Twitter API.
@@ -47,8 +40,8 @@
             localStorage.setItem('token', token)
             localStorage.setItem('secret', secret)
             localStorage.setItem('screenName', screenName)
+            localStorage.setItem('displayName', displayName)
             this.$router.push("/twitter")
-            return [token, secret, screenName]
           }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
@@ -60,9 +53,6 @@
             const credential = TwitterAuthProvider.credentialFromError(error);
             // ...
           })
-          token = t[0]
-          secret = t[1]
-          screenName = t[2]
         },
     }
   }
