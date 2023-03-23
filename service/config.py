@@ -9,6 +9,7 @@ class Config(dict):
             "default_model_config": kwargs.get("default_model_config", "v1-inference.yaml"),
             "force_cpu": kwargs.get("force_cpu", False),
             "map_location": kwargs.get("map_location", "cpu"),
+            "sample_out_path": kwargs.get("sample_out_path", "images"),
         }
         for key, value in dict_body.items():
             self.__setattr__(key, value)

@@ -18,7 +18,6 @@ class TaskStatus(enum.Enum):
 
 class Task:
     def __init__(self, task_type: TaskType, function_args: dict, func=None, total_progress=1, task_id: str = None):
-
         self.task_type = task_type
         self.function_args = function_args
         self.func = func
@@ -47,5 +46,12 @@ class Task:
             "task_type": self.task_type.value,
             "task_status": self.task_status.value,
             "progress": self.get_progress().tolist(),
-            "result": self.result,
+            # "result": self.result,
         }
+
+    def task_info(self):
+        keys = ["progress", "length", "n_iter", "batch_size", "width", "height", "step", "sampler", "prompt", "negative_prompt", "cfg"]
+        result = {key: self.function_args[key] for key in keys if key in self.function_args}
+        result["uuid"] = self.task_id
+        result["progress"] = self.get_progress()[0]
+        return result

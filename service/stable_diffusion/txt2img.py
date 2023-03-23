@@ -12,12 +12,13 @@ from contextlib import contextmanager, nullcontext
 
 
 class Txt2Img:
-    def __init__(self, model, device, dtype_vae, noise_seed_delta=0.0, enable_batch_seeds=True):
+    def __init__(self, model, device, dtype_vae, noise_seed_delta=0.0, enable_batch_seeds=True, force_cpu=False):
         self.model = model
         self.device = device
         self.dtype_vae = dtype_vae
         self.noise_seed_delta = noise_seed_delta
         self.enable_batch_seeds = enable_batch_seeds
+        self.force_cpu = force_cpu
         self.samplers = {}
         self.opt_C = 4
         self.opt_f = 8
@@ -26,7 +27,8 @@ class Txt2Img:
     def load_sampler(self):
         self.samplers["DDIM"] = TypicalStableDiffusionSampler(DDIMSampler, self.model)
         self.samplers["PLMS"] = TypicalStableDiffusionSampler(PLMSSampler, self.model)
-        return
+        if self.force_cpu:
+            return
         self.samplers["Euler A"] = KDiffusionSampler(k_diffusion.sampling.sample_euler_ancestral, self.model, self.device)
         self.samplers["Euler"] = KDiffusionSampler(k_diffusion.sampling.sample_euler, self.model, self.device)
         self.samplers["LMS"] = KDiffusionSampler(k_diffusion.sampling.sample_lms, self.model, self.device)
@@ -46,10 +48,12 @@ class Txt2Img:
             sampler = self.samplers[sample]
             x = self.create_random_tensors([self.opt_C, height // self.opt_f, width // self.opt_f], seeds=[seed + i for i in range(batch_size)], seed_resize_from_h=0, seed_resize_from_w=0,
                                            sampler=sampler)
-            uc = self.model.get_learned_conditioning(batch_size * [negative_prompt])
-            c = self.model.get_learned_conditioning(batch_size * [prompt])
-            # uc = prompt_parser.get_learned_conditioning(self.model, batch_size * [negative_prompt], steps)
-            # c = prompt_parser.get_multicond_learned_conditioning(self.model, batch_size * [prompt], steps)
+            if sample not in["DDIM", "PLMS"]:
+                uc = prompt_parser.get_learned_conditioning(self.model, batch_size * [negative_prompt], steps)
+                c = prompt_parser.get_multicond_learned_conditioning(self.model, batch_size * [prompt], steps)
+            else:
+                uc = self.model.get_learned_conditioning(batch_size * [negative_prompt])
+                c = self.model.get_learned_conditioning(batch_size * [prompt])
             image_conditioning = self.txt2img_image_conditioning(sampler, x, width, height)
 
             samples_ddim = sampler.sample(x, c, uc, steps=steps, cfg_scale=cfg, image_conditioning=image_conditioning)

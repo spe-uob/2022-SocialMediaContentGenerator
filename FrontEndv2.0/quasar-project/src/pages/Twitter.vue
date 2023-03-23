@@ -41,12 +41,13 @@
     </div>
   </div>
   <a class="twitter-timeline"
-     href = "https://twitter.com/${this.twitterUsername}"
+     href="https://twitter.com/${this.twitterUsername}"
      data-aria-polite="assertive">
     Tweets by @{{this.screenName}}
   </a>
 
 </template>
+
 
 <script >
 import {defineComponent} from 'vue'
@@ -69,16 +70,23 @@ onAuthStateChanged(auth, (user) => {
     this.$router.push("/signin")
   }
 })
-
 export default defineComponent({
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Twitter",
   data() {
     return {
       text: '',
       image: '',
+      image_path: "",
+      url: "",
       displayName: displayName,
       screenName: screenName,
     }
+  },
+  mounted() {
+    this.image_path = this.$route.query.image;
+    this.url = this.$route.query.url;
+    this.image = this.url;
   },
   methods: {
     signOut() {
@@ -94,7 +102,7 @@ export default defineComponent({
     },
     async addNewTweetPost(){
       let tweet = this.text
-      const url = `http://localhost:8888/api/v1/twitter`
+      const url = `/api/v1/twitter`
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -106,10 +114,12 @@ export default defineComponent({
           consumer_secret: AuthComponent.data().apiSecret,
           access_token: token,
           access_token_secret: secret,
-          image: this.image
+          image: this.image,
+          image_path: this.image_path,
         }),
         mode: 'cors',
       })
+      // eslint-disable-next-line no-unused-vars
       const data = await response.json()
       this.text = ''
     },

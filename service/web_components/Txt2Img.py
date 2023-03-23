@@ -44,9 +44,9 @@ class Txt2ImgResult(Component):
             return {"status": 0, "images": []}
         result = task.result
         response = {"status": 0, "images": []}
-        for image, seed in result[loaded:len(result)]:
+        for image, seed, saved_path in result[loaded:len(result)]:
             retval, buffer = cv2.imencode('.jpg', cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR))
             pic_str = base64.b64encode(buffer)
             pic_str = pic_str.decode()
-            response['images'].append(f"data:image/jpg;base64,{pic_str}")
+            response['images'].append((saved_path, f"data:image/jpg;base64,{pic_str}", seed))
         return response
