@@ -1,6 +1,7 @@
 [![Python Test](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python_test.yml/badge.svg)](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/python_test.yml)
 [![Node.js CI Build and Lint](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/nodejs_ci_build_and_lint.yml/badge.svg)](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/nodejs_ci_build_and_lint.yml) 
 [![Python Test and Deploy](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml/badge.svg)](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/main_python_cd.yml)
+[![Check Invalid Directories](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/invalid_dir_check.yml/badge.svg)](https://github.com/spe-uob/2022-SocialMediaContentGenerator/actions/workflows/invalid_dir_check.yml)
 
 # 2022-SocialMediaContentGenerator
 
