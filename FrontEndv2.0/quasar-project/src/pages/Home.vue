@@ -7,7 +7,7 @@
   <div id="twitter-timeline-feed" class="embedded-twitter-feed">
     <v-container fluid>
     <a class="twitter-timeline" data-theme='dark' href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
-      Tweets by SpacenxtLabs
+      Tweets by SpacenxtLabs. If timeline fails to load, please refresh the page.
     </a>
     </v-container>
   </div>

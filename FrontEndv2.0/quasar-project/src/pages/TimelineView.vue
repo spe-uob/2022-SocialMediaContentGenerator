@@ -20,10 +20,10 @@
   </div>
 
   <a class="twitter-timeline"
-      href="https://twitter.com/Flogdd"
-     data-aria-polite="assertive">
+      href="https://twitter.com/DavidYa56963667"
+     data-aria-polite="rude">
      <!--data-chrome="nofooter"-->
-    Tweets by @TwitterDev
+    Tweets by you.
   </a>
 </template>
 

@@ -9,7 +9,6 @@ const routes = [
     component: Index,
     children: [
       { path: '', component: Home },
-      { path: '/home' , name: 'home', component: Home},
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
       { path: '/FaceBookPost', name: 'FaceBookPost', component: FaceBookPost},
       { path:  '/signin', component: () => import('src/pages/SignIn.vue')},
