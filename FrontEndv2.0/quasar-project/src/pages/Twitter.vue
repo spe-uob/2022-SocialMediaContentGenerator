@@ -32,6 +32,9 @@
         <q-icon name="attach_file"/>
       </template>
     </q-file>
+    <img
+    class="col justify-end"
+    :src="`data:image/png;base64,${this.image}`"/>
   </div>
   <a class="twitter-timeline"
      href = "https://twitter.com/${this.twitterUsername}"
@@ -115,7 +118,9 @@ export default defineComponent({
       })
     },
     async uploadImage(files) {
-      this.image = await this.getBase64(files)
+      var s = await this.getBase64(files)
+      var base64result = s.split(',')[1];
+      this.image = base64result
     }
   },
 })
