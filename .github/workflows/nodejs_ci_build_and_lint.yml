@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Node.js CI Build and Lint
 
 on:
   push:
@@ -19,10 +19,19 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v2
-      - run: yarn
-      - run: yarn test
+      - name: Install essential packages
+        run: yarn --silent install
+      - name: Install quasar
+        run: yarn global add @quasar/cli
+      - name: build
+        run: quasar build
+      - name: Run tests
+        run: yarn test
+      - name: Run eslint check
+        run: yarn run lint
+

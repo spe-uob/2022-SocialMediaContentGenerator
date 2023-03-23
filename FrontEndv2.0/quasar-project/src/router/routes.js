@@ -1,6 +1,5 @@
 import Index from "layouts/Index.vue";
 import Home from "pages/Home.vue";
-import TwitterView from "src/pages/SignIn.vue";
 import FaceBookPost from "src/pages/FaceBookPost.vue";
 
 const routes = [
@@ -15,6 +14,7 @@ const routes = [
       { path: '/stablediffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
       { path: '/LinkedInPost', component: () => import('pages/LinkedInPost.vue')},
       { path: '/TextGenerator', component: () => import('pages/TextGenerator.vue')},
+      { path: '/Text', component: () => import('pages/Text.vue')},
     ]
   },
 

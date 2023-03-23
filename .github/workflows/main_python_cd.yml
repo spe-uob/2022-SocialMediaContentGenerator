@@ -3,14 +3,14 @@ name: Python Test and Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 defaults:
   run:
     working-directory: ./service
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:

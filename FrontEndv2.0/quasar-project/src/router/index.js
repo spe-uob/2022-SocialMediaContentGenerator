@@ -12,8 +12,10 @@ import routes from './routes'
  */
 
 export default route(function (/* { store, ssrContext } */) {
+  // eslint-disable-next-line no-undef
   const createHistory = process.env.SERVER
     ? createMemoryHistory
+    // eslint-disable-next-line no-undef
     : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
 
   const Router = createRouter({
@@ -23,6 +25,7 @@ export default route(function (/* { store, ssrContext } */) {
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
+    // eslint-disable-next-line no-undef
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
