@@ -5,4 +5,5 @@ from .HardwareInfo import *
 from .ModelComponents import *
 from .Sampler import *
 from .Txt2Img import *
+from .Image import *
 from .Twitter import *

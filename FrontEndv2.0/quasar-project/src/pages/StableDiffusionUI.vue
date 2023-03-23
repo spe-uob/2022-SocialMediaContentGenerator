@@ -110,7 +110,14 @@
                 </q-card-section>
               </q-bar>
               <q-card-section>
-                <q-img :src="images[currentImageIndex-1]" style="max-height: 60vh" fit="contain"></q-img>
+                <q-img :src="images.length > 0 ? images[currentImageIndex-1].url:''" style="max-height: 60vh; background-color: white" fit="contain">
+                  <div class="text-h6" v-if="images.length > 0 ">Seed: {{ images[currentImageIndex - 1].seed }}</div>
+                </q-img>
+                <router-link v-if="images.length > 0 " :to="{path: '/twitter', query: {image:images[currentImageIndex - 1].path, url: images[currentImageIndex-1].url }}">
+                  <q-btn color="blue" class="full-width" style="margin-top: 20px">
+                    Send {{ images[currentImageIndex - 1].path }} to twitter page
+                  </q-btn>
+                </router-link>
                 <q-pagination v-model="currentImageIndex" :max="images.length" :min="1" input/>
                 <!--                <q-linear-progress :value="task_progress" class="q-mt-md" />-->
                 <q-linear-progress size="25px" :value="task_progress" stripe color="positive">
@@ -122,6 +129,7 @@
               <q-card-section class="self-center">
                 <q-btn color="positive" class="q-mr-md" label="generate" :disable="generating || loading_model" @click="generate()"/>
                 <q-btn color="positive" class="q-ml-md" label="save" @click="saveImage"/>
+
               </q-card-section>
 
             </q-card>
@@ -180,7 +188,7 @@ export default defineComponent({
       height: 512,
       n_iter: 1,
       batch_size: 1,
-      base_url: 'http://localhost:8888',
+      base_url: '',
       sampler: 'DDIM',
       sampler_options: [],
       images_buffer: [],
@@ -260,6 +268,13 @@ export default defineComponent({
         });
         let response = await request.json();
         let images = response['images'];
+        for (let i = 0; i < images.length; i++) {
+          images[i] = {
+            url: this.getUrl(`/api/v1/cached_image?path=${encodeURIComponent(images[i][0])}`),
+            seed: images[i][2],
+            path: images[i][0],
+          }
+        }
         this.images_buffer = this.images_buffer.concat(images);
         if (this.images_buffer.length > 0) {
           if (this.images_buffer.length < this.images.length)

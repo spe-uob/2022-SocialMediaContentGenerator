@@ -23,24 +23,24 @@
     </q-file>
   </div>
   <a class="twitter-timeline"
-     href = "https://twitter.com/${this.twitterUsername}"
+     href="https://twitter.com/${this.twitterUsername}"
      data-aria-polite="assertive">
-  <!--:href = "'https://twitter.com/' + temp">{{temp}}-->
+    <!--:href = "'https://twitter.com/' + temp">{{temp}}-->
     <!--data-chrome="nofooter"-->
-    Tweets by @{{temp}}
+    Tweets by @{{ temp }}
   </a>
   <a v-html="twitterTimelineLink"></a>
 
 </template>
 
-<script >
+<script>
 import {data} from 'browserslist';
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
 
 console.log(AuthComponent.data().token);
 console.log(AuthComponent.data().displayName);
-const temp =  AuthComponent.data().displayName;
+const temp = AuthComponent.data().displayName;
 const test = "https://twitter.com/" + temp;
 console.log(test)
 
@@ -56,12 +56,19 @@ export default defineComponent({
       access_token: AuthComponent.data().token,
       access_token_secret: AuthComponent.data().secret,
       twitterUsername: AuthComponent.data().displayName,
+      image_path: "",
+      url: "",
     }
+  },
+  mounted() {
+    this.image_path = this.$route.query.image;
+    this.url = this.$route.query.url;
+    this.image = this.url;
   },
   methods: {
 
 
-    async addNewTweetPost(){
+    async addNewTweetPost() {
       /*let tweet = this.text
       const url = `http://localhost:5000/tweet?status=${encodeURIComponent(tweet)}&consumer_key=${encodeURIComponent(AuthComponent.data().apiKey)}&consumer_secret=${encodeURIComponent(AuthComponent.data().apiSecret)}&access_token=${encodeURIComponent(AuthComponent.data().token)}&access_token_secret=${encodeURIComponent(AuthComponent.data().secret)}`
       const response = await fetch(url)
@@ -69,7 +76,7 @@ export default defineComponent({
       console.log(data)*/
 
       let tweet = this.text
-      const url = `http://localhost:8888/api/v1/twitter`
+      const url = `/api/v1/twitter`
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -81,7 +88,8 @@ export default defineComponent({
           consumer_secret: AuthComponent.data().apiSecret,
           access_token: AuthComponent.data().token,
           access_token_secret: AuthComponent.data().secret,
-          image: this.image
+          image: this.image,
+          image_path: this.image_path,
         }),
         mode: 'cors',
       })
@@ -101,7 +109,7 @@ export default defineComponent({
     },
   },
 
-  setup(){
+  setup() {
     return {
       test,
       temp,
