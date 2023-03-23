@@ -16,6 +16,7 @@ const routes = [
       { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
       { path: '/LinkedInPost', component: () => import('pages/LinkedInPost.vue')},
       { path: '/TextGenerator', component: () => import('pages/TextGenerator.vue')},
+      { path: '/Text', component: () => import('pages/Text.vue')},
     ]
   },
 
