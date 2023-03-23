@@ -1,5 +1,12 @@
 <template>
   <div>
+    <q-toolbar
+    :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
+      <div class="col"></div>
+      <div class="col">
+        <span class="text-grey-5"> Signed in as {{ this.name }}</span>
+      </div>
+    </q-toolbar>
     <q-input
       rounded
       outlined
