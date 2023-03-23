@@ -8,7 +8,7 @@
 
 <script>
   import { getAuth, signInWithPopup, TwitterAuthProvider, onAuthStateChanged } from "firebase/auth"
-  import { auth } from "boot/firebase.js"
+  import { auth } from "./../boot/firebase.js"
 
   const provider = new TwitterAuthProvider
   const apiKey = 'EzoH0w73hC3naY84U6NBHZHyz'
