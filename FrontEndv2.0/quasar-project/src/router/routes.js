@@ -13,7 +13,6 @@ const routes = [
       { path: '/FaceBookPost', name: 'FaceBookPost', component: FaceBookPost},
       { path:  '/signin', component: () => import('src/pages/SignIn.vue')},
       { path: '/stablediffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
-      { path: '/TimelineView', component: () => import('pages/TimelineView.vue')},
       { path: '/LinkedInPost', component: () => import('pages/LinkedInPost.vue')},
       { path: '/TextGenerator', component: () => import('pages/TextGenerator.vue')},
     ]

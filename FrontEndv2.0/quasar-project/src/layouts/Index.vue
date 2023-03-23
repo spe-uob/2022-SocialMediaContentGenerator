@@ -14,10 +14,6 @@
         <q-toolbar-title>
           <span class="gt-sm text-h4 text-grey-5 q-pa-md">Social Media Content Generator</span>
         </q-toolbar-title>
-        <q-btn v-if="!signedIn" class="q-mx-md text-grey-5" flat v-ripple>
-          <q-icon name="fa-solid fa-user" class="q-mr-xs"/>
-          Sign In
-        </q-btn>
         <q-btn
           class="bg-grey-5 q-mx-xs"
           flat
@@ -59,7 +55,7 @@
           <q-item-section>Home</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple class="text-grey-5" to="/signin" active-class="menu-link">
+        <q-item clickable @click="signOut()" v-ripple class="text-grey-5" to="/signin" active-class="menu-link">
           <q-item-section avatar>
             <q-icon name="fa-solid fa-user" />
           </q-item-section>
@@ -71,13 +67,6 @@
             <q-icon name="fa-solid fa-sliders" />
           </q-item-section>
           <q-item-section>SD UI</q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple class="text-grey-5" to="/TimelineView" active-class="menu-link">
-          <q-item-section avatar>
-            <q-icon name="crop_din" />
-          </q-item-section>
-          <q-item-section>TimeLine View</q-item-section>
         </q-item>
 
         <q-item clickable v-ripple class="text-grey-5" to="/LinkedInPost" active-class="menu-link">
@@ -105,11 +94,6 @@
 </template>
 
 <script>
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from "boot/firebase.js"
-
-var b = false
-
 export default {
   data(){
     return{
@@ -118,27 +102,16 @@ export default {
     }
   },
   name: "Index",
-  computed: {
-    signedIn() {
-      onAuthStateChanged(auth, (user) => {
-      console.log("on auth state changed")
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        this.b = true
-        // ...
-      } else {
-        // User is signed out
-        // ...
-        this.b = false
-      }
-      console.log(b)
-    });
-    //return (localStorage.getItem('token')) ? true : false
-    }
-  },
   methods: {
-
+    signOut() {
+      auth.signOut().then(function() {
+        console.log('Signed Out')
+        localStorage.removeItem('token')
+        localStorage.removeItem('secret')
+      }, function(error) {
+        console.error('Sign Out Error', error);
+      });
+    },
   }
 }
 </script>
