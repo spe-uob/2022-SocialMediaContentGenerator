@@ -71,6 +71,7 @@ onAuthStateChanged(auth, (user) => {
   }
 })
 export default defineComponent({
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Twitter",
   data() {
     return {
@@ -113,11 +114,12 @@ export default defineComponent({
           consumer_secret: AuthComponent.data().apiSecret,
           access_token: token,
           access_token_secret: secret,
-          image: this.image
+          image: this.image,
           image_path: this.image_path,
         }),
         mode: 'cors',
       })
+      // eslint-disable-next-line no-unused-vars
       const data = await response.json()
       this.text = ''
     },
