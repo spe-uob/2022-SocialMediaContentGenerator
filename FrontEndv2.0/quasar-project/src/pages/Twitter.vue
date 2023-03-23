@@ -32,9 +32,13 @@
         <q-icon name="attach_file"/>
       </template>
     </q-file>
-    <img
-    class="col justify-end"
-    :src="`data:image/png;base64,${this.image}`"/>
+    <div class="row">
+      <span class="col"></span>
+      <img
+      class="col"
+      :src="`data:image/png;base64,${this.image}`"/>
+      <span class="col"></span>
+    </div>
   </div>
   <a class="twitter-timeline"
      href = "https://twitter.com/${this.twitterUsername}"
