@@ -3,8 +3,12 @@
     <q-toolbar
     :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
       <div class="col"></div>
-      <div class="col">
+      <div class="justify-end">
         <span class="text-grey-5"> Signed in as {{ this.name }}</span>
+        <q-btn class="q-mx-md text-grey-5" flat to="/signin" v-ripple @click="signOut()">
+          <q-icon name="fa-solid fa-user" class="q-mr-xs"/>
+          Sign Out
+        </q-btn>
       </div>
     </q-toolbar>
     <q-input

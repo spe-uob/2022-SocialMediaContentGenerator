@@ -18,10 +18,6 @@
           <q-icon name="fa-solid fa-user" class="q-mr-xs"/>
           Sign In
         </q-btn>
-        <q-btn v-if="signedIn" class="q-mx-md text-grey-5" flat to="/signin" v-ripple @click="signOut()">
-          <q-icon name="fa-solid fa-user" class="q-mr-xs"/>
-          Sign Out
-        </q-btn>
         <q-btn
           class="bg-grey-5 q-mx-xs"
           flat
