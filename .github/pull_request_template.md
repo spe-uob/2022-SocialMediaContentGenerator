@@ -14,6 +14,7 @@
 - [ ] Create a new feature
 - [ ] Plan a new feature
 - [ ] Implement a planed feature
+- [ ] Optimize some code
 - [ ] Fix a bug
 - [ ] Organize folder (Please include path below)
 - [ ] Other (Please specify below)
