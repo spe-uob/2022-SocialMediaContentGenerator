@@ -22,10 +22,8 @@
 
 <script>
 import axios from 'axios';
-import {myData, retrieveAccessToken, postToLinkedIn} from "app/LinkedInTest";
-
 export default {
-  name: "LinkedInPost",
+  name: "My",
   data () {
     return {
       post: {
@@ -57,9 +55,7 @@ export default {
       }).catch(error => {
         console.error('Failed to publish post:', error.response.data);
       });
-    },
-    postToLinkedIn(){},
-    retrieveAccessToken(){},
+    }
   }
 }
 </script>

@@ -2,7 +2,6 @@
   "name": "quasar-project",
   "version": "0.0.1",
   "private": true,
-  "type": "module",
   "description": "Better design ",
   "author": "Flgodd <benjyaram@gmail.com>",
   "scripts": {
