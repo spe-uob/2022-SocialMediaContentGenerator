@@ -29,12 +29,10 @@ export default {
   },
   methods: {
     async postToFacebook() {
-      console.log("user access token:", this.$route.query.user_token)
-      console.log("page access token:", this.$route.query.page_token)
+      const userAccessToken = localStorage.getItem('userAccessToken')
+      const pageAccessToken = localStorage.getItem('pageAccessToken')
       this.page_token = this.$route.query.page_token
       this.user_token = this.$route.query.user_token
-      const image_path = "src/assets/quasar-logo-vertical.svg"
-      const caption = this.message
       //formData.append('source', this.image);
       console.log("message sent", this.message)
       console.log("page token", this.page_token)
@@ -49,7 +47,7 @@ export default {
           // Make the POST request to Facebook Graph API
           axios.post('https://graph.facebook.com/119057271096466/photos', formData, {
             params: {
-              access_token: this.page_token,
+              access_token: pageAccessToken,
               caption: this.message
             },
             headers: {
