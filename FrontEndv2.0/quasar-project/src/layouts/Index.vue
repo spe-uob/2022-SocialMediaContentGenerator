@@ -142,7 +142,7 @@ export default {
       })
       // eslint-disable-next-line no-unused-vars
       const data = await response.json()
-      if data['status'] == "signedIn" return true
+      if (data['status'] == "signedIn") return true
       else return false
     },
     signOut() {
