@@ -14,7 +14,7 @@
 
 <script>
 import axios from 'axios'
-import {myData, retrieveAccessToken, postToLinkedIn} from "app/LinkedInTest";
+//import {myData, retrieveAccessToken, postToLinkedIn} from "app/LinkedInTest";
 import qs from 'qs'
 
 const client_id = '78sme225fsy5by'
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    retrieveAccessToken,
+    //retrieveAccessToken,
     /*authorize() {
       const state = Math.random().toString(36).substring(7)
       const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&state=${state}&scope=${scope}`

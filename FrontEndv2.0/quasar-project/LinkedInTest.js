@@ -74,7 +74,7 @@ export async function postToLinkedIn(){
   }
 }
 
-async function run(){
+export async function run(){
   console.log("start");
   await retrieveAccessToken();
   console.log("middle");

@@ -10,7 +10,7 @@
         <h2 class="q-ma-none">Publish a post on LinkedIn</h2>
       </q-card-section>
       <q-card-section>
-        <q-form @submit="publishPost">
+        <q-form @submit="loginWithLinkedIn">
           <q-input v-model="post.subject" label="Post subject"></q-input>
           <q-input v-model="post.text.text" label="Post text" type="textarea"></q-input>
           <q-btn type="submit" label="Publish post xxx"></q-btn>
@@ -21,8 +21,10 @@
 </template>
 
 <script>
+
 import axios from 'axios';
-import {myData, retrieveAccessToken, postToLinkedIn} from "app/LinkedInTest";
+
+import {authorize, handleResponse} from "app/Test3.js";
 
 export default {
   name: "LinkedInPost",
@@ -38,29 +40,15 @@ export default {
     }
   },
   methods: {
-    publishPost () {
-      const shareEndpoint = 'https://api.linkedin.com/v2/shares';
-      const postData = {
-        owner: 'urn:li:person:USER_ID',
-        subject: this.post.subject,
-        text: {
-          text: this.post.text.text
-        }
-        // Add any other relevant parameters here, such as visibility settings or image attachments
-      };
-      axios.post(shareEndpoint, postData, {
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`
-        }
-      }).then(response => {
-        console.log('Post published:', response.data);
-      }).catch(error => {
-        console.error('Failed to publish post:', error.response.data);
-      });
+    loginWithLinkedIn(){
+      authorize()
     },
-    postToLinkedIn(){},
-    retrieveAccessToken(){},
+
+  },
+  mounted() {
+    handleResponse();
   }
+
 }
 </script>
 
