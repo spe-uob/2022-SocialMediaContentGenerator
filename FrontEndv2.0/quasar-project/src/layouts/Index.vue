@@ -14,6 +14,10 @@
         <q-toolbar-title>
           <span class="gt-sm text-h4 text-grey-5 q-pa-md">Social Media Content Generator</span>
         </q-toolbar-title>
+        <q-btn dense flat class="q-pa-md text-grey-5"
+        @click="rightDrawerMenu = !rightDrawerMenu">
+          <q-avatar class="fa-solid fa-user"/>
+        </q-btn>
         <q-btn
           class="bg-grey-5 q-mx-xs"
           flat
@@ -32,6 +36,7 @@
   <q-page-container>
     <router-view />
   </q-page-container>
+
   <q-drawer
     v-model="drawerMenu"
     :width="240"
@@ -82,39 +87,67 @@
           </q-item-section>
           <q-item-section>Text Generator</q-item-section>
         </q-item>
-
-        <!--<q-item clickable v-ripple class="text-grey-5" to="/Text" active-class="menu-link">
-          <q-item-section avatar>
-            <q-icon name="article" />
-          </q-item-section>
-          <q-item-section>Text</q-item-section>
-        </q-item>-->
       </q-list>
-
-
-
     </q-scroll-areac>
+  </q-drawer>
 
+
+  <q-drawer
+    side="right"
+    v-model="rightDrawerMenu"
+    :width="240"
+    no-swipe-open
+    bordered
+    :class="$q.dark.isActive ? 'bg-grey-1' : 'bg-white'"
+    content-class="bg-primary text-white">
+    <q-scroll-areac class="fit">
+      <q-list>
+        <q-item>
+          <q-item-section>
+            <div class="q-pa-sm"></div>
+            <AuthComponent v-if="!checkTwitterStatus"/>
+            <q-btn v-else class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" rounded>
+              <span class="q-pa-sm">
+                Signed in as ...
+              </span>
+            </q-btn>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-scroll-areac>
   </q-drawer>
 
 </q-layout>
 </template>
 
 <script>
+import AuthComponent from "components/AuthComponent.vue"
+import LinkedInLogin from "components/LinkedInLogin.vue";
+import FBAuthComponent from "components/FBAuthComponent.vue";
 export default {
+  components: {FBAuthComponent, AuthComponent, LinkedInLogin },
   data(){
     return{
-      drawerMenu: false,
-      b: null
+      drawerMenu: true,
+      rightDrawerMenu: true,
     }
   },
   name: "Index",
   methods: {
+    async checkTwitterStatus() {
+      const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`
+      const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+      })
+      // eslint-disable-next-line no-unused-vars
+      const data = await response.json()
+      if data['status'] == "signedIn" return true
+      else return false
+    },
     signOut() {
       auth.signOut().then(function() {
         console.log('Signed Out')
-        localStorage.removeItem('token')
-        localStorage.removeItem('secret')
       }, function(error) {
         console.error('Sign Out Error', error);
       });

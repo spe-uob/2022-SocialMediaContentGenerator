@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-toolbar
+    <!--<q-toolbar
     :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
       <div class="col"></div>
       <div>
@@ -10,7 +10,7 @@
           Sign Out
         </q-btn>
       </div>
-    </q-toolbar>
+    </q-toolbar> -->
     <q-input
       rounded
       outlined
@@ -54,33 +54,12 @@ import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 
-const token = localStorage.getItem('token')
-const secret = localStorage.getItem('secret')
-const displayName = localStorage.getItem('displayName')
-const screenName = localStorage.getItem('screenName')
-console.log("name:" + name)
-
 const auth = getAuth()
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log(user)
-  }
-  else {
-    console.log("No user")
-    this.$router.push("/signin")
-  }
-})
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Twitter",
   data() {
     return {
-      text: '',
-      image: '',
-      image_path: "",
-      url: "",
-      displayName: displayName,
-      screenName: screenName,
     }
   },
   mounted() {
@@ -92,8 +71,6 @@ export default defineComponent({
     signOut() {
       auth.signOut().then(function() {
         console.log('Signed Out')
-        localStorage.removeItem('displayName')
-        localStorage.removeItem('screenName')
       }, function(error) {
         console.error('Sign Out Error', error);
       });

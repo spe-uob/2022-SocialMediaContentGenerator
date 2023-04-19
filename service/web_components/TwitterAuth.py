@@ -24,3 +24,12 @@ class TwitterAuth(Component):
             outfile.write(json_object)
 
         return {'status': 'ok', 'auth': auth_dict}
+    
+class TwitterSignInCheck(Component):
+    def __init__(self, env: Environment):
+        super().__init__(env, '/api/v1/twitterSignInCheck', TwitterSignInCheck, ['GET'])
+        self.env = env
+
+    def view(self):
+        status = 'signedIn'
+        return {'status': status}

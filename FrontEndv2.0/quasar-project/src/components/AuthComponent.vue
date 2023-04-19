@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="flex flex-center">
-      <q-btn ref="button" class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" label="sign in with twitter" type="submit" rounded @click="twitter"/>
+      <q-btn ref="button" class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" type="submit" rounded @click="twitter">
+        <span class="q-pa-sm">
+          Sign in with Twitter
+        </span>
+      </q-btn>
     </div>
   </div>
 </template>
