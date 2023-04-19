@@ -6,16 +6,17 @@ import json
 
 class TwitterBackEnd(Component):
     def __init__(self, env: Environment):
-        super().__init__(env, '/api/v1//twitter', TwitterBackEnd, ['GET', 'POST'])
+        super().__init__(env, '/api/v1/twitter', TwitterBackEnd, ['POST'])
         self.env = env
 
         # when frontend request this api, this function will be called
     def view(self):
         data = request.get_json()
         tweet_string = data['status']
-        consumer_key = data['consumer_key']
-        consumer_secret = data['consumer_secret']
         image_base64 = data['image']
+
+        consumer_key = "EzoH0w73hC3naY84U6NBHZHyz"
+        consumer_secret = "qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw"
 
         file = io.BytesIO(base64.b64decode(image_base64))
 

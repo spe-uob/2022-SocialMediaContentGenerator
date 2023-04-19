@@ -25,7 +25,7 @@
     methods: {
       async twitter () {
         await signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(async (result) => {
             // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
             // You can use these server side with your app's credentials to access the Twitter API.
             const credential = TwitterAuthProvider.credentialFromResult(result);
@@ -37,8 +37,21 @@
             const displayName = user.displayName
             const screenName = user.reloadUserInfo.screenName
             // ...
-            localStorage.setItem('token', token)
-            localStorage.setItem('secret', secret)
+            const url = `http://127.0.0.1:8888/api/v1/twitterAuth`
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                access_token: token,
+                access_token_secret: secret
+              }),
+              mode: 'cors',
+            })
+            // eslint-disable-next-line no-unused-vars
+            const data = await response.json()
+            console.log(data)
             localStorage.setItem('screenName', screenName)
             localStorage.setItem('displayName', displayName)
             this.$router.push("/twitter")
