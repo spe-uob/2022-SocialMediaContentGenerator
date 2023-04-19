@@ -24,14 +24,19 @@ class Scheduler:
 
     def schedule_loop(self):
         logger.info("Scheduler started...")
-        while self.schedule_loop_flag:
-            self.current_task: Task = self.tasks.get()
-            self.current_task.progress_task = self.progress.add_task(f"Processing task: [{self.current_task.task_type}]...", total=self.current_task.total_progress[0])
-            self.current_task.task_status = TaskStatus.Running
-            self.current_task.result = self.current_task.run()
-            self.current_task.task_status = TaskStatus.Finished
-            self.tasks_completed[self.current_task.task_id] = self.current_task
-            self.current_task = None
+        try:
+            while self.schedule_loop_flag:
+                self.current_task: Task = self.tasks.get()
+                if self.current_task is None:
+                    continue
+                self.current_task.progress_task = self.progress.add_task(f"Processing task: [{self.current_task.task_type}]...", total=self.current_task.total_progress[0])
+                self.current_task.task_status = TaskStatus.Running
+                self.current_task.result = self.current_task.run()
+                self.current_task.task_status = TaskStatus.Finished
+                self.tasks_completed[self.current_task.task_id] = self.current_task
+                self.current_task = None
+        except KeyboardInterrupt as e:
+            logger.exception(e)
         logger.info("Scheduler stopped...")
 
     def start(self):
@@ -39,6 +44,7 @@ class Scheduler:
 
     def stop(self):
         self.schedule_loop_flag = False
+        self.tasks.put(None)
         self.schedule_thread.join()
 
     def add_task_txt2img(self, prompt, negative_prompt, sampler, step, width, height, n_iter, batch_size, cfg):

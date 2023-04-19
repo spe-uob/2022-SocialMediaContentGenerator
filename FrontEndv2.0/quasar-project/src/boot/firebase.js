@@ -1,5 +1,5 @@
-import { boot } from 'quasar/wrappers'
 import firebase from "firebase/compat/app"
+import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
     apiKey: "AIzaSyAhLly_xBcWA2FTfeKe726EGCJmQD7mGHo",
@@ -10,12 +10,5 @@ const firebaseConfig = {
     appId: "1:205591394295:web:474e8be42ce7a64edde0f2"
   };
 firebase.initializeApp(firebaseConfig);
-firebase.getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-      unsubscribe();
-      resolve(user);
-    }, reject);
-  })
-  }
-export default firebase
+
+export const auth = getAuth()

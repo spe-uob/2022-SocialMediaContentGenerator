@@ -11,9 +11,13 @@ class GetTasks(Component):
 
     def view(self):
         queue_copy = list(self.env.scheduler.tasks.queue)
-        if self.env.scheduler.current_task is not None:
-            queue_copy.append(self.env.scheduler.current_task)
-        return jsonify([task.to_dict() for task in queue_copy])
+        queue_copy.append(self.env.scheduler.current_task)
+        tasks = [task.task_info() for task in queue_copy if task is not None]
+        return {
+            "status": 0,
+            "queue_length": len(queue_copy),
+            "tasks": tasks
+        }
 
 
 class GetTxt2ImgTasks(Component):

@@ -97,7 +97,7 @@ class StableDiffusionModel:
             model = model.half()
             model.first_stage_model = vae
         self.dtype = torch.float16 if self.half else torch.float32
-        self.dtype_vae = torch.float16 if not self.vae_half or not self.half else torch.float32
+        self.dtype_vae = torch.float16 if self.vae_half or self.half else torch.float32
         model.first_stage_model.to(self.dtype_vae)
 
     def load_vae(self, model, vae):

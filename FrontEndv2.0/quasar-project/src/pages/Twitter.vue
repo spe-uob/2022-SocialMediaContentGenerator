@@ -1,5 +1,16 @@
 <template>
   <div>
+    <q-toolbar
+    :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
+      <div class="col"></div>
+      <div>
+        <span class="text-grey-5"> Signed in as {{ this.displayName }}</span>
+        <q-btn class="q-mx-md text-grey-5" flat to="/signin" v-ripple @click="signOut()">
+          <q-icon name="fa-solid fa-sign-out" class="q-mr-xs"/>
+          Sign Out
+        </q-btn>
+      </div>
+    </q-toolbar>
     <q-input
       rounded
       outlined
@@ -15,61 +26,83 @@
         <q-icon name="send" @click="addNewTweetPost" color="primary" class="cursor-pointer" :disable="!text"/>
       </template>
     </q-input>
-    <q-img :src="image" style="max-width: 40vw"></q-img>
+    <!--<q-img :src="image" style="max-width: 40vw"></q-img>-->
     <q-file color="purple-12" @update:model-value="uploadImage($event)" label="Add images">
       <template v-slot:prepend>
         <q-icon name="attach_file"/>
       </template>
     </q-file>
+    <div class="row">
+      <span class="col"></span>
+      <img
+      class="col"
+      :src="`data:image/png;base64,${this.image}`"/>
+      <span class="col"></span>
+    </div>
   </div>
   <a class="twitter-timeline"
-     href = "https://twitter.com/${this.twitterUsername}"
+     href="https://twitter.com/${this.twitterUsername}"
      data-aria-polite="assertive">
-  <!--:href = "'https://twitter.com/' + temp">{{temp}}-->
-    <!--data-chrome="nofooter"-->
-    Tweets by @{{temp}}
+    Tweets by @{{this.screenName}}
   </a>
-  <a v-html="twitterTimelineLink"></a>
 
 </template>
 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
-import {data} from 'browserslist';
+
+<script >
 import {defineComponent} from 'vue'
 import AuthComponent from '../components/AuthComponent.vue'
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 
-console.log(AuthComponent.data().token);
-console.log(AuthComponent.data().displayName);
-const temp =  AuthComponent.data().displayName;
-const test = "https://twitter.com/" + temp;
-console.log(test)
+const token = localStorage.getItem('token')
+const secret = localStorage.getItem('secret')
+const displayName = localStorage.getItem('displayName')
+const screenName = localStorage.getItem('screenName')
+console.log("name:" + name)
 
+const auth = getAuth()
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log(user)
+  }
+  else {
+    console.log("No user")
+    this.$router.push("/signin")
+  }
+})
 export default defineComponent({
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Twitter",
-  props: [test, temp],
   data() {
     return {
       text: '',
       image: '',
-      consumer_key: AuthComponent.data().apiKey,
-      consumer_secret: AuthComponent.data().apiSecret,
-      access_token: AuthComponent.data().token,
-      access_token_secret: AuthComponent.data().secret,
-      twitterUsername: AuthComponent.data().displayName,
+      image_path: "",
+      url: "",
+      displayName: displayName,
+      screenName: screenName,
     }
   },
+  mounted() {
+    this.image_path = this.$route.query.image;
+    this.url = this.$route.query.url;
+    this.image = this.url;
+  },
   methods: {
-
-
+    signOut() {
+      auth.signOut().then(function() {
+        console.log('Signed Out')
+        localStorage.removeItem('token')
+        localStorage.removeItem('secret')
+        localStorage.removeItem('displayName')
+        localStorage.removeItem('screenName')
+      }, function(error) {
+        console.error('Sign Out Error', error);
+      });
+    },
     async addNewTweetPost(){
       let tweet = this.text
-      const url = `http://localhost:5000/tweet?status=${encodeURIComponent(tweet)}&consumer_key=${encodeURIComponent(AuthComponent.data().apiKey)}&consumer_secret=${encodeURIComponent(AuthComponent.data().apiSecret)}&access_token=${encodeURIComponent(AuthComponent.data().token)}&access_token_secret=${encodeURIComponent(AuthComponent.data().secret)}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-
-      /*let tweet = this.text
-      const url = `/api/v1/tweet`
+      const url = `/api/v1/twitter`
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -79,21 +112,16 @@ export default defineComponent({
           status: tweet,
           consumer_key: AuthComponent.data().apiKey,
           consumer_secret: AuthComponent.data().apiSecret,
-          access_token: AuthComponent.data().token,
-          access_token_secret: AuthComponent.data().secret,
-          image: this.image
+          access_token: token,
+          access_token_secret: secret,
+          image: this.image,
+          image_path: this.image_path,
         }),
         mode: 'cors',
       })
+      // eslint-disable-next-line no-unused-vars
       const data = await response.json()
-
-      console.log(AuthComponent.data().displayName)
-
-      let newTweet = {
-        content: this.text,
-        date: Date.now()
-      }
-      this.text = ''*/
+      this.text = ''
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -104,17 +132,11 @@ export default defineComponent({
       })
     },
     async uploadImage(files) {
-      this.image = await this.getBase64(files)
-    },
-  },
-
-  setup(){
-    return {
-      test,
-      temp,
+      var s = await this.getBase64(files)
+      var base64result = s.split(',')[1];
+      this.image = base64result
     }
-  }
-
+  },
 })
 </script>
 
