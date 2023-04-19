@@ -15,15 +15,14 @@ class TwitterBackEnd(Component):
         tweet_string = data['status']
         image_base64 = data['image']
 
-        consumer_key = "EzoH0w73hC3naY84U6NBHZHyz"
-        consumer_secret = "qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw"
-
         file = io.BytesIO(base64.b64decode(image_base64))
 
         with open('twitter_auth.json') as json_file:
             auth_dict = json.load(json_file)
             access_token = auth_dict['access_token']
             access_token_secret = auth_dict['access_token_secret']
+            consumer_key = auth_dict['consumer_key']
+            consumer_secret = auth_dict['consumer_secret']
 
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)

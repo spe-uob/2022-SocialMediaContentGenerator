@@ -1,6 +1,7 @@
 from . import *
 from flask import request
 import json
+import tweepy
 
 class TwitterAuth(Component):
     def __init__(self, env: Environment):
@@ -15,7 +16,9 @@ class TwitterAuth(Component):
 
         auth_dict = {
             'access_token': access_token,
-            'access_token_secret': access_token_secret
+            'access_token_secret': access_token_secret,
+            'consumer_key': "EzoH0w73hC3naY84U6NBHZHyz",
+            'consumer_secret': "qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw"
         }
 
         json_object = json.dumps(auth_dict, indent=4)
@@ -31,5 +34,29 @@ class TwitterSignInCheck(Component):
         self.env = env
 
     def view(self):
-        status = 'signedIn'
+        with open('twitter_auth.json') as json_file:
+            auth_dict = json.load(json_file)
+            access_token = auth_dict['access_token']
+            access_token_secret = auth_dict['access_token_secret']
+            consumer_key = auth_dict['consumer_key']
+            consumer_secret = auth_dict['consumer_secret']
+
+        
+        # Set up OAuth and integrate with API
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+
+        # Create API object
+        api = tweepy.API(auth)  
+
+        # Verify credentials
+        try:
+            api.verify_credentials()
+            print("Authentication OK")
+            status = 'signedIn'
+        except Exception as e:
+            print("Error during authentication")
+            print(e)
+            status = 'notSignedIn'
+        #check if the access token and secret are valid
         return {'status': status}
