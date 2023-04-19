@@ -52,14 +52,10 @@ export default {
               console.log('Page access token:', pageAccessToken)
               this.page_token = pageAccessToken
               console.log('Page access token:', this.page_token)
-              this.$router.push({
-                path: '/FaceBookPost',
-                query: {
-                  user_id: this.user_id,
-                  user_token: this.user_token,
-                  page_token: this.page_token
-                }
-              })
+              localStorage.setItem('pageAccessToken', pageAccessToken)
+              this.$router.push(
+                "/FaceBookPost"
+              )
             })
             .catch(error => {
               console.error('Error:', error);
