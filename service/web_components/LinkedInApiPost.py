@@ -61,26 +61,6 @@ class LinkedInApiPost(Component):
         print(response.json())
 
 
-        """ profile = application.get_profile(selectors=['id', 'first-name', 'last-name', 'email-address'])
-        print(profile) """
-        """ application.get_profile(selectors=['id', 'first-name', 'last-name'])
-        print("222222222222222222")
-        user_id = profile['id']
-        print(user_id)
-        print(profile['first-name']) """
-
-        """ APPLICATION_KEY    = "78sme225fsy5by"
-        APPLICATION_SECRET = "J3xg14qRTV87viVq"
-
-        RETURN_URL = "http://localhost:9000"
-        auth = linkedin.LinkedInAuthentication(APPLICATION_KEY, APPLICATION_SECRET, RETURN_URL, linkedin.PERMISSIONS.enums.values())
-        auth.token = {'access_token': access_token}
-        client = linkedin.LinkedInApplication(auth)
-
-        profile = client.get_profile(selectors=['id', 'first-name', 'last-name', 'email-address'])
-        user_id = profile['id']
-        print(f"User ID: {user_id}")
-
         # you can get the request args by request.args.get('argName')"""
         arg1 = request.args.get('arg1')
         # you can reutrn a dict, it will be converted to json automatically
