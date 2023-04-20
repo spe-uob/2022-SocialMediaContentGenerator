@@ -32,31 +32,7 @@ class LinkedInApi(Component):
         print ("Access Token:", result.access_token)
         print ("Expires in (seconds):", result.expires_in)
 
-        """ APPLICATON_KEY    = '78sme225fsy5by'
-        APPLICATON_SECRET = 'J3xg14qRTV87viVq'
 
-        RETURN_URL = 'http://localhost:9000'
-
-        authentication = linkedin.LinkedInAuthentication(
-                            APPLICATON_KEY,
-                            APPLICATON_SECRET,
-                            RETURN_URL,
-                            linkedin.PERMISSIONS.enums.values()
-                        )
-
-        authentication.authorization_code = code
-        result = authentication.get_access_token()
-
-        print ("Access Token:", result.access_token)
-        print ("Expires in (seconds):", result.expires_in) """
-
-
-
-
-
-
-        """ authentication.authorization_code = code
-        access_token = authentication.get_access_token() """
         print(result.access_token)
         # you can get the request args by request.args.get('argName')
         arg1 = request.args.get('arg1')
