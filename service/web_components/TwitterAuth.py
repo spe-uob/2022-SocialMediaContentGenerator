@@ -51,12 +51,34 @@ class TwitterSignInCheck(Component):
 
         # Verify credentials
         try:
-            api.verify_credentials()
+            user = api.verify_credentials()
             print("Authentication OK")
             status = 'signedIn'
+            name = user.name
         except Exception as e:
             print("Error during authentication")
             print(e)
             status = 'notSignedIn'
+            name = 'notSignedIn'
         #check if the access token and secret are valid
-        return {'status': status}
+        return {'status': status, 'name': name}
+
+class TwitterSignOut(Component):
+    def __init__(self, env: Environment):
+        super().__init__(env, '/api/v1/twitterSignOut', TwitterSignOut, ['GET'])
+        self.env = env
+
+    def view(self):
+        auth_dict = {
+            'access_token': '',
+            'access_token_secret': '',
+            'consumer_key': "EzoH0w73hC3naY84U6NBHZHyz",
+            'consumer_secret': "qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw"
+        }
+
+        json_object = json.dumps(auth_dict, indent=4)
+
+        with open('twitter_auth.json', 'w') as outfile:
+            outfile.write(json_object)
+
+        return {'status': 'signed out'}

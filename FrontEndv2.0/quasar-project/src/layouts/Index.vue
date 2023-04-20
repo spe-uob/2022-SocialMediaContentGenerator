@@ -105,12 +105,17 @@
         <q-item>
           <q-item-section>
             <div class="q-pa-sm"></div>
-            <AuthComponent v-if="!checkTwitterStatus"/>
-            <q-btn v-else class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" rounded>
-              <span class="q-pa-sm">
-                Signed in as ...
-              </span>
-            </q-btn>
+            <AuthComponent v-if="!signedIn"/>
+            <div v-else class="q-col row items-center justify-center q-mt-md" >
+                <q-btn class="q-ma-sm" color="light-blue" icon="fa-brands fa-twitter" rounded no-caps>
+                  <span>
+                    Signed in as {{ name }}
+                  </span>
+                </q-btn>
+                <q-btn class="q-ma-sm" color="red" @click="this.signOut()">
+                  Sign Out
+                </q-btn>
+            </div>
           </q-item-section>
         </q-item>
       </q-list>
@@ -124,17 +129,30 @@
 import AuthComponent from "components/AuthComponent.vue"
 import LinkedInLogin from "components/LinkedInLogin.vue";
 import FBAuthComponent from "components/FBAuthComponent.vue";
+import { onAuthStateChanged, getAuth } from "@firebase/auth";
+
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  this.checkTwitterStatus()
+});
+
 export default {
   components: {FBAuthComponent, AuthComponent, LinkedInLogin },
   data(){
     return{
       drawerMenu: true,
       rightDrawerMenu: true,
+      name: '',
+      signedIn: false,
     }
   },
   name: "Index",
+  mounted() {
+    this.checkTwitterStatus()
+  },
   methods: {
     async checkTwitterStatus() {
+      console.log("checking twitter status")
       const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`
       const response = await fetch(url, {
         method: 'GET',
@@ -142,11 +160,26 @@ export default {
       })
       // eslint-disable-next-line no-unused-vars
       const data = await response.json()
-      if (data['status'] == "signedIn") return true
-      else return false
+      if (data['status'] === "signedIn") {
+        console.log("signed in", data['name'])
+        this.name = data['name']
+        this.signedIn = true
+      }
+      else {
+        console.log("not signed in")
+        this.name = ''
+        this.signedIn = false
+        return false
+      }
     },
     signOut() {
-      auth.signOut().then(function() {
+      auth.signOut().then(async function() {
+        const url = `http://127.0.0.1:8888/api/v1/twitterSignOut`
+        const response = await fetch(url, {
+          method: 'GET',
+          mode: 'cors',
+        })
+        this.name = ''
         console.log('Signed Out')
       }, function(error) {
         console.error('Sign Out Error', error);
