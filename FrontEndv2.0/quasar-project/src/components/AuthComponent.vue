@@ -55,7 +55,8 @@
             })
             // eslint-disable-next-line no-unused-vars
             const data = await response.json()
-            this.$router.push("/twitter")
+            //this.$router.push("/twitter")
+            location.reload()
           }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
