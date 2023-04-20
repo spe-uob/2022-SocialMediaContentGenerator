@@ -129,13 +129,10 @@
 import AuthComponent from "components/AuthComponent.vue"
 import LinkedInLogin from "components/LinkedInLogin.vue";
 import FBAuthComponent from "components/FBAuthComponent.vue";
-import { onAuthStateChanged, getAuth } from "@firebase/auth";
+import { getAuth } from "firebase/auth";
 
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  this.checkTwitterStatus()
-});
 
+const auth = getAuth()
 export default {
   components: {FBAuthComponent, AuthComponent, LinkedInLogin },
   data(){
@@ -179,8 +176,8 @@ export default {
           method: 'GET',
           mode: 'cors',
         })
-        this.name = ''
         console.log('Signed Out')
+        location.reload()
       }, function(error) {
         console.error('Sign Out Error', error);
       });

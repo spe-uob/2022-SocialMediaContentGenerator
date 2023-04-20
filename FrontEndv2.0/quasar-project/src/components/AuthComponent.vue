@@ -55,9 +55,6 @@
             })
             // eslint-disable-next-line no-unused-vars
             const data = await response.json()
-            console.log(data)
-            localStorage.setItem('screenName', screenName)
-            localStorage.setItem('displayName', displayName)
             this.$router.push("/twitter")
           }).catch((error) => {
             // Handle Errors here.
