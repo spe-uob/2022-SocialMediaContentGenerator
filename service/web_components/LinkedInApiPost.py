@@ -15,6 +15,10 @@ class LinkedInApiPost(Component):
     # when frontend request this api, this function will be called
     def view(self):
 
+        data = request.get_json()
+        message = data['message']
+        print(message)
+
         with open("linkedin_auth.json") as json_file:
                     auth_dict = json.load(json_file)
                     access_token = auth_dict["access_token"]
@@ -41,7 +45,7 @@ class LinkedInApiPost(Component):
                   "specificContent": {
                     "com.linkedin.ugc.ShareContent": {
                       "shareCommentary": {
-                        "text": "114514!"
+                        "text": f"{message}"
                       },
                       "shareMediaCategory": "NONE"
                     }
