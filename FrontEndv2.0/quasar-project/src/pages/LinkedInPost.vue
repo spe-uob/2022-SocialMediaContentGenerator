@@ -41,7 +41,7 @@ export default {
   name: "LinkedInPost",
   data () {
     return {
-      url: linkedinAuthUrl
+      url: linkedinAuthUrl,
       inputText: ''
     }
   },
