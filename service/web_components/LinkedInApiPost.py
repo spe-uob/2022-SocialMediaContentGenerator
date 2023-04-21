@@ -1,7 +1,7 @@
 from . import *
 from flask import request
 import requests
-from linkedin import linkedin
+""" from linkedin import linkedin """
 from linkedin.linkedin import PERMISSIONS
 from linkedin import server
 import json
