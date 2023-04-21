@@ -20,7 +20,7 @@
     "facebook-js-sdk": "^0.3.4",
     "firebase": "^9.18.0",
     "fs": "^0.0.1-security",
-    "quasar": "^2.11.5",
+    "quasar": "^2.11.10",
     "request": "^2.88.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0"
