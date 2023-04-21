@@ -29,7 +29,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-vue": "^9.0.0",
+    "eslint-plugin-vue": "^9.11.0",
     "eslint-webpack-plugin": "^4.0.0"
   },
   "browserslist": [
