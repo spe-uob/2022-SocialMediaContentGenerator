@@ -35,6 +35,8 @@ class StableDiffusionModel:
         }
         self.vae_ignore_keys = {"model_ema.decay", "model_ema.num_updates"}
         self.sync_checkpoint_list()
+        if not os.path.exists(self.path):
+            os.makedirs(self.path)
 
     def load_model(self, model_name, vae_name=None):
         if model_name not in self.checkpoints:
