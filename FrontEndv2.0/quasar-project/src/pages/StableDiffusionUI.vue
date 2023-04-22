@@ -125,6 +125,11 @@
                     <q-badge color="white" text-color="accent" :label="task_progress"/>
                   </div>
                 </q-linear-progress>
+                <q-linear-progress v-if="current_task.hasOwnProperty('sub_progress')" size="25px" :value="current_task['sub_progress']" stripe color="positive">
+                  <div class="absolute-full flex flex-center">
+                    <q-badge color="white" text-color="accent" :label="(current_task['sub_progress'] * 100).toFixed(2) + '%'"/>
+                  </div>
+                </q-linear-progress>
               </q-card-section>
               <q-card-section class="self-center">
                 <q-btn color="positive" class="q-mr-md" label="generate" :disable="generating || loading_model" @click="generate()"/>
@@ -188,17 +193,19 @@ export default defineComponent({
       height: 512,
       n_iter: 1,
       batch_size: 1,
-      base_url: '',
+      base_url: 'http://localhost:8888',
       sampler: 'DDIM',
-      sampler_options: [],
+      sampler_options: ["DDIM", "PLMS", "Euler A", "Euler", "LMS", "Heun", "DPM2", "DPM2 a", "DPM++ 2S a", "DPM++ 2M", "DPM++ SDE", "DPM fast", "DPM adaptive"],
       images_buffer: [],
       sample_task_uuid: null,
       task_images_length: 0,
       task_progress: 0,
+      current_task: {},
       current_tasks: [],
       task_columns: [
         {name: 'this', label: 'is your task?', align: 'center', field: 'this', sortable: true},
         {name: 'progress', label: 'progress', align: 'center', field: 'progress', sortable: true},
+        {name: 'sub_progress', label: 'sub_progress', align: 'center', field: 'sub_progress', sortable: true},
         {name: 'uuid', label: 'uuid', align: 'left', field: 'uuid', sortable: true},
         {name: 'n_iter', align: 'center', label: 'n_iter', field: 'n_iter', sortable: true},
         {name: 'batch_size', label: 'batch_size', field: 'batch_size', sortable: true},
@@ -211,6 +218,7 @@ export default defineComponent({
         {name: 'negative_prompt', label: 'negative_prompt', field: 'negative_prompt', sortable: true},
       ],
       task_rows: [],
+      current_progress: 0,
       allocated: 0,
       cached: 0,
       device_total: 0,
@@ -302,16 +310,21 @@ export default defineComponent({
       this.generating = false
     },
     async syncTasks() {
-      let request = await fetch(this.getUrl(`/api/v1/get_task_info`), {
+      let request = await fetch(this.getUrl(`/api/v1/get_txt2img_task_info`), {
         method: 'GET',
         mode: 'cors'
       });
       let response = await request.json();
+      this.current_task = {};
+      for (let i = 0; i < response['tasks'].length; i++)
+        if (response['tasks'][0]['uuid'] === this.sample_task_uuid)
+          this.current_task = response['tasks'][0];
       this.current_tasks = response['tasks'];
       this.task_rows = this.current_tasks.map((task) => {
         return {
           'this': task['uuid'] === this.sample_task_uuid,
           progress: (task['progress'] * 100).toFixed(2) + "%",
+          sub_progress: (task['sub_progress'] * 100).toFixed(2) + "%",
           uuid: task['uuid'],
           n_iter: task['n_iter'],
           batch_size: task['batch_size'],
