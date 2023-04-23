@@ -24,7 +24,7 @@
             flat
             round
             @click="$q.dark.toggle()"
-            :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
+            :icon="!$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
           />
         </q-toolbar>
       </div>
@@ -59,13 +59,6 @@
               <q-icon name="fa-solid fa-house" />
             </q-item-section>
             <q-item-section>Home</q-item-section>
-          </q-item>
-
-          <q-item clickable @click="signOut()" v-ripple class="text-grey-5" to="/signin" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-solid fa-user" />
-            </q-item-section>
-            <q-item-section>Sign In</q-item-section>
           </q-item>
 
           <q-item clickable v-ripple class="text-grey-5" to="/stablediffusionUI" active-class="menu-link">
@@ -132,6 +125,7 @@
   import FBAuthComponent from "components/FBAuthComponent.vue";
   import { getAuth } from "firebase/auth";
   const auth = getAuth()
+
   export default {
     components: {AuthComponent},
     data(){
