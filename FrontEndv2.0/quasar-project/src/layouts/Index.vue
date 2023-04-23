@@ -107,7 +107,7 @@
             <div class="q-pa-sm"></div>
             <AuthComponent v-if="!signedIn"/>
             <div v-else class="q-col row items-center justify-center q-mt-md" >
-                <q-btn class="q-ma-sm" color="light-blue" icon="fa-brands fa-twitter" rounded no-caps>
+                <q-btn class="q-ma-sm" color="light-blue" icon="fa-brands fa-twitter" rounded no-caps disable>
                   <span>
                     Signed in as {{ name }}
                   </span>
