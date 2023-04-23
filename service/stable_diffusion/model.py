@@ -9,10 +9,13 @@ from loguru import logger
 from ldm.util import instantiate_from_config
 from omegaconf import OmegaConf
 
+from stable_diffusion import lora_compvis
+
 
 class StableDiffusionModel:
     def __init__(self, path, default_config, device, half=False, vae_half=False, map_location=None, show_global_state=False, opt_channelslast=False):
         self.path = path
+        self.lora_path = os.path.join(self.path, 'lora')
         self.default_config = default_config
         self.device = device
         self.half = half
@@ -21,6 +24,7 @@ class StableDiffusionModel:
         self.show_global_state = show_global_state
         self.opt_channelslast = opt_channelslast
         self.checkpoint_list = []
+        self.lora_model_list = []
         self.checkpoints = {}
         self.dtype = None
         self.dtype_vae = None
@@ -28,6 +32,7 @@ class StableDiffusionModel:
         self.base_vae = None
         self.current_vae_file = None
         self.current_model = None
+        self.lora_networks = []
         self.chckpoint_dict_replacements = {
             'cond_stage_model.transformer.embeddings.': 'cond_stage_model.transformer.text_model.embeddings.',
             'cond_stage_model.transformer.encoder.': 'cond_stage_model.transformer.text_model.encoder.',
@@ -35,6 +40,41 @@ class StableDiffusionModel:
         }
         self.vae_ignore_keys = {"model_ema.decay", "model_ema.num_updates"}
         self.sync_checkpoint_list()
+        if not os.path.exists(self.path):
+            os.makedirs(self.path)
+        if not os.path.exists(self.lora_path):
+            os.makedirs(self.lora_path)
+
+    def load(self, model_name, vae_name=None):
+        if self.current_model != model_name:
+            self.load_model(model_name, None)
+        if vae_name and self.current_vae_file != vae_name:
+            self.rollback_vae(self.model)
+            self.load_vae(self.model, vae_name)
+
+    def load_lora(self, lora_model_name, weight=1.0):
+        lora_model_path = os.path.join(self.lora_path, lora_model_name)
+        unet = self.model.model.diffusion_model
+        text_encoder = self.model.cond_stage_model
+        if lora_model_path.endswith(".safetensors"):
+            lora_state_dict = safetensors.torch.load_file(lora_model_path)
+        else:
+            lora_state_dict = torch.load(lora_model_path)
+        network, info = lora_compvis.create_network_and_apply_compvis(
+            lora_state_dict, weight, weight, text_encoder, unet
+        )
+        network.to(self.model.device, dtype=self.model.dtype)
+        logger.info(f"LoRA model {lora_model_path} loaded: {info}")
+        self.lora_networks.append((network, lora_model_path))
+
+    def restore_networks(self):
+        unet = self.model.model.diffusion_model
+        text_encoder = self.model.cond_stage_model
+        if len(self.lora_networks) > 0:
+            print("restoring last networks")
+            for network, _ in self.lora_networks[::-1]:
+                network.restore(text_encoder, unet)
+            self.lora_networks.clear()
 
     def load_model(self, model_name, vae_name=None):
         if model_name not in self.checkpoints:
@@ -138,6 +178,7 @@ class StableDiffusionModel:
                 config = self.default_config
             self.checkpoint_list.append((checkpoint, config))
         self.checkpoints = {k: v for k, v in self.checkpoint_list}
+        self.lora_model_list = list(filter(lambda x: x.endswith(".pt") or x.endswith(".safetensors"), os.listdir(self.path)))
 
     def get_available_vae_list(self):
         return list(filter(lambda x: x.endswith(".vae.pt"), os.listdir(self.path)))

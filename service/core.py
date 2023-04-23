@@ -48,12 +48,17 @@ class Core:
             seed = random.randint(1000000, 1000000000)
         results = []
         task.result = []
+        task.progress = np.array((0, 0))
+
+        def update_progress(it):
+            task.progress[1] = it
+
         for i in range(n_iter):
-            temp_result = self.txt2img.generate(prompt, negative_prompt, height, width, batch_size, seed, sample=sampler, steps=step, cfg=cfg)
+            temp_result = self.txt2img.generate(prompt, negative_prompt, height, width, batch_size, seed, sample=sampler, steps=step, cfg=cfg, update_progress=update_progress)
             seeds = [seed + i for i in range(batch_size)]
             saved_path = self.save_sample(temp_result)
             results += zip(temp_result, seeds, saved_path)
-            task.progress = np.array((i, 0))
+            task.progress[0] = i
             task.result += zip(temp_result, seeds, saved_path)
             seed += batch_size
         return results

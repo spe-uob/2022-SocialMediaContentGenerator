@@ -41,11 +41,12 @@ class Txt2Img:
         self.samplers["DPM fast"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_fast, self.model, self.device)
         self.samplers["DPM adaptive"] = KDiffusionSampler(k_diffusion.sampling.sample_dpm_adaptive, self.model, self.device)
 
-    def generate(self, prompt, negative_prompt, height, width, batch_size, seed, sample="DDIM", steps=20, cfg=7.5):
+    def generate(self, prompt, negative_prompt, height, width, batch_size, seed, sample="DDIM", steps=20, cfg=7.5, update_progress=None):
         with torch.autocast("cuda") if self.device.type == "cuda" else nullcontext():
             if self.device.type != "cuda":
                 self.model.cond_stage_model.transformer.to(dtype=torch.float32)
             sampler = self.samplers[sample]
+            sampler.update_progress = update_progress
             x = self.create_random_tensors([self.opt_C, height // self.opt_f, width // self.opt_f], seeds=[seed + i for i in range(batch_size)], seed_resize_from_h=0, seed_resize_from_w=0,
                                            sampler=sampler)
             if sample not in["DDIM", "PLMS"]:
