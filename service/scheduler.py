@@ -50,7 +50,7 @@ class Scheduler:
     def add_task_txt2img(self, prompt, negative_prompt, sampler, step, width, height, n_iter, batch_size, cfg):
         task = Task(TaskType.Txt2Img, function_args={
             "prompt": prompt, "negative_prompt": negative_prompt, "step": step, "width": width, "height": height, "sampler": sampler, "n_iter": n_iter, "batch_size": batch_size, "cfg": cfg,
-        }, func=self.core.sample_txt2img, total_progress=[n_iter, batch_size])
+        }, func=self.core.sample_txt2img, total_progress=[n_iter, step])
         task.function_args["task"] = task
         self.tasks.put(task)
         self.tasks_table[task.task_id] = task

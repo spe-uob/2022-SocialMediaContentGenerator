@@ -18,6 +18,11 @@ class TypicalStableDiffusionSampler:
         self.step = 0
         self.eta = 0.0
         self.conditioning_key = model.model.conditioning_key
+        self.update_progress = None
+
+    def callback(self, i):
+        if self.update_progress is not None:
+            self.update_progress(i)
 
     def sample(self, x, conditioning, unconditional_conditioning, steps, cfg_scale=7.5, image_conditioning=None, eta=0.0):
         self.init_latent = None
@@ -25,7 +30,7 @@ class TypicalStableDiffusionSampler:
         self.step = 0
 
         sample_results = self.sampler.sample(S=steps, conditioning=conditioning, batch_size=int(x.shape[0]), shape=x[0].shape, verbose=False, unconditional_guidance_scale=cfg_scale,
-                                             unconditional_conditioning=unconditional_conditioning, x_T=x, eta=self.eta)[0]
+                                             unconditional_conditioning=unconditional_conditioning, x_T=x, eta=self.eta, callback=self.callback)[0]
         return sample_results
 
     @staticmethod
@@ -165,6 +170,7 @@ class KDiffusionSampler:
         self.sampler_noises = None
         self.eta = 0
         self.conditioning_key = model.model.conditioning_key
+        self.update_progress = None
 
     def initialize(self):
         self.model_wrap_cfg.mask = None
@@ -188,6 +194,11 @@ class KDiffusionSampler:
     def number_of_needed_noises(steps):
         return steps
 
+    def callback(self, data):
+        x, i, sigma, sigma_hat, denoised = data['x'], data['i'], data['sigma'], data['sigma_hat'], data['denoised']
+        if self.update_progress is not None:
+            self.update_progress(i)
+
     def sample(self, x, conditioning, unconditional_conditioning, steps, cfg_scale=7, image_conditioning=None):
 
         sigmas = k_diffusion.sampling.get_sigmas_karras(n=steps, sigma_min=0.1, sigma_max=10, device=self.device)
@@ -209,6 +220,6 @@ class KDiffusionSampler:
             'image_cond': image_conditioning,
             'uncond': unconditional_conditioning,
             'cond_scale': cfg_scale
-        }, disable=False, callback=None, **extra_params_kwargs)
+        }, disable=False, callback=self.callback, **extra_params_kwargs)
 
         return samples

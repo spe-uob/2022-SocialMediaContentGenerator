@@ -36,6 +36,7 @@ class GetTxt2ImgTasks(Component):
                     {
                         "uuid": task.task_id,
                         "progress": task.get_progress()[0],
+                        "sub_progress": task.get_progress()[1],
                         "length": task.function_args["n_iter"] * task.function_args["batch_size"],
                         "n_iter": task.function_args["n_iter"],
                         "batch_size": task.function_args["batch_size"],
