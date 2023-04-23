@@ -45,13 +45,13 @@ console.log(AuthComponent.data().secret);
 console.log("https://twitter.com/" + AuthComponent.data().displayName);
 const temp = "https://twitter.com/" + AuthComponent.data().displayName;
 export default {
-  components: { AuthComponent},
+  components: { },
   name: "TimelineView",
   props: ['screenName', temp],
   data() {
     return {
       tweets: null,
-      screenName: temp,
+      // screenName: temp,
       //displayUser: ''
     };
   },

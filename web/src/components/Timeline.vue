@@ -5,7 +5,9 @@
 </template>
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
-
+export default {
+  name: "TimeLine",
+};
 </script>
 
 <style scoped>
