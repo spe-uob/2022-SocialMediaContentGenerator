@@ -4,6 +4,7 @@ from linkedin import linkedin
 from linkedin.linkedin import PERMISSIONS
 import json
 
+
 class LinkedInApi(Component):
     def __init__(self, env: Environment):
         super().__init__(env, '/api/linkedin/access_token', 'LinkedInApi', ['GET', 'POST'])
@@ -20,29 +21,27 @@ class LinkedInApi(Component):
         RETURN_URL = 'http://localhost:9000'
 
         authentication = linkedin.LinkedInAuthentication(
-                            APPLICATION_KEY,
-                            APPLICATION_SECRET,
-                            RETURN_URL,
-                            linkedin.PERMISSIONS.enums.values()
-                        )
+            APPLICATION_KEY,
+            APPLICATION_SECRET,
+            RETURN_URL,
+            linkedin.PERMISSIONS.enums.values()
+        )
 
         authentication.authorization_code = code
         result = authentication.get_access_token()
 
-        print ("Access Token:", result.access_token)
-        print ("Expires in (seconds):", result.expires_in)
-
+        print("Access Token:", result.access_token)
+        print("Expires in (seconds):", result.expires_in)
 
         print(result.access_token)
         # you can get the request args by request.args.get('argName')
         arg1 = request.args.get('arg1')
         # you can reutrn a dict, it will be converted to json automatically
         auth_dict = {
-        "access_token": result.access_token
+            "access_token": result.access_token
         }
         json_object = json.dumps(auth_dict, indent=4)
         with open("linkedin_auth.json", 'w') as outfile:
             outfile.write(json_object)
 
         return {'status': 'ok', 'arg1': arg1}
-
