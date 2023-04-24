@@ -29,37 +29,44 @@ export default {
     async login () {
       const auth = getAuth()
       //const pageId = '119057271096466'
-      let fb = await signInWithPopup(auth, provider)
+      await signInWithPopup(auth, provider)
         .then((result) => {
           const credential = FacebookAuthProvider.credentialFromResult(result)
           const userAccessToken = credential.accessToken
           const user = result.user
-          localStorage.setItem('uid',user.uid)
-          localStorage.setItem('userAccessToken',userAccessToken)
+          const uid = user.uid
           axios.get(`https://graph.facebook.com/${this.version}/me/accounts?access_token=${userAccessToken}`)
             .then((response) => {
                 const pages = response.data.data
                 const page = pages.find((page) => page.tasks.includes('ADMIN'))
                 const pageId = page.id
-                localStorage.setItem('pageId', pageId)
+              fetch(`https://graph.facebook.com/${pageId}?fields=access_token&access_token=${userAccessToken}`)
+                .then(response => response.json())
+                .then(data => {
+                  const pageAccessToken = data.access_token
+                  const url = `http://127.0.0.1:9000/api/v1/facebookAuth`
+                  const response = fetch(url, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      pageId:pageId,
+                      userAccessToken:userAccessToken,
+                      pageAccessToken:pageAccessToken
+                    }),
+                    mode: 'cors',
+                  })
+                  const res = response.json()
+                  //this.$router.push("/FaceBookPost")
+                  location.reload()
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
               }).catch((error) => {
             console.error('Error:', error)
           })
-          fetch(`https://graph.facebook.com/${localStorage.getItem('pageID')}?fields=access_token&access_token=${userAccessToken}`)
-            .then(response => response.json())
-            .then(data => {
-              const pageAccessToken = data.access_token
-              console.log('Page access token:', pageAccessToken)
-              this.page_token = pageAccessToken
-              console.log('Page access token:', this.page_token)
-              localStorage.setItem('pageAccessToken', pageAccessToken)
-              this.$router.push(
-                "/FaceBookPost"
-              )
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
         }).catch((error) => {
           console.log(error.code)
           console.log(error.message)
