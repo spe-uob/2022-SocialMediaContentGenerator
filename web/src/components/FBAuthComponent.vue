@@ -44,7 +44,7 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                   const pageAccessToken = data.access_token
-                  const url = `http://127.0.0.1:9000/api/v1/facebookAuth`
+                  const url = `http://127.0.0.1:8888/api/v1/facebookAuth`
                   const response = fetch(url, {
                     method: 'POST',
                     headers: {

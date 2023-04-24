@@ -110,6 +110,7 @@
                     Sign Out
                   </q-btn>
               </div>
+              <FBAuthComponent/>
             </q-item-section>
           </q-item>
         </q-list>
@@ -122,12 +123,12 @@
   <script>
   import AuthComponent from "components/AuthComponent.vue"
   import LinkedInLogin from "components/LinkedInLogin.vue";
-  import FBAuthComponent from "components/FBAuthComponent.vue";
   import { getAuth } from "firebase/auth";
+  import FBAuthComponent from "components/FBAuthComponent.vue";
   const auth = getAuth()
 
   export default {
-    components: {AuthComponent},
+    components: {FBAuthComponent, AuthComponent},
     data(){
       return{
         drawerMenu: true,
