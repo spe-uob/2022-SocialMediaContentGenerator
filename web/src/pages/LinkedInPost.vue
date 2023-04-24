@@ -1,7 +1,7 @@
 <template>
   <div>
     <a href="https://www.linkedin.com/oauth/v2/authorization?client_id=78sme225fsy5by&redirect_uri=http://localhost:9000&response_type=code&scope=r_emailaddress r_liteprofile w_member_social" @click="getCode">
-      <img src="/path/to/linkedin-icon.png" alt="Log in with LinkedIn" />
+      <img src="~assets/quasar-logo-vertical.svg" alt="Log in with LinkedIn" />
     </a>
   </div>
   <q-page>
