@@ -15,9 +15,6 @@ class FacebookBackEnd(Component):
             userAccessToken = auth_dict['userAccessToken']
             pageAccessToken = auth_dict['pageAccessToken']
             pageID = auth_dict['pageID']
-        graph = facebook.GraphAPI(access_token = userAccessToken, version='16.0')
-        photo_id = graph.put_photo(image=image)
-        graph.put_object(parent_object=pageID, connection_name='feed', message=message,
-                         picture='https://www.facebook.com/photo.php?fbid=' + photo_id)
+        
 
 
