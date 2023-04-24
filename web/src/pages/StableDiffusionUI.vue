@@ -176,6 +176,7 @@ export default defineComponent({
   },
   data() {
     return {
+      debug: false,
       model: null,
       models: [],
       loading_model: false,
@@ -226,7 +227,7 @@ export default defineComponent({
   },
   methods: {
     getUrl(path) {
-      return this.base_url + path
+      return this.debug ? "http://localhost:8888" + path : path;
     },
     saveImage() {
       const link = document.createElement('a')
@@ -416,12 +417,18 @@ export default defineComponent({
     },
 
   },
+  mounted() {
+    console.log("debug type:", this.$DEBUG)
+    this.debug = this.$DEBUG;
+  },
   async beforeMount() {
+
     await this.syncModelList()
     await this.getCurrentModel();
     await this.syncSamplerList();
     window.setInterval(this.syncTasks, 500);
     // window.setInterval(this.syncGPUInfo, 200);
+
   },
   beforeUnmount() {
     this.$q.loading.hide()
