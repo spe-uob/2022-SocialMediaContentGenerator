@@ -13,7 +13,7 @@
         <q-form @submit="submitPost">
           <q-input label="Post subject"></q-input>
           <q-input label="Post text" v-model="inputText" type="textarea"></q-input>
-          <q-btn type="submit" label="Publish post xxx"></q-btn>
+          <q-btn type="submit" label="Publish post"></q-btn>
         </q-form>
       </q-card-section>
     </q-card>
