@@ -8,3 +8,5 @@ from .Txt2Img import *
 from .Image import *
 from .Twitter import *
 from .TwitterAuth import *
+from .LinkedInApi import *
+from .LinkedInApiPost import *

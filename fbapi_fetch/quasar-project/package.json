@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.2",
-    "axios": "^1.3.4",
+    "axios": "^1.3.6",
     "core-js": "^3.29.1",
-    "firebase": "^9.18.0",
-    "firebase-tools": "^11.27.0",
+    "firebase": "^9.20.0",
+    "firebase-tools": "^11.28.0",
     "quasar": "^2.11.10",
     "vue": "^3.0.0",
     "vue-facebook-login-component": "^4.0.2",
@@ -24,13 +24,13 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.3",
     "@quasar/app-webpack": "^3.7.2",
-    "eslint": "^8.36.0",
+    "eslint": "^8.39.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^9.11.0",
-    "eslint-webpack-plugin": "^4.0.0"
+    "eslint-webpack-plugin": "^4.0.1"
   },
   "browserslist": [
     "last 10 Chrome versions",
