@@ -40,7 +40,7 @@ export default {
         },
         body: JSON.stringify({
           message: this.message,
-          image: this.image ? this.image : '',
+          image_url: this.image ? this.image : '',
         }),
         mode: 'cors',
       })
