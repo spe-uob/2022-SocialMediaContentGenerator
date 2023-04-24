@@ -31,12 +31,22 @@ export default {
     async postToFacebook() {
       const userAccessToken = localStorage.getItem('userAccessToken')
       const pageAccessToken = localStorage.getItem('pageAccessToken')
-      this.page_token = this.$route.query.page_token
-      this.user_token = this.$route.query.user_token
       //formData.append('source', this.image);
-      console.log("message sent", this.message)
-      console.log("page token", this.page_token)
-      fetch('src/assets/spaceNXT.png')
+     const url = 'http://127.0.0.1:8888/api/v1/facebook'
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: this.message,
+          image: this.image ? this.image : '',
+        }),
+        mode: 'cors',
+      })
+      const data = await response.json()
+
+     /* fetch('src/assets/spaceNXT.png')
         .then(response => response.blob())
         .then(blob => {
 
