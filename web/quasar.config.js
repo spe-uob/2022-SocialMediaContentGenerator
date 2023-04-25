@@ -10,9 +10,16 @@
 
 
 const { configure } = require('quasar/wrappers');
+const debug_type = require('./src/boot/debug_type.json');
+const fs = require('fs');
 
-
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function ( ctx ) {
+  debug_type.DEBUG = !!ctx.dev;
+  fs.writeFile('./src/boot/debug_type.json', JSON.stringify(debug_type), function writeJSON(err) {
+    if (err) return console.log(err);
+    // console.log(JSON.stringify(debug_type));
+    // console.log('writing to ' + './src/boot/debug_type');
+  });
   return {
     eslint: {
       // fix: true,
@@ -32,6 +39,7 @@ module.exports = configure(function (/* ctx */) {
     boot: [
       'firebase',
       'axios',
+      'debug'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -59,7 +67,7 @@ module.exports = configure(function (/* ctx */) {
         browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
         node: 'node16'
       },
-
+      showProgress: true,
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
