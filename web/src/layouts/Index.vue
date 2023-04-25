@@ -68,6 +68,13 @@
             <q-item-section>SD UI</q-item-section>
           </q-item>
 
+          <q-item clickable v-ripple class="text-grey-5" to="/PostPage" active-class="menu-link">
+            <q-item-section avatar>
+              <q-icon name="fa-solid fa-sliders" />
+            </q-item-section>
+            <q-item-section>Post Page</q-item-section>
+          </q-item>
+
           <q-item clickable v-ripple class="text-grey-5" to="/LinkedInPost" active-class="menu-link">
             <q-item-section avatar>
               <q-icon name="fa-brands fa-linkedin" />
