@@ -16,3 +16,7 @@
 ./FrontEndv2.0LinkedInApi/quasar-project/.vscode
 
 /service/images/
+web/node_modules
+/service/stable_diffusion/images
+/config.json
+/.pytest_cache/
