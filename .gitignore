@@ -19,4 +19,4 @@
 web/node_modules
 /service/stable_diffusion/images
 /config.json
-
+/.pytest_cache/
