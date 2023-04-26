@@ -15,9 +15,18 @@
         </div>
         <div class="col"></div>
         <div class="col">
-          <q-btn dense flat size="1rem"
-          @click="rightDrawerMenu = !rightDrawerMenu">
-            <q-avatar class="fa-solid fa-user text-grey-5"/>
+          <q-btn dense flat size="1rem">
+            <q-avatar size="2rem" class="fa-solid fa-user text-grey-5"/>
+            <q-menu
+              transition-show="flip-right"
+              transition-hide="flip-left"
+            >
+              <q-list>
+                <q-item clickable>
+                  <AuthComponent></AuthComponent>
+                </q-item>
+              </q-list>
+            </q-menu>
           </q-btn>
           <q-btn
             class="q-mx-lg text-grey-5"
