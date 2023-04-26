@@ -1,5 +1,4 @@
 <template>
-  <!--<div class="container">-->
     <div class="left_container">
       <q-card>
         <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
@@ -45,20 +44,12 @@
         v-model="prompt">
     ></textarea>
       <button><img src="~assets/send.svg"></button>
-      <!--<p>{{ generatedText }}</p>-->
+
     </form>
     <p>{{ generatedText }}</p>
   </div>
   </div>
-  <!--</div>-->
- <!--<div>
-    <label for="prompt-input">Enter a prompt:</label>
-    <input id="prompt-input" type="text" v-model="prompt">
-    <label for="temperature-toggle">Temperature:</label>
-    <input id="temperature-toggle" type="range" min="0" max="1" step="0.1" v-model="temperature">
-    <button @click="generateText">Generate Text</button>
-    <p>{{ generatedText }}</p>
-  </div>-->
+
 </template>
 
 <script>
