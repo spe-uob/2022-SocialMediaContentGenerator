@@ -16,6 +16,7 @@ class openAiApi(Component):
         data = request.get_json()
         prompt = data['prompt']
         temp = data['temp']
+        temp = float(temp)
         print(prompt)
         print(temp)
 
@@ -25,7 +26,8 @@ class openAiApi(Component):
           model="gpt-3.5-turbo",
           messages=[
             {"role": "user", "content": prompt}
-          ]
+          ],
+          temperature = temp
         )
 
         print("hreer")
