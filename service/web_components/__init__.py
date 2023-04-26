@@ -10,3 +10,4 @@ from .Twitter import *
 from .TwitterAuth import *
 from .LinkedInApi import *
 from .LinkedInApiPost import *
+from .openAiApi import *
