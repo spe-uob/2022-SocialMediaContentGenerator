@@ -1,5 +1,4 @@
 <template>
-  <!--<div class="container">-->
     <div class="left_container">
       <q-card>
         <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
@@ -37,28 +36,20 @@
     </div>
   <div class="right_container">
   <div class="chat_container">
-    <form @submit.prevent="generateText">
+    <form @submit.prevent="sendPrompt">
       <textarea
         rows="1"
         cols="1"
         placeholder="generate content..."
         v-model="prompt">
     ></textarea>
-      <button @click="generateText"><img src="~assets/send.svg"></button>
-      <!--<p>{{ generatedText }}</p>-->
+      <button><img src="~assets/send.svg"></button>
+
     </form>
     <p>{{ generatedText }}</p>
   </div>
   </div>
-  <!--</div>-->
- <!--<div>
-    <label for="prompt-input">Enter a prompt:</label>
-    <input id="prompt-input" type="text" v-model="prompt">
-    <label for="temperature-toggle">Temperature:</label>
-    <input id="temperature-toggle" type="range" min="0" max="1" step="0.1" v-model="temperature">
-    <button @click="generateText">Generate Text</button>
-    <p>{{ generatedText }}</p>
-  </div>-->
+
 </template>
 
 <script>
@@ -69,38 +60,23 @@ export default {
     return {
       prompt: '',
       generatedText: '',
-      temperature: 0.5
+      temperature: "0.5"
 
     };
   },
   methods: {
-    async generateText() {
-      const prompt = this.prompt;
-      const apiKey = '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';
-      //GPT-2 'https://api.openai.com/v1/engines/davinci-codex/completions'
-      //GPT-3 'https://api.openai.com/v1/engines/davinci/completions'
-      const url = 'https://api.openai.com/v1/engines/davinci-codex/completions';
-
-      try {
-        const response = await axios.post(url, {
-          //model: 'text-davinci-003' ,
-          prompt: prompt,
-          max_tokens: 50,
-          n: 1,
-          stop: '\n',
-          temperature: this.temperature
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          }
+    sendPrompt() {
+      console.log(this.prompt)
+      if (this.prompt) {
+        axios.post("http://localhost:8888/api/openAiApi", {prompt: this.prompt, temp: this.temperature})
+          .then(response => {
+            this.generatedText = response.data.text
+            console.log(response.data.text)
+          }).catch(error => {
+          console.log(error);
         });
-
-        this.generatedText = response.data.choices[0].text;
-      } catch (error) {
-        console.log(error);
       }
-    }
+    },
   }
 }
 </script>
