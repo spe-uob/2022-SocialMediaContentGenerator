@@ -28,11 +28,18 @@ class openAiApi(Component):
           ]
         )
 
-        print(completion.choices[0].message)
+        print("hreer")
+        print(completion.choices[0].message.content)
+        print("here")
+
+        message = completion.choices[0].message.content
 
 
 
-        # you can get the request args by request.args.get('argName')
-        arg1 = request.args.get('arg1')
+
+
+
+
+
         # you can reutrn a dict, it will be converted to json automatically
-        return {'status': 'ok', 'arg1': arg1}
+        return {'status': 'ok', 'text': message}
