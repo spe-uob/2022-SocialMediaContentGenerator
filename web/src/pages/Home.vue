@@ -1,9 +1,5 @@
 <template>
-  <div class="col-0 col-md-6 flex justify-center content-center">
-    <q-btn flat>
-      <img src="~assets/spaceNXT.png" class="responsive" alt = "login-image" @click="hyperlink"/>
-    </q-btn>
-  </div>
+
   <div id="twitter-timeline-feed" class="embedded-twitter-feed">
     <v-container fluid>
     <a class="twitter-timeline" data-theme='dark' href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
@@ -19,11 +15,6 @@
 import { openURL } from 'quasar'
 export default {
   name: "HomePage",
-  methods: {
-    hyperlink () {
-      openURL("https://spacenxtlabs.com")
-    }
-  }
 }
 window.twttr = (function (d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],

@@ -1,97 +1,39 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <q-layout view="hHh Lpr FfF">
-    <q-header bordered>
-      <div class="row no-wrap">
-        <q-toolbar shrink
-                   :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'" style="max-width:240px">
-          <q-btn flat icon="apps" class="text-grey-6" @click="drawerMenu = !drawerMenu">
-          <q-toolbar-title>
-            <span class="text-h6 text-grey-5">Space</span><span class="text-orange-5">.NXT</span>
-          </q-toolbar-title>
+    <q-header style="height:100px" class="bg-white" reveal bordered>
+      <div class="row items-center justify-around">
+        <div class="col"></div>
+        <div class="col-2">
+          <q-btn flat>
+            <img src="~/assets/spaceNXT.png" style="height:5.5rem" @click="hyperlink"/>
           </q-btn>
-        </q-toolbar>
-        <q-toolbar :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
-          <q-toolbar-title>
-            <span class="gt-sm text-h4 text-grey-5 q-pa-md">Social Media Content Generator</span>
-          </q-toolbar-title>
-          <q-btn dense flat class="q-pa-md text-grey-5"
+        </div>
+        <div class="col-6">
+          <q-btn label="Home" to="/" style="color:#031629" flat class="text-grey-5"/>
+          <q-btn label="Stable Diffusion UI" to="/stablediffusionUI" style="color:#031629" flat class="text-grey-5"/>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+          <q-btn dense flat size="1rem"
           @click="rightDrawerMenu = !rightDrawerMenu">
-            <q-avatar class="fa-solid fa-user"/>
+            <q-avatar class="fa-solid fa-user text-grey-5"/>
           </q-btn>
           <q-btn
-            class="bg-grey-5 q-mx-xs"
+            class="q-mx-lg text-grey-5"
+            size="1rem"
             flat
             round
             @click="$q.dark.toggle()"
             :icon="!$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
           />
-        </q-toolbar>
+        </div>
       </div>
     </q-header>
-    <q-footer bordered>
-      <q-bar :class="$q.dark.isActive ? 'bg-grey-3' : 'bg-white'" class="text-h6 text-grey-5 q-pa-sm">
-        <span class="text caption">Social Media Content Generator: Benjamin, Gene, David, Stephen</span>
-      </q-bar>
-    </q-footer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <q-drawer
-      v-model="drawerMenu"
-      :width="240"
-      no-swipe-open
-      bordered
-      :class="$q.dark.isActive ? 'bg-grey-1' : 'bg-white'"
-      content-class="bg-primary text-white">
-      <q-scroll-areac class="fit">
-        <q-list dense>
-          <q-item>
-            <q-item-section class="text-grey-5 text-weight-medium">
-              MAIN MENU
-            </q-item-section>
-          </q-item>
-        </q-list>
-        <q-list dense>
-          <q-item clickable v-ripple class="text-grey-5" to="/" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-solid fa-house" />
-            </q-item-section>
-            <q-item-section>Home</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/stablediffusionUI" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-solid fa-sliders" />
-            </q-item-section>
-            <q-item-section>SD UI</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/PostPage" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-solid fa-sliders" />
-            </q-item-section>
-            <q-item-section>Post Page</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/LinkedInPost" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-brands fa-linkedin" />
-            </q-item-section>
-            <q-item-section>LinkedIn Post</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/TextGenerator" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="article" />
-            </q-item-section>
-            <q-item-section>Text Generator</q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-areac>
-    </q-drawer>
-
 
     <q-drawer
       side="right"
@@ -128,10 +70,11 @@
   </template>
 
   <script>
-  import AuthComponent from "components/AuthComponent.vue"
+  import AuthComponent from "components/AuthComponent.vue";
   import LinkedInLogin from "components/LinkedInLogin.vue";
   import { getAuth } from "firebase/auth";
   import FBAuthComponent from "components/FBAuthComponent.vue";
+  import { openURL } from 'quasar';
   const auth = getAuth()
 
   export default {
@@ -148,6 +91,9 @@
       this.checkTwitterStatus()
     },
     methods: {
+      hyperlink() {
+        openURL("https://spacenxtlabs.com")
+      },
       async checkTwitterStatus() {
         console.log("checking twitter status")
         const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`
