@@ -18,24 +18,35 @@
           <q-btn dense flat size="1rem">
             <q-avatar size="2rem" class="fa-solid fa-user text-grey-5"/>
             <q-menu
-              transition-show="flip-right"
-              transition-hide="flip-left"
+              transition-show="scale"
+              transition-hide="scale"
+              anchor="top right"
+              self="top left"
+              style="min-width:300px"
             >
               <q-list>
-                <q-item clickable>
-                  <AuthComponent></AuthComponent>
+                <q-item>
+                  <AuthComponent v-if="!signedIn"/>
+                  <q-btn disabled ref="button" class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" type="submit" rounded @click="twitter" style="min-height:50px; min-width:270px;">
+                    <span class="q-pa-xs">
+                      Signed in as {{ name }}
+                    </span>
+                  </q-btn>
+                </q-item>
+                <q-item>
+                  <FBAuthComponent></FBAuthComponent>
                 </q-item>
               </q-list>
             </q-menu>
           </q-btn>
           <q-btn
-            class="q-mx-lg text-grey-5"
-            size="1rem"
+            dense
             flat
-            round
             @click="$q.dark.toggle()"
-            :icon="!$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
-          />
+            class="q-pl-lg"
+          >
+            <q-avatar size="2rem" :class="!$q.dark.isActive ? 'fa-regular fa-moon text-grey-5' : 'fa-solid fa-moon text-grey-5'"/>
+          </q-btn>
         </div>
       </div>
     </q-header>
@@ -43,37 +54,6 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <q-drawer
-      side="right"
-      v-model="rightDrawerMenu"
-      :width="240"
-      no-swipe-open
-      bordered
-      :class="$q.dark.isActive ? 'bg-grey-1' : 'bg-white'"
-      content-class="bg-primary text-white">
-      <q-scroll-areac class="fit">
-        <q-list>
-          <q-item>
-            <q-item-section>
-              <div class="q-pa-sm"></div>
-              <AuthComponent v-if="!signedIn"/>
-              <div v-else class="q-col row items-center justify-center q-mt-md" >
-                  <q-btn class="q-ma-sm" color="light-blue" icon="fa-brands fa-twitter" rounded no-caps disable>
-                    <span>
-                      Signed in as {{ name }}
-                    </span>
-                  </q-btn>
-                  <q-btn class="q-ma-sm" color="red" @click="this.signOut()">
-                    Sign Out
-                  </q-btn>
-              </div>
-              <FBAuthComponent/>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-areac>
-    </q-drawer>
 
   </q-layout>
   </template>

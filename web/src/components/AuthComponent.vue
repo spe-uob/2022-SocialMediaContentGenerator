@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex flex-center">
-      <q-btn ref="button" class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" type="submit" rounded @click="twitter">
-        <span class="q-pa-sm">
+      <q-btn ref="button" class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" type="submit" rounded @click="twitter" style="min-height:50px; min-width:270px;">
+        <span class="q-pa-xs">
           Sign in with Twitter
         </span>
       </q-btn>
