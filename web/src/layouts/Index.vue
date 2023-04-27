@@ -10,10 +10,33 @@
           </q-btn>
         </div>
         <div class="col-6">
-          <q-btn label="Home" to="/" style="color:#031629" flat class="text-grey-5"/>
-          <q-btn label="Stable Diffusion UI" to="/stablediffusionUI" style="color:#031629" flat class="text-grey-5"/>
+          <q-btn to="/" flat @click="handleClick($event)">
+            <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
+          </q-btn>
+          <q-btn to="/stablediffusionUI" flat @click="handleClick">
+            <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
+          </q-btn>
+          <q-btn to="/aboutUs" flat @click="handleClick">
+            <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
+          </q-btn>
         </div>
-        <div class="col"></div>
+        <div class="col q-pr-xl">
+            <div class="row justify-evenly">
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
+              <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
+              <q-avatar v-else size="0.5rem" class="fa-solid fa-circle text-green"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-facebook text-blue"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-linkedin text-blue-2"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+          </div>
+        </div>
         <div class="col">
           <q-btn dense flat size="1rem">
             <q-avatar size="2rem" class="fa-solid fa-user text-grey-5"/>
@@ -21,20 +44,23 @@
               transition-show="scale"
               transition-hide="scale"
               anchor="top right"
-              self="top left"
-              style="min-width:300px"
+              self="bottom left"
+              style="min-width:300px; min-height: 210px;"
             >
               <q-list>
                 <q-item>
                   <AuthComponent v-if="!signedIn"/>
-                  <q-btn disabled ref="button" class="flex justify-center full-width" color="light-blue" icon="fa-brands fa-twitter" type="submit" rounded @click="twitter" style="min-height:50px; min-width:270px;">
+                  <q-btn v-else ref="button" class="flex justify-center full-width" color="light-blue-2" icon="fa-brands fa-twitter" type="submit" rounded @click="signOut" style="min-height:50px; min-width:270px;">
                     <span class="q-pa-xs">
-                      Signed in as {{ name }}
+                      Sign out of Twitter
                     </span>
                   </q-btn>
                 </q-item>
                 <q-item>
                   <FBAuthComponent></FBAuthComponent>
+                </q-item>
+                <q-item>
+                  <LinkedInLogin></LinkedInLogin>
                 </q-item>
               </q-list>
             </q-menu>
@@ -67,19 +93,33 @@
   const auth = getAuth()
 
   export default {
-    components: {FBAuthComponent, AuthComponent},
+    components: {FBAuthComponent, AuthComponent, LinkedInLogin},
     data(){
       return{
         drawerMenu: true,
         rightDrawerMenu: true,
         name: '',
         signedIn: false,
+        select: 0,
       }
     },
     mounted() {
       this.checkTwitterStatus()
     },
     methods: {
+      handleClick(event) {
+        const buttonId = event.target.innerText
+        console.log("event target id:", event.target.innerText)
+        if (buttonId === 'HOME') {
+          this.select=1
+          console.log("home button clicked")
+        } else if (buttonId === 'STABLE DIFFUSION UI') {
+          this.select=2
+          console.log("home button clicked")
+        } else if (buttonId === 'ABOUT US') {
+          this.select=3
+        }
+      },
       hyperlink() {
         openURL("https://spacenxtlabs.com")
       },
