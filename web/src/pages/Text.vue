@@ -13,7 +13,7 @@
 import axios from "axios";
 
 export default {
-  name: "TextPage",
+  name: "TextG",
   data() {
     return {
       prompt: '',
