@@ -1,62 +1,19 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <q-layout view="hHh Lpr FfF">
+  <q-layout view="hHh lpR lFf">
     <q-header style="height:100px" class="bg-white" reveal bordered>
       <div class="row items-center justify-evenly">
         <div class="col-1">
           <q-btn v-if="$q.screen.lt.md" @click="drawer = !drawer" flat dense class="q-pl-lg">
             <q-avatar size="2rem" class="fa-solid fa-bars text-grey-5"></q-avatar>
           </q-btn>
-          <q-drawer
-            v-model="drawer"
-            bordered>
-            <q-scroll-area class="fit">
-              <q-list>
-                <q-item>
-                  <q-btn to="/" flat @click="handleClick">
-                    <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
-                  </q-btn>
-                </q-item>
-                <q-item>
-                  <q-btn to="/stablediffusionUI" flat @click="handleClick">
-                    <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
-                  </q-btn>
-                </q-item>
-                <q-item>
-                  <q-btn to="/post" flat @click="handleClick">
-                    <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
-                  </q-btn>
-                </q-item>
-                <q-item>
-                  <q-btn to="/aboutUs" flat @click="handleClick">
-                    <span :class="select == 4 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
-                  </q-btn>
-                </q-item>
-                <q-item class="q-pl-lg">
-                  <div>
-                    <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
-                    <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
-                    <q-avatar v-else size="0.5rem" class="fa-solid fa-circle text-green"/>
-                  </div>
-                  <div>
-                    <q-avatar size="2rem" class="fa-brands fa-facebook text-blue"/>
-                    <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
-                  </div>
-                  <div>
-                    <q-avatar size="2rem" class="fa-brands fa-linkedin text-blue-2"/>
-                    <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
-                  </div>
-                </q-item>
-              </q-list>
-            </q-scroll-area>
-          </q-drawer>
         </div>
         <div class="col">
           <q-btn flat>
             <img src="~/assets/spaceNXT.png" style="height:5.5rem" @click="hyperlink"/>
           </q-btn>
         </div>
-        <div class="col-4" v-if="$q.screen.gt.sm">
+        <div class="col-5" v-if="$q.screen.gt.sm">
           <q-btn to="/" flat @mouseover="select = 1" @mouseleave="select = 0">
             <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
           </q-btn>
@@ -87,6 +44,7 @@
             </div>
           </div>
         </div>
+        <div class="col-6" v-if="$q.screen.lt.md"></div>
         <div class="col auto">
           <q-btn dense flat size="1rem">
             <q-avatar size="2rem" :class="select == 5 ? 'fa-solid fa-user text-light-blue-3' : 'fa-solid fa-user text-grey-5'" @mouseover="select = 5" @mouseleave="select = 0"/>
@@ -127,6 +85,51 @@
         </div>
       </div>
     </q-header>
+
+    <q-drawer
+      v-model="drawer"
+      bordered
+      >
+      <q-scroll-area class="fit">
+        <q-list>
+          <q-item>
+            <q-btn to="/" flat @mouseover="select = 1" @mouseleave="select = 0">
+              <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
+            </q-btn>
+          </q-item>
+          <q-item>
+            <q-btn to="/stablediffusionUI" flat @mouseover="select = 2" @mouseleave="select = 0">
+              <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
+            </q-btn>
+          </q-item>
+          <q-item>
+            <q-btn to="/post" flat @mouseover="select = 3" @mouseleave="select = 0">
+              <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
+            </q-btn>
+          </q-item>
+          <q-item>
+            <q-btn to="/aboutUs" flat @mouseover="select = 4" @mouseleave="select = 0">
+              <span :class="select == 4 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
+            </q-btn>
+          </q-item>
+          <q-item class="q-pl-lg justify-center">
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
+              <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
+              <q-avatar v-else size="0.5rem" class="fa-solid fa-circle text-green"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-facebook text-blue"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-linkedin text-blue-2"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
+    </q-drawer>
 
     <q-page-container>
       <router-view />
