@@ -1,10 +1,12 @@
 <template>
   <div>
     <div class="flex flex-center">
-
-      <q-btn class="text-center full-width" color="blue" icon="fa-brands fa-facebook" label="sign in with facebook" type="submit" @click="login" rounded></q-btn>
-
-      </div>
+      <q-btn class="flex justify-center full-width" color="blue" icon="fa-brands fa-facebook" type="submit" @click="login" rounded style="min-height:50px; min-width:270px;">
+        <span class="q-pl-xs">
+          Sign in with Facebook
+        </span>
+      </q-btn>
+    </div>
   </div>
 </template>
 

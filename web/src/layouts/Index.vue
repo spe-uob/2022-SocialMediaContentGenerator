@@ -1,153 +1,169 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <q-layout view="hHh Lpr FfF">
-    <q-header bordered>
-      <div class="row no-wrap">
-        <q-toolbar shrink
-                   :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'" style="max-width:240px">
-          <q-btn flat icon="apps" class="text-grey-6" @click="drawerMenu = !drawerMenu">
-          <q-toolbar-title>
-            <span class="text-h6 text-grey-5">Space</span><span class="text-orange-5">.NXT</span>
-          </q-toolbar-title>
+  <q-layout view="hHh lpR lFf">
+    <q-header style="height:100px" class="bg-white" reveal bordered>
+      <div class="row items-center justify-evenly">
+        <div class="col-1">
+          <q-btn v-if="$q.screen.lt.md" @click="drawer = !drawer" flat dense class="q-pl-lg">
+            <q-avatar size="2rem" class="fa-solid fa-bars text-grey-5"></q-avatar>
           </q-btn>
-        </q-toolbar>
-        <q-toolbar :class="$q.dark.isActive ? 'bg-grey-2' : 'bg-white'">
-          <q-toolbar-title>
-            <span class="gt-sm text-h4 text-grey-5 q-pa-md">Social Media Content Generator</span>
-          </q-toolbar-title>
-          <q-btn dense flat class="q-pa-md text-grey-5"
-          @click="rightDrawerMenu = !rightDrawerMenu">
-            <q-avatar class="fa-solid fa-user"/>
+        </div>
+        <div class="col">
+          <q-btn flat>
+            <img src="~/assets/spaceNXT.png" style="height:5.5rem" @click="hyperlink"/>
+          </q-btn>
+        </div>
+        <div class="col-5" v-if="$q.screen.gt.sm">
+          <q-btn to="/" flat @mouseover="select = 1" @mouseleave="select = 0">
+            <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
+          </q-btn>
+          <q-btn to="/stablediffusionUI" flat @mouseover="select = 2" @mouseleave="select = 0">
+            <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
+          </q-btn>
+          <q-btn to="/post" flat @mouseover="select = 3" @mouseleave="select = 0">
+            <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
+          </q-btn>
+          <q-btn to="/aboutUs" flat @mouseover="select = 4" @mouseleave="select = 0">
+            <span :class="select == 4 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
+          </q-btn>
+        </div>
+        <div class="col-2 q-pr-xl" v-if="$q.screen.gt.sm">
+            <div class="row justify-evenly">
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
+              <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
+              <q-avatar v-else size="0.5rem" class="fa-solid fa-circle text-green"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-facebook text-blue"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-linkedin text-blue-2"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-6" v-if="$q.screen.lt.md"></div>
+        <div class="col auto">
+          <q-btn dense flat size="1rem">
+            <q-avatar size="2rem" :class="select == 5 ? 'fa-solid fa-user text-light-blue-3' : 'fa-solid fa-user text-grey-5'" @mouseover="select = 5" @mouseleave="select = 0"/>
+            <q-menu
+              transition-show="scale"
+              transition-hide="scale"
+              anchor="top right"
+              self="bottom left"
+              style="min-width:300px; min-height: 210px;"
+            >
+              <q-list>
+                <q-item>
+                  <AuthComponent v-if="!signedIn"/>
+                  <q-btn v-else ref="button" class="flex justify-center full-width" color="light-blue-2" icon="fa-brands fa-twitter" type="submit" rounded @click="signOut" style="min-height:50px; min-width:270px;">
+                    <span class="q-pa-xs">
+                      Sign out of Twitter
+                    </span>
+                  </q-btn>
+                </q-item>
+                <q-item>
+                  <FBAuthComponent></FBAuthComponent>
+                </q-item>
+                <q-item>
+                  <LinkedInLogin></LinkedInLogin>
+                </q-item>
+              </q-list>
+            </q-menu>
           </q-btn>
           <q-btn
-            class="bg-grey-5 q-mx-xs"
+            dense
             flat
-            round
             @click="$q.dark.toggle()"
-            :icon="!$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
-          />
-        </q-toolbar>
+            class="q-pl-lg"
+          >
+            <q-avatar size="2rem" :class="select == 6 ? 'text-light-blue-3' : 'text-grey-5'" @mouseover="select = 6" @mouseleave="select = 0"
+              :icon="$q.dark.isActive ? 'fa solid fa-moon' : 'fa-regular fa-moon'"/>
+          </q-btn>
+        </div>
       </div>
     </q-header>
-    <q-footer bordered>
-      <q-bar :class="$q.dark.isActive ? 'bg-grey-3' : 'bg-white'" class="text-h6 text-grey-5 q-pa-sm">
-        <span class="text caption">Social Media Content Generator: Benjamin, Gene, David, Stephen</span>
-      </q-bar>
-    </q-footer>
+
+    <q-drawer
+      v-model="drawer"
+      bordered
+      >
+      <q-scroll-area class="fit">
+        <q-list>
+          <q-item>
+            <q-btn to="/" flat @mouseover="select = 1" @mouseleave="select = 0">
+              <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
+            </q-btn>
+          </q-item>
+          <q-item>
+            <q-btn to="/stablediffusionUI" flat @mouseover="select = 2" @mouseleave="select = 0">
+              <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
+            </q-btn>
+          </q-item>
+          <q-item>
+            <q-btn to="/post" flat @mouseover="select = 3" @mouseleave="select = 0">
+              <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
+            </q-btn>
+          </q-item>
+          <q-item>
+            <q-btn to="/aboutUs" flat @mouseover="select = 4" @mouseleave="select = 0">
+              <span :class="select == 4 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
+            </q-btn>
+          </q-item>
+          <q-item class="q-pl-lg justify-center">
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
+              <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
+              <q-avatar v-else size="0.5rem" class="fa-solid fa-circle text-green"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-facebook text-blue"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+            <div>
+              <q-avatar size="2rem" class="fa-brands fa-linkedin text-blue-2"/>
+              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
+            </div>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
+    </q-drawer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <q-drawer
-      v-model="drawerMenu"
-      :width="240"
-      no-swipe-open
-      bordered
-      :class="$q.dark.isActive ? 'bg-grey-1' : 'bg-white'"
-      content-class="bg-primary text-white">
-      <q-scroll-areac class="fit">
-        <q-list dense>
-          <q-item>
-            <q-item-section class="text-grey-5 text-weight-medium">
-              MAIN MENU
-            </q-item-section>
-          </q-item>
-        </q-list>
-        <q-list dense>
-          <q-item clickable v-ripple class="text-grey-5" to="/" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-solid fa-house" />
-            </q-item-section>
-            <q-item-section>Home</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/stablediffusionUI" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-solid fa-sliders" />
-            </q-item-section>
-            <q-item-section>SD UI</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/PostPage" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-solid fa-sliders" />
-            </q-item-section>
-            <q-item-section>Post Page</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/LinkedInPost" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="fa-brands fa-linkedin" />
-            </q-item-section>
-            <q-item-section>LinkedIn Post</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple class="text-grey-5" to="/TextGenerator" active-class="menu-link">
-            <q-item-section avatar>
-              <q-icon name="article" />
-            </q-item-section>
-            <q-item-section>Text Generator</q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-areac>
-    </q-drawer>
-
-
-    <q-drawer
-      side="right"
-      v-model="rightDrawerMenu"
-      :width="240"
-      no-swipe-open
-      bordered
-      :class="$q.dark.isActive ? 'bg-grey-1' : 'bg-white'"
-      content-class="bg-primary text-white">
-      <q-scroll-areac class="fit">
-        <q-list>
-          <q-item>
-            <q-item-section>
-              <div class="q-pa-sm"></div>
-              <AuthComponent v-if="!signedIn"/>
-              <div v-else class="q-col row items-center justify-center q-mt-md" >
-                  <q-btn class="q-ma-sm" color="light-blue" icon="fa-brands fa-twitter" rounded no-caps disable>
-                    <span>
-                      Signed in as {{ name }}
-                    </span>
-                  </q-btn>
-                  <q-btn class="q-ma-sm" color="red" @click="this.signOut()">
-                    Sign Out
-                  </q-btn>
-              </div>
-              <FBAuthComponent/>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-areac>
-    </q-drawer>
 
   </q-layout>
   </template>
 
   <script>
-  import AuthComponent from "components/AuthComponent.vue"
+  import AuthComponent from "components/AuthComponent.vue";
   import LinkedInLogin from "components/LinkedInLogin.vue";
   import { getAuth } from "firebase/auth";
   import FBAuthComponent from "components/FBAuthComponent.vue";
+  import { openURL } from 'quasar';
   const auth = getAuth()
 
+
   export default {
-    components: {FBAuthComponent, AuthComponent},
+    components: {FBAuthComponent, AuthComponent, LinkedInLogin},
     data(){
       return{
-        drawerMenu: true,
-        rightDrawerMenu: true,
+        drawer: false,
         name: '',
         signedIn: false,
+        select: 0,
       }
     },
     mounted() {
       this.checkTwitterStatus()
-    },
+      },
     methods: {
+      hyperlink() {
+        openURL("https://spacenxtlabs.com")
+      },
       async checkTwitterStatus() {
         console.log("checking twitter status")
         const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`

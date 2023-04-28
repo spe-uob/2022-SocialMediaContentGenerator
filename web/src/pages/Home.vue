@@ -1,27 +1,50 @@
 <template>
-  <div class="col-0 col-md-6 flex justify-center content-center">
-    <q-btn flat>
-      <img src="~assets/spaceNXT.png" class="responsive" alt = "login-image" @click="hyperlink"/>
-    </q-btn>
-  </div>
-  <div id="twitter-timeline-feed" class="embedded-twitter-feed">
-    <v-container fluid>
-    <a class="twitter-timeline" data-theme='dark' href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
-      Tweets by SpacenxtLabs. If timeline fails to load, please refresh the page.
-    </a>
-    </v-container>
-  </div>
-  <!--<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+  <q-tabs
+    v-model="tab"
+    indicator-color="light-blue-3"
+    class="text-grey-5"
+  >
+    <span class="text text-grey-5 col q-ml-md" >Social Media Content Generator</span>
+      <q-tab name="twitter" icon="fa-brands fa-twitter" @click="twitter"/>
+      <q-tab name="facebook" icon="fa-brands fa-facebook" />
+      <q-tab name="linkedin" icon="fa-brands fa-linkedin" />
+    <div class="col"></div>
+
+
+
+  </q-tabs>
+  <q-separator></q-separator>
+  <q-tab-panels v-model="tab" animated>
+    <q-tab-panel name="twitter">
+      <div id="twitter-timeline-feed" class="embedded-twitter-feed">
+        <v-container fluid>
+        <a class="twitter-timeline" data-theme='dark' href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
+          Loading...
+        </a>
+        </v-container>
+      </div>
+    </q-tab-panel>
+    <q-tab-panel name="facebook">
+      Facebook timeline
+    </q-tab-panel>
+    <q-tab-panel name="linkedin">
+      LinkedIn timeline
+    </q-tab-panel>
+  </q-tab-panels>
 
 </template>
 
 <script>
-import { openURL } from 'quasar'
 export default {
   name: "HomePage",
+  data() {
+    return  {
+      tab: 'twitter'
+    }
+  },
   methods: {
-    hyperlink () {
-      openURL("https://spacenxtlabs.com")
+    twitter() {
+      location.reload()
     }
   }
 }
