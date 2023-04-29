@@ -4,9 +4,9 @@ from linkedin import linkedin
 from linkedin.linkedin import PERMISSIONS
 import json
 import tweepy
-from service.SMCGlibrary.Twitter import Twitter
-from service.SMCGlibrary.Facebook import Facebook
-from service.SMCGlibrary.LinkedIn import LinkedIn
+from SMCGlibrary.Twitter import Twitter
+from SMCGlibrary.Facebook import Facebook
+from SMCGlibrary.LinkedIn import LinkedIn
 
 
 class LoginAPI(Component):
@@ -22,6 +22,7 @@ class LoginAPI(Component):
             self.facebookAuth(data)
         elif data['platform'] == "linkedin":
             self.linkedinAuth(data)
+        return {"status":0}
 
     def twitterAuth(self, data):
         access_token = data['access_token']
@@ -39,11 +40,11 @@ class LoginAPI(Component):
     def facebookAuth(self, data):
         userAccessToken = data['userAccessToken']
         pageAccessToken = data['pageAccessToken']
-        pageID = data['pageID']
+        pageId = data['pageId']
         auth_dict = {
             'userAccessToken': userAccessToken,
             'pageAccessToken': pageAccessToken,
-            'pageId': pageID
+            'pageId': pageId
         }
         json_object = json.dumps(auth_dict, indent=4)
 
