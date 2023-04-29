@@ -45,3 +45,23 @@ class LinkedInApi(Component):
             outfile.write(json_object)
 
         return {'status': 'ok', 'arg1': arg1}
+
+class linkedinSignOut(Component):
+    def __init__(self, env: Environment):
+        super().__init__(env, '/api/v1/linkedinSignOut', linkedinSignOut, ['GET', 'POST'])
+        self.env = env
+
+    def view(self):
+        auth_dict = {
+            'access_token': '',
+            'access_token_secret': '',
+            'consumer_key': "78sme225fsy5by",
+            'consumer_secret': "J3xg14qRTV87viVq"
+        }
+
+        json_object = json.dumps(auth_dict, indent=4)
+
+        with open('linkedin_auth.json', 'w') as outfile:
+            outfile.write(json_object)
+
+        return {'status': 'signed out'}
