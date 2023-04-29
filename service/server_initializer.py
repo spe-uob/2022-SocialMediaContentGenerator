@@ -3,7 +3,9 @@ from web_components import *
 
 from utility import Environment, Component
 
-init_web_components: [Component] = [Index, GetTasks, GetTxt2ImgTasks, VRAM, ModelList, LoadModel, CurrentModel, SamplerList, Txt2Img, Txt2ImgResult, Image, TwitterBackEnd, TwitterAuth, TwitterSignInCheck, TwitterSignOut, LinkedInApi, LinkedInApiPost, openAiApi]
+init_web_components: [Component] = [Index, GetTasks, GetTxt2ImgTasks, VRAM, ModelList, LoadModel, CurrentModel, SamplerList, Txt2Img, Txt2ImgResult, Image, ImageList, ImageInfo, VaeList, LoadLora,
+                                    LoraList, CurrentVae, CurrentLora,
+                                    TwitterBackEnd, TwitterAuth, TwitterSignInCheck, TwitterSignOut, LinkedInApi, LinkedInApiPost, openAiApi]
 
 
 def initialize(environment: Environment, static_folder: str) -> [ApiServer, [Component]]:
