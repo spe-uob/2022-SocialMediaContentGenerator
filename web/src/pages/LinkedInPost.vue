@@ -75,19 +75,6 @@ export default {
           const upUrl = response.data.url
           console.log(upUrl)
 
-          /*const formData = new FormData()
-          formData.append('image', this.file)
-
-          axios.put(upUrl, formData, { headers: {
-              'Content-Type': 'multipart/form-data',
-              'X-Restli-Protocol-Version': '2.0.0'
-            }} )
-            .then(response => {
-              console.log(response.data)
-            })
-            .catch(error => {
-              console.log(error)
-            })*/
         })
         .catch(error =>{
           console.log(error)
