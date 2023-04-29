@@ -1,4 +1,4 @@
-name: "tagged-release"
+name: Release
 
 on:
   push:
@@ -8,17 +8,17 @@ on:
 jobs:
   tagged-release:
     name: "Tagged Release"
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
 
     steps:
       # ...
-      - name: "Build & test"
+      - name: Build & test
         run: |
           echo "done!"
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: marvinpinto/action-automatic-releases@latest
         with:
-          repo_token: "${{ secrets.RELEASE_KEY }}"
+          repo_token: ${{ secrets.RELEASE_KEY }}
           prerelease: false
           files: |
             web/*
