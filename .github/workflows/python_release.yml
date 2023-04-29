@@ -18,8 +18,10 @@ jobs:
         args: zip -qq -r service.zip service
     - uses: marvinpinto/action-automatic-releases@latest
       with:
-        repo_token: ${{ secrets.RELEASE_KEY }}
+        repo_token: ${{ secrets.GITHUB_TOKEN  }}
+        automatic_release_tag: "latest"
         prerelease: false
+        title: "Development Build"
         files: |
           web/*
           service/*
