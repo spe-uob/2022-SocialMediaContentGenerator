@@ -5,17 +5,15 @@ on:
     branches:
       - main
 
-defaults:
-  run:
-    working-directory: ./
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: montudor/action-zip@v1
+    - uses: vimtor/action-zip@v1
       with:
-        args: zip -qq -r service.zip service/*
+        files: service/
+        dest: service.zip
     - uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN  }}
