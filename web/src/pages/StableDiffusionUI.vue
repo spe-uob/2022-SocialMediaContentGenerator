@@ -255,7 +255,7 @@ export default defineComponent({
       height: 512,
       n_iter: 1,
       batch_size: 1,
-      base_url: 'http://localhost:8888',
+      base_url: '',
       sampler: 'DDIM',
       sampler_options: ["DDIM", "PLMS", "Euler A", "Euler", "LMS", "Heun", "DPM2", "DPM2 a", "DPM++ 2S a", "DPM++ 2M", "DPM++ SDE", "DPM fast", "DPM adaptive"],
       images_buffer: [],
@@ -287,9 +287,8 @@ export default defineComponent({
     }
   },
   methods: {
-
     getUrl(path) {
-      return this.debug ? "http://localhost:8888" + path : path;
+      return this.base_url + path;
     },
     saveImage() {
       const link = document.createElement('a')
@@ -544,6 +543,7 @@ export default defineComponent({
   mounted() {
     console.log("debug type:", this.$DEBUG)
     this.debug = this.$DEBUG;
+    this.base_url = this.$BASEURL;
   },
   async beforeMount() {
     this.loading_lora = true;
