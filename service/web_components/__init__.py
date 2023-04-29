@@ -6,7 +6,6 @@ from .ModelComponents import *
 from .Sampler import *
 from .Txt2Img import *
 from .Image import *
-from .TwitterPost import *
 from .TwitterAuth import *
 from .LinkedInApi import *
 from .LinkedInApiPost import *
