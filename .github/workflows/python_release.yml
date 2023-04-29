@@ -13,7 +13,7 @@ jobs:
     - run: ls
     - uses: vimtor/action-zip@v1
       with:
-        files: service/
+        files: service/*
         dest: service.zip
     - uses: marvinpinto/action-automatic-releases@latest
       with:
