@@ -1,0 +1,22 @@
+name: Python Release
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: ./
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: ${{ secrets.RELEASE_KEY }}
+        prerelease: false
+        files: |
+          web/*
+          service/*

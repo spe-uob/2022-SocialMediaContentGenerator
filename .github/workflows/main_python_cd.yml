@@ -40,10 +40,4 @@ jobs:
           remote_user: ${{ secrets.DEPLOY_USER }}
           remote_key: ${{ secrets.DEPLOY_KEY }}
 
-      - uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: ${{ secrets.RELEASE_KEY }}
-          prerelease: false
-          files: |
-            web/*
-            service/*
+
