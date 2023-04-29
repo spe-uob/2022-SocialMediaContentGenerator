@@ -33,3 +33,19 @@ class Twitter:
         else:
             api.update_status(tweet_string)
         return {'status': 'ok', 'tweet': tweet_string}
+
+    def check(self):
+        auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
+        auth.set_access_token(self.access_token, self.access_token_secret)
+        api = tweepy.API(auth)
+        try:
+            user = api.verify_credentials()
+            print("Authentication OK")
+            status = 'signedIn'
+            name = user.name
+        except Exception as e:
+            print("Error during authentication")
+            print(e)
+            status = 'notSignedIn'
+            name = 'notSignedIn'
+        return {'status': status, 'name': name}
