@@ -1,4 +1,4 @@
-name: Python Test and Deploy and Release
+name: Python Test and Deploy
 
 on:
   push:
