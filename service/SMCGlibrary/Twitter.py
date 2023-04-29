@@ -1,4 +1,4 @@
-from service.web_components import *
+from web_components import *
 from flask import request
 import tweepy
 import io
