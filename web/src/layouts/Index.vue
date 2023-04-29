@@ -20,6 +20,9 @@
           <q-btn to="/stablediffusionUI" flat @mouseover="select = 2" @mouseleave="select = 0">
             <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
           </q-btn>
+          <q-btn to="/GeneratedImage" flat @mouseover="select = 2" @mouseleave="select = 0">
+          <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> GeneratedImage </span>
+        </q-btn>
           <q-btn to="/post" flat @mouseover="select = 3" @mouseleave="select = 0">
             <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
           </q-btn>

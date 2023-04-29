@@ -11,3 +11,4 @@ from .TwitterAuth import *
 from .LinkedInApi import *
 from .LinkedInApiPost import *
 from .openAiApi import *
+from .LoraModel import *

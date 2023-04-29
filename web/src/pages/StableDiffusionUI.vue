@@ -1,30 +1,82 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="column" style="width: 100vw; margin-top: 20px;margin-bottom: 40px">
+    <div class="column" style="width: 100vw; margin-top: 20px; margin-bottom: 40px">
       <div class="col flex flex-center">
-        <div class="row" style="width: 66.5vw">
-          <div class="col-sm-12 ">
-            <q-card>
-              <q-card-section class="text-white"
-                              :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
-                <q-select class="hint-white" filled bottom-slots :disable="task_rows.length > 0" v-model="model" :options="models" label="Models" label-color="white" counter maxlength="12"
-                          counter-color="white"
-                          :loading="loading_model" @update:model-value="load_model">
-                  <template v-slot:hint>
-                    model loader
-                  </template>
-                  <template v-slot:after>
-                    <q-btn round dense flat icon="refresh" @click="syncModelList"/>
-                  </template>
-                </q-select>
-              </q-card-section>
-            </q-card>
-
-          </div>
+        <div class="row q-px-xl q-pb-md" style="width: 85%">
+          <q-card style="width: 100%">
+            <q-card-section>
+              <div class="row">
+                <div class="col-6 q-pr-sm">
+                  <q-select :loading="loading_model" v-model="model" :options="models" label="Model" label-color="red" class="hint-grey" filled bottom-slots
+                            :disable="task_rows.length > 0 || loading_vae" @update:model-value="load_model">
+                    <template v-slot:hint>
+                      model loader
+                    </template>
+                    <template v-slot:after>
+                      <q-btn round dense flat icon="refresh" @click="syncModelList"/>
+                    </template>
+                  </q-select>
+                </div>
+                <div class="col-6 q-pl-sm">
+                  <q-select :loading="loading_vae" v-model="vae" :options="vae_list" label="VAE" label-color="blue" class="hint-grey" filled bottom-slots
+                            :disable="task_rows.length > 0 || model === null || model === undefined || loading_model" @update:model-value="load_model">
+                    <template v-slot:hint>
+                      vae loader
+                    </template>
+                    <template v-slot:after>
+                      <q-btn round dense flat icon="refresh" @click="syncVaeList"/>
+                    </template>
+                  </q-select>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
         </div>
-      </div>
-      <div class="col flex flex-center">
-        <div class="row q-pa-xl q-mr-xl" style="width: 85%" v-if="device_total>0">
+        <div class="row q-px-xl q-pb-md" style="width: 85%">
+
+          <q-card style="width: 100%">
+            <q-inner-loading :showing="loading_lora" label="Loading..." label-class="text-teal" label-style="font-size: 1.1em"/>
+            <q-card-section>
+              <div class="text-h6">Lora network:</div>
+              <q-chip class="q-py-lg" color="white" v-for="(model, index) in lora_models" :key="index">
+                <q-btn icon="remove" class="q-pa-sm q-mr-sm" @click="remove_lora(index)">
+                  <q-tooltip>
+                    remove this lora model
+                  </q-tooltip>
+                </q-btn>
+                {{ model.name }} :
+                <q-circular-progress show-value font-size="12px" :value="model.weight * 100" hint="weight" size="40px" :thickness="0.22" color="teal" track-color="grey-3" class="q-ml-md">
+                  {{ model.weight }}
+                </q-circular-progress>
+                <q-menu>
+                  <div class="row q-px-md q-py-sm" style="width: 15vw">
+                    Weight:
+                    <q-slider v-model="model.weight" :min="0.0" :max="1.0" :step="0.05" markers></q-slider>
+                  </div>
+                </q-menu>
+                <q-badge color="red" rounded floating v-if="!lora_diff && !current_lora.find((lora) => lora['name'] === model.name)">
+                  <q-tooltip>unloaded</q-tooltip>
+                </q-badge>
+                <q-badge color="green" rounded floating v-if="!lora_diff && current_lora.find((lora) => lora['name'] ===  model.name)">
+                  <q-tooltip>loaded</q-tooltip>
+                </q-badge>
+              </q-chip>
+              <q-btn icon="add" class="q-px-sm q-ml-sm">
+                <q-menu>
+                  <q-list style="min-width: 100px">
+                    <q-item clickable v-close-popup v-for="(model, index) in lora_model_list" :key="index" :disable="lora_models.map(x=>x.name).includes(model)">
+                      <q-item-section @click="lora_models.map(x=>x.name).includes(model) ? ()=>{} :lora_models.push({name: model, weight: 1.0})">{{ model }}</q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+            </q-card-section>
+            <q-card-section>
+              <q-btn label="load model" color="primary" @click="load_lora_model()" :disable="loading_lora"/>
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="row q-px-xl q-pb-sm" style="width: 85%" v-if="device_total>0">
           <q-card style="width: 100%">
             <q-card-actions>
               <div class="text-h5">VRAM Usage:</div>
@@ -45,9 +97,8 @@
             </q-card-section>
           </q-card>
         </div>
-        <div class="row q-pa-xl q-mr-xl" style="width: 85%">
-
-          <div class="col-sm-4 q-pa-sm">
+        <div class="row q-px-xl q-pb-sm" style="width: 85%">
+          <div class="col-4 q-pr-sm">
             <q-card>
               <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
                 <q-card-section>
@@ -102,7 +153,7 @@
             </q-card>
 
           </div>
-          <div class="col-8 q-pa-sm">
+          <div class="col-8 q-pl-sm">
             <q-card>
               <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
                 <q-card-section>
@@ -140,7 +191,7 @@
             </q-card>
           </div>
         </div>
-        <div class="row q-pa-xl q-mr-xl" style="width: 85%">
+        <div class="row q-px-xl q-pb-sm" style="width: 85%">
           <q-table title="Tasks" :rows="task_rows" style="width: 100%" :columns="task_columns" row-key="uuid"/>
         </div>
       </div>
@@ -151,7 +202,7 @@
 <script>
 let PromptID = 0
 
-import {defineComponent, ref} from 'vue'
+import {computed, defineComponent, ref} from 'vue'
 
 
 export default defineComponent({
@@ -179,7 +230,17 @@ export default defineComponent({
       debug: false,
       model: null,
       models: [],
+      vae: null,
+      vae_list: [],
+      lora_models: [],
+      current_lora: [],
+      lora_model_list: [],
+      lora_diff: computed(() => {
+        return this.compare_loaded_lora()
+      }),
       loading_model: false,
+      loading_vae: false,
+      loading_lora: false,
       prompt: '',
       negative_prompts: '',
       seed: '',
@@ -226,6 +287,7 @@ export default defineComponent({
     }
   },
   methods: {
+
     getUrl(path) {
       return this.debug ? "http://localhost:8888" + path : path;
     },
@@ -356,6 +418,63 @@ export default defineComponent({
       await this.getCurrentModel()
       this.loading_model = false
     },
+    async syncVaeList() {
+      this.loading_vae = true
+      await this.sleep(300);
+      let request = await fetch(this.getUrl('/api/v1/vae_list'), {method: 'GET', mode: 'cors'});
+      let response = await request.json();
+      console.log(response)
+      this.vae_list = response['mode_list'];
+      await this.getCurrentVae()
+      this.loading_vae = false
+    },
+    async syncLoraList() {
+      let request = await fetch(this.getUrl('/api/v1/lora_list'), {method: 'GET', mode: 'cors'});
+      this.lora_model_list = await request.json();
+    },
+    remove_lora(index) {
+      this.lora_models.splice(index, 1)
+    },
+    async load_lora_model() {
+      this.loading_lora = true
+      let request = await fetch(this.getUrl('/api/v1/load_lora'), {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          lora_networks: this.lora_models
+        })
+      });
+      await this.load_current_lora()
+      this.loading_lora = false
+    },
+    async load_current_lora() {
+      this.loading_lora = true
+      await this.sleep(100);
+      let request = await fetch(this.getUrl('/api/v1/current_lora'), {method: 'GET', mode: 'cors'});
+      this.current_lora = await request.json();
+      this.loading_lora = false
+    },
+    copy_current_lora() {
+      for (let i = 0; i < this.current_lora.length; i++)
+        this.lora_models.push(this.current_lora[i])
+    },
+    compare_loaded_lora() {
+      let current_lora_sorted = this.current_lora.sort((a, b) => {
+        return a['name'] > b['name'] ? 1 : -1
+      })
+      let lora_models_sorted = this.lora_models.sort((a, b) => {
+        return a['name'] > b['name'] ? 1 : -1
+      })
+      if (current_lora_sorted.length !== lora_models_sorted.length)
+        return false
+      for (let i = 0; i < current_lora_sorted.length; i++)
+        if (current_lora_sorted[i]['name'] !== lora_models_sorted[i]['name'])
+          return false
+      return true
+    },
     async syncSamplerList() {
       let request = await fetch(this.getUrl('/api/v1/sampler_list'), {method: 'GET', mode: 'cors'});
       let response = await request.json();
@@ -369,7 +488,7 @@ export default defineComponent({
         position: "top",
         timeout: 0,
       })
-      let request = await fetch(this.getUrl(`/api/v1/load_model?ModelName=${this.model}`), {method: 'GET', mode: 'cors'});
+      let request = await fetch(this.getUrl(`/api/v1/load_model?ModelName=${this.model}&${this.vae}`), {method: 'GET', mode: 'cors'});
       let response = await request.json();
       dismiss()
       if (response['status'] === 0)
@@ -393,6 +512,11 @@ export default defineComponent({
     async getCurrentModel() {
       let info = await this.getInfo();
       this.model = info['current_model']
+    },
+    async getCurrentVae() {
+      let request = await fetch(this.getUrl('/api/v1/current_model'), {method: 'GET', mode: 'cors'});
+      let info = request.json();
+      this.vae = info['current_vae']
     },
     async getInfo() {
       let request = await fetch(this.getUrl('/api/v1/current_model'), {method: 'GET', mode: 'cors'});
@@ -422,12 +546,16 @@ export default defineComponent({
     this.debug = this.$DEBUG;
   },
   async beforeMount() {
-
+    this.loading_lora = true;
     await this.syncModelList()
+    await this.syncVaeList()
+    await this.syncLoraList()
+    await this.load_current_lora()
+    this.copy_current_lora()
     await this.getCurrentModel();
     await this.syncSamplerList();
     window.setInterval(this.syncTasks, 500);
-    // window.setInterval(this.syncGPUInfo, 200);
+    window.setInterval(this.syncGPUInfo, 200);
 
   },
   beforeUnmount() {
