@@ -13,8 +13,7 @@ jobs:
     - run: ls
     - uses: vimtor/action-zip@v1
       with:
-        files: service/
-        recursive: false
+        files: service/ 
         dest: service.zip
     - uses: marvinpinto/action-automatic-releases@latest
       with:
@@ -23,5 +22,4 @@ jobs:
         prerelease: false
         title: "Development Build"
         files: |
-          web/*
-          service/*
+          service.zip
