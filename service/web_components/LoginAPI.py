@@ -36,6 +36,18 @@ class LoginAPI(Component):
         with open('twitter_auth.json', 'w') as outfile:
             outfile.write(json_object)
 
-    
+    def facebookAuth(self, data):
+        userAccessToken = data['userAccessToken']
+        pageAccessToken = data['pageAccessToken']
+        pageID = data['pageID']
+        auth_dict = {
+            'userAccessToken': userAccessToken,
+            'pageAccessToken': pageAccessToken,
+            'pageId': pageID
+        }
+        json_object = json.dumps(auth_dict, indent=3)
+
+        with open('facebook_auth.json', 'w') as outfile:
+            outfile.write(json_object)
 
 
