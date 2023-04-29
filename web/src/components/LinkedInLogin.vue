@@ -22,14 +22,12 @@ import qs from 'qs'
 
 const client_id = '78sme225fsy5by'
 const client_secret = 'J3xg14qRTV87viVq'
-const redirect_uri = 'http://localhost:9000/LinkedInPost'
+const redirect_uri = 'http://localhost:9000/PostPage'
 const scope = 'r_liteprofile r_emailaddress'
 export default {
   name: "linkedInLogin",
   data() {
     return {
-      authorized: false,
-      access_token: '',
     }
   },
   methods: {
@@ -37,7 +35,7 @@ export default {
       const state = Math.random().toString(36).substring(7)
       const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&state=${state}&scope=${scope}`
       window.location.href = linkedinAuthUrl
-      this.$router.push("/LinkedInPost")
+      //this.$router.push("/LinkedInPost")
     },
     retrieveAccessToken() {
       const code = new URLSearchParams(window.location.search).get('code')
@@ -56,8 +54,19 @@ export default {
 
         axios.post('https://www.linkedin.com/oauth/v2/accessToken', qs.stringify(data), { headers })
           .then(response => {
-            this.authorized = true
-            this.access_token = response.data.access_token
+            const access_token = response.data.access_token
+            const url = `http://localhost:8888/api/v1/Login`
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                platform:'linkedin',
+                code:code
+              }),
+              mode: 'cors',
+            })
           })
           .catch(error => console.error(error))
       }

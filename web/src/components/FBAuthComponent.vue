@@ -41,27 +41,28 @@ export default {
             .then((response) => {
                 const pages = response.data.data
                 const page = pages.find((page) => page.tasks.includes('ADMIN'))
-                const pageId = page.id
+                //const pageId = page.id
+                const pageId = '119057271096466'
               fetch(`https://graph.facebook.com/${pageId}?fields=access_token&access_token=${userAccessToken}`)
                 .then(response => response.json())
                 .then(data => {
                   const pageAccessToken = data.access_token
-                  const url = `http://127.0.0.1:8888/api/v1/facebookAuth`
+                  const url = `http://localhost:8888/api/v1/Login`
                   const response = fetch(url, {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                      platform:'facebook',
                       pageId:pageId,
                       userAccessToken:userAccessToken,
                       pageAccessToken:pageAccessToken
                     }),
                     mode: 'cors',
                   })
-                  const res = response.json()
                   //this.$router.push("/FaceBookPost")
-                  location.reload()
+                  //location.reload()
                 })
                 .catch(error => {
                   console.error('Error:', error);

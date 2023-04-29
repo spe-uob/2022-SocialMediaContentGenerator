@@ -39,13 +39,14 @@
             const displayName = user.displayName
             const screenName = user.reloadUserInfo.screenName
             // ...
-            const url = `http://127.0.0.1:8888/api/v1/twitterAuth`
+            const url = `http://localhost:8888/api/v1/Login`
             const response = await fetch(url, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
+                platform:'twitter',
                 access_token: token,
                 access_token_secret: secret
               }),
@@ -54,7 +55,7 @@
             // eslint-disable-next-line no-unused-vars
             const data = await response.json()
             //this.$router.push("/twitter")
-            location.reload()
+            //location.reload()
           }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
