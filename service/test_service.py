@@ -23,6 +23,7 @@ def load_config(path):
 
 def test_service():
     try:
+        os.makedirs("models/lora")
         config = load_config("config.json")
         config["api_server"]["static_folder"] = "./"
         config["model_path"] = "./"
