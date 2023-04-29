@@ -10,7 +10,6 @@ const routes = [
     children: [
       { path: '', component: Home },
       { path: '/twitter', component: () => import('pages/Twitter.vue')},
-      { path: '/PostPage', name: 'FaceBookPost', component: PostPage},
       { path: '/FaceBookPost', name: 'FaceBookPost', component: FaceBookPost},
       { path: '/signin', component: () => import('src/pages/SignIn.vue')},
       { path: '/stablediffusionUI', component: () => import('pages/StableDiffusionUI.vue')},
