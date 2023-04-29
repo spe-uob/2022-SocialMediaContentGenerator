@@ -1,0 +1,29 @@
+name: Python Release
+
+on:
+  push:
+    branches:
+      - main
+      
+defaults:
+  run:
+    working-directory: ./
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps: 
+    - uses: actions/checkout@v3
+    - run: ls
+    - uses: vimtor/action-zip@v1
+      with:
+        files: service/
+        dest: service.zip
+    - uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN  }}
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "Development Build"
+        files: |
+          service.zip

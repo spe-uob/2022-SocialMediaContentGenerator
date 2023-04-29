@@ -13,9 +13,9 @@ from stable_diffusion import lora_compvis
 
 
 class StableDiffusionModel:
-    def __init__(self, path, default_config, device, half=False, vae_half=False, map_location=None, show_global_state=False, opt_channelslast=False):
+    def __init__(self, path, default_config, device, half=False, vae_half=False, map_location=None, show_global_state=False, opt_channelslast=False, **kwargs):
         self.path = path
-        self.lora_path = os.path.join(self.path, 'lora')
+        self.lora_path = kwargs.get("lora_model_path", os.path.join(self.path, 'lora'))
         self.default_config = default_config
         self.device = device
         self.half = half
@@ -65,14 +65,14 @@ class StableDiffusionModel:
         )
         network.to(self.model.device, dtype=self.model.dtype)
         logger.info(f"LoRA model {lora_model_path} loaded: {info}")
-        self.lora_networks.append((network, lora_model_path))
+        self.lora_networks.append((network, lora_model_path, weight))
 
     def restore_networks(self):
         unet = self.model.model.diffusion_model
         text_encoder = self.model.cond_stage_model
         if len(self.lora_networks) > 0:
             print("restoring last networks")
-            for network, _ in self.lora_networks[::-1]:
+            for network, _, _ in self.lora_networks[::-1]:
                 network.restore(text_encoder, unet)
             self.lora_networks.clear()
 
@@ -178,7 +178,7 @@ class StableDiffusionModel:
                 config = self.default_config
             self.checkpoint_list.append((checkpoint, config))
         self.checkpoints = {k: v for k, v in self.checkpoint_list}
-        self.lora_model_list = list(filter(lambda x: x.endswith(".pt") or x.endswith(".safetensors"), os.listdir(self.path)))
+        self.lora_model_list = list(filter(lambda x: x.endswith(".pt") or x.endswith(".safetensors"), os.listdir(self.lora_path)))
 
     def get_available_vae_list(self):
         return list(filter(lambda x: x.endswith(".vae.pt"), os.listdir(self.path)))
