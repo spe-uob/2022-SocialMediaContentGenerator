@@ -45,9 +45,32 @@ class LoginAPI(Component):
             'pageAccessToken': pageAccessToken,
             'pageId': pageID
         }
-        json_object = json.dumps(auth_dict, indent=3)
+        json_object = json.dumps(auth_dict, indent=4)
 
         with open('facebook_auth.json', 'w') as outfile:
+            outfile.write(json_object)
+
+    def linkedinAuth(self,data):
+        data = request.get_json()
+        code = data['code']
+        APPLICATION_KEY = '78sme225fsy5by'
+        APPLICATION_SECRET = 'J3xg14qRTV87viVq'
+        RETURN_URL = 'http://localhost:8888'
+        authentication = linkedin.LinkedInAuthentication(
+            APPLICATION_KEY,
+            APPLICATION_SECRET,
+            RETURN_URL,
+            linkedin.PERMISSIONS.enums.values()
+        )
+        authentication.authorization_code = code
+        result = authentication.get_access_token()
+        auth_dict = {
+            "access_token": result.access_token,
+            "APPLICATION_KEY" : '78sme225fsy5by',
+            "APPLICATION_SECRET" : 'J3xg14qRTV87viVq'
+        }
+        json_object = json.dumps(auth_dict, indent=4)
+        with open("linkedin_auth.json", 'w') as outfile:
             outfile.write(json_object)
 
 
