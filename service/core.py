@@ -11,6 +11,7 @@ from stable_diffusion import StableDiffusionModel, Txt2Img, MemoryOptimizer, Cor
 class Core:
     def __init__(self, config: dict):
         self.model_path = config.get('model_path', 'models')
+        self.lora_model_path = config.get('lora_model_path', os.path.join(self.model_path, "lora"))
         self.default_model_config = config.get('default_model_config', 'v1-inference.yaml')
         self.force_cpu = config.get('force_cpu', False)
         self.device = torch.device("cuda" if torch.cuda.is_available() and not self.force_cpu else "cpu")
@@ -19,7 +20,7 @@ class Core:
 
         self.memory_optimizer = MemoryOptimizer()
         self.optimize_memory()
-        self.model_loader = StableDiffusionModel(self.model_path, self.default_model_config, self.device, half=False, map_location=self.map_location)
+        self.model_loader = StableDiffusionModel(self.model_path, self.default_model_config, self.device, half=False, map_location=self.map_location, lora_model_path=self.lora_model_path)
         self.txt2img: Txt2Img = None
 
     def optimize_memory(self):
@@ -68,7 +69,7 @@ class Core:
 
     def get_sampler_list(self):
         if self.txt2img is None:
-            return ["DDIM", "PLMS"]
+            return ["DDIM", "PLMS", "Euler A", "Euler", "LMS", "Heun", "DPM2", "DPM2 a", "DPM++ 2S a", "DPM++ 2M", "DPM++ SDE", "DPM fast", "DPM adaptive"]
         else:
             return list(self.txt2img.samplers.keys())
 
@@ -77,3 +78,10 @@ class Core:
 
     def get_vae_list(self):
         return self.model_loader.get_available_vae_list()
+
+    def load_lora_network(self, lora_networks):
+        self.model_loader.restore_networks()
+        for lora_network in lora_networks:
+            network = lora_network['name']
+            weight = lora_network['weight']
+            self.model_loader.load_lora(network, weight)
