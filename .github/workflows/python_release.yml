@@ -9,12 +9,15 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-    - run: ls
+    steps: 
     - uses: vimtor/action-zip@v1
       with:
-        files: service/ 
+        files: service/*.py
         dest: service.zip
+    - uses: vimtor/action-zip@v1
+      with:
+        files: ./
+        dest: release.zip
     - uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN  }}
@@ -23,3 +26,4 @@ jobs:
         title: "Development Build"
         files: |
           service.zip
+          release.zip
