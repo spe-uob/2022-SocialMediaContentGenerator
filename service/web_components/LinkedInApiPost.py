@@ -69,3 +69,95 @@ class LinkedInApiPost(Component):
         arg1 = request.args.get('arg1')
         # you can reutrn a dict, it will be converted to json automatically
         return {'status': 'ok', 'arg1': arg1}
+
+class LinkedInApiPostImage(Component):
+    def __init__(self, env: Environment):
+        super().__init__(env, '/api/LinkedInApiPostImage', 'LinkedInApiPostImage', ['GET', 'POST'])
+        self.env = env
+
+    # when frontend request this api, this function will be called
+    def view(self):
+
+
+        image = request.files['image']
+        #image = data.read()
+
+
+
+
+
+        with open("linkedin_auth.json") as json_file:
+                            auth_dict = json.load(json_file)
+                            access_token = auth_dict["access_token"]
+
+        application = linkedin.LinkedInApplication(token= access_token)
+        print("HHEEERRRREEEE 2222")
+        response = application.make_request('GET', 'https://api.linkedin.com/v2/me')
+        print(response.text)
+        profile = response.text
+        profile_d = json.loads(profile)
+        user_id = profile_d['id']
+
+        url = 'https://api.linkedin.com/rest/images?action=initializeUpload'
+
+        message = {
+                       "initializeUploadRequest": {
+                              "owner": f"urn:li:person:{user_id}"
+                        }
+
+                  }
+
+        payload = json.dumps(message)
+
+        response = requests.post(url, headers={'Authorization': 'Bearer ' + access_token, 'Content-Type': 'application/json', 'LinkedIn-Version': '202304' , 'X-Restli-Protocol-Version': '2.0.0'}, data=payload)
+
+        print(response.json())
+
+        res = response.json()
+        uploadUrl = res['value']['uploadUrl']
+        image_id = res['value']['image']
+
+
+
+        responseImage = requests.put(uploadUrl, headers={'X-Restli-Protocol-Version': '2.0.0', 'Authorization': 'Bearer ' + access_token, 'LinkedIn-Version': '202304'}, data = image)
+
+        responseImage.raise_for_status()
+
+        message = "testing api"
+
+
+
+
+
+
+        post_d = {
+                   "author": f"urn:li:person:{user_id}",
+                   "commentary": "Sample video Post",
+                   "visibility": "PUBLIC",
+                   "distribution": {
+                     "feedDistribution": "MAIN_FEED",
+                     "targetEntities": [],
+                     "thirdPartyDistributionChannels": []
+                   },
+                   "content": {
+                     "media": {
+                       "title":"title of the video",
+                       "id": image_id
+                     }
+                   },
+                   "lifecycleState": "PUBLISHED",
+
+
+                 }
+
+        payload = json.dumps(post_d)
+        r = requests.post("https://api.linkedin.com/rest/posts", headers={'Authorization': 'Bearer ' + access_token, 'Content-Type': 'application/json', 'X-Restli-Protocol-Version': '2.0.0', 'LinkedIn-Version': '202304'}, data=payload)
+
+
+        print("here")
+        """ print(r.json()) """
+
+
+
+        # you can reutrn a dict, it will be converted to json automatically
+        return {'status': 'ok', 'url': uploadUrl}

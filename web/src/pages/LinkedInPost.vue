@@ -18,6 +18,24 @@
       </q-card-section>
     </q-card>
   </q-page>
+
+  <div class="container">
+    <div class="container">
+      <h1>Upload Image</h1>
+      <div class="upload">
+        <input type="file" @change="onFileChange">
+<!--        <label for="file">{{ fileName }}</label>-->
+      </div>
+      <button class="btn" @click="uploadImage">Upload</button>
+    </div>
+  </div>
+
+  <input type="file" @change="onFileChange">
+
+
+  <q-btn class="q-ma-sm" color="red" @click="signOut">
+    Sign Out
+  </q-btn>
 </template>
 
 <script>
@@ -38,10 +56,52 @@ export default {
   data () {
     return {
       url: linkedinAuthUrl,
-      inputText: ''
+      inputText: '',
+      fileName: 'choose file',
+      file: null
     }
   },
   methods: {
+    onFileChange(event) {
+      this.file = event.target.files[0];
+      this.fileName = this.file.name;
+    },
+    uploadImage() {
+      const formData = new FormData()
+      formData.append('image', this.file)
+
+      axios.post("http://localhost:8888/api/LinkedInApiPostImage", formData)
+        .then(response=>{
+          const upUrl = response.data.url
+          console.log(upUrl)
+
+          /*const formData = new FormData()
+          formData.append('image', this.file)
+
+          axios.put(upUrl, formData, { headers: {
+              'Content-Type': 'multipart/form-data',
+              'X-Restli-Protocol-Version': '2.0.0'
+            }} )
+            .then(response => {
+              console.log(response.data)
+            })
+            .catch(error => {
+              console.log(error)
+            })*/
+        })
+        .catch(error =>{
+          console.log(error)
+        })
+    },
+    signOut() {
+      axios.post("http://localhost:8888/api/v1/linkedinSignOut")
+        .then(response=>{
+          console.log(response)
+        })
+        .catch(error =>{
+          console.log(error)
+        })
+    },
     getCode(){
       const code = new URL(location.href).searchParams.get('code')
       console.log(code)
@@ -65,5 +125,72 @@ export default {
 </script>
 
 <style scoped>
+
+.container {
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.upload {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.inputFile {
+  display: none;
+}
+
+label {
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #333;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+label:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+span {
+  font-size: 16px;
+  color: #333;
+}
+
+.btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #333;
+}
+
 
 </style>
