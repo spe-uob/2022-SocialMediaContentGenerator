@@ -27,11 +27,12 @@ export default defineComponent({
       image_info_list: [],
       max_size: 500,
       bottom_size: 86,
+      base_url: "",
     };
   },
   methods: {
     getUrl(path) {
-      return this.debug ? "http://localhost:8888" + path : path;
+      return this.base_url + path;
     },
     async load_image_list() {
       let response = await fetch(this.getUrl("/api/v1/image_list"));
@@ -59,6 +60,7 @@ export default defineComponent({
   mounted() {
     console.log("debug type:", this.$DEBUG)
     this.debug = this.$DEBUG;
+    this.base_url = this.$BASEURL;
     this.load_image_list()
   }
 });
