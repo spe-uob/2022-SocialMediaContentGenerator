@@ -18,3 +18,14 @@ class Facebook:
         graph = facebook.GraphAPI(self.userAccessToken)
         graph.put_object(self.pageID, "feed", message=message,
                          attachment={'media': [{'type': 'image', 'src': image, 'href': image}]})
+
+    def check(self):
+        graph = facebook.GraphAPI(access_token=self.userAccessToken, version='16.0')
+        try:
+            profile = graph.get_object(id='me')
+            status = "signedIn"
+            name = profile['name']
+        except facebook.GraphAPIError as e:
+            status = "notSignedIn"
+            name = ""
+        return {'status': status, 'name': name}
