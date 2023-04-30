@@ -69,6 +69,7 @@ export default {
     uploadImage() {
       const formData = new FormData()
       formData.append('image', this.file)
+      formData.append('message', this.inputText)
 
       axios.post("http://localhost:8888/api/LinkedInApiPostImage", formData)
         .then(response=>{
