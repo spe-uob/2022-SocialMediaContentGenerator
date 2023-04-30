@@ -9,15 +9,17 @@ class Facebook:
             auth_dict = json.load(json_file)
             userAccessToken = auth_dict['userAccessToken']
             pageAccessToken = auth_dict['pageAccessToken']
-            pageID = auth_dict['pageID']
+            pageID = auth_dict['pageId']
         self.userAccessToken = userAccessToken
         self.pageAccessToken = pageAccessToken
         self.pageID = pageID
 
     def post(self, message, image):
-        graph = facebook.GraphAPI(self.userAccessToken)
-        graph.put_object(self.pageID, "feed", message=message,
-                         attachment={'media': [{'type': 'image', 'src': image, 'href': image}]})
+        graph = facebook.GraphAPI(self.pageAccessToken)
+        graph.put_object(self.pageID, 'feed', message=message, picture=image)
+        return {"status": "ok"}
+        """graph.put_object(self.pageID, "feed", message=message,
+                         attachment={'media': [{'type': 'image', 'src': image, 'href': image}]})"""
 
     def check(self):
         graph = facebook.GraphAPI(access_token=self.userAccessToken, version='16.0')

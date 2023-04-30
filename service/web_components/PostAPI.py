@@ -15,23 +15,24 @@ class PostAPI(Component):
     def view(self):
         data = request.get_json()
         if data['platform'] == "twitter":
-            self.twitterPost(data)
+            response = self.twitterPost(data)
         elif data['platform'] == "facebook":
-            self.facebookPost(data)
+            response = self.facebookPost(data)
         elif data['platform'] == "linkedin":
-            self.linkedinPost(data)
+            response = self.linkedinPost(data)
+        return response
     def twitterPost(self, data):
         tweet_string = data['status']
         image_base64 = data['image']
-        Twitter().post(Twitter,tweet_string,image_base64)
+        return Twitter().post(tweet_string, image_base64)
     def facebookPost(self, data):
         message = data['message']
         image_url = data['image_url']
-        Facebook().post(Facebook, message, image_url)
+        return Facebook().post(message, image_url)
     def linkedinPost(self, data):
         text = data['text']
         image = data['image']
-        LinkedIn().post(LinkedIn, text, image)
+        return LinkedIn().post(text, image)
 
 
 
