@@ -78,7 +78,7 @@ class LinkedInApiPostImage(Component):
     # when frontend request this api, this function will be called
     def view(self):
 
-
+        textMessage = request.files['message']
         image = request.files['image']
         #image = data.read()
 
@@ -132,7 +132,7 @@ class LinkedInApiPostImage(Component):
 
         post_d = {
                    "author": f"urn:li:person:{user_id}",
-                   "commentary": "Sample video Post",
+                   "commentary": textMessage,
                    "visibility": "PUBLIC",
                    "distribution": {
                      "feedDistribution": "MAIN_FEED",
