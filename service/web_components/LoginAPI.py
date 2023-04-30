@@ -68,8 +68,8 @@ class LoginAPI(Component):
         profile = authentication.get_profile(selectors=['id', 'first-name', 'last-name'])
         auth_dict = {
             "access_token": result.access_token,
-            "APPLICATION_KEY" : '78sme225fsy5by',
-            "APPLICATION_SECRET" : 'J3xg14qRTV87viVq',
+            "APPLICATION_KEY": '78sme225fsy5by',
+            "APPLICATION_SECRET": 'J3xg14qRTV87viVq',
             "profile": profile
         }
         json_object = json.dumps(auth_dict, indent=4)
