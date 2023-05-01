@@ -22,3 +22,4 @@ web/node_modules
 /.pytest_cache/
 web/twitter_auth.json
 /service/linkedin_auth.json
+/service/facebook_auth.json
