@@ -21,3 +21,4 @@ web/node_modules
 /config.json
 /.pytest_cache/
 web/twitter_auth.json
+/service/linkedin_auth.json
