@@ -37,10 +37,27 @@ class LinkedInApi(Component):
         # you can get the request args by request.args.get('argName')
         arg1 = request.args.get('arg1')
         # you can reutrn a dict, it will be converted to json automatically
-        auth_dict = {
-            "access_token": result.access_token
+
+        application = linkedin.LinkedInApplication(token=result.access_token)
+        response = application.make_request('GET', 'https://api.linkedin.com/v2/userinfo')
+        print(response.text)
+        profile = response.text
+        profile_d = json.loads(profile)
+        user_name = profile_d['name']
+
+        responseId = application.make_request('GET', 'https://api.linkedin.com/v2/me')
+
+        profile = responseId.text
+        profile_d = json.loads(profile)
+        user_id = profile_d['id']
+
+        with open("linkedin_auth.json", 'r') as f:
+            storage = json.load(f)
+        storage[user_name] = {
+            "access_token": result.access_token,
+            "userId": user_id
         }
-        json_object = json.dumps(auth_dict, indent=4)
+        json_object = json.dumps(storage, indent=4)
         with open("linkedin_auth.json", 'w') as outfile:
             outfile.write(json_object)
 
