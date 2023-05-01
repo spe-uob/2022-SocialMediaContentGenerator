@@ -1,7 +1,10 @@
+import os.path
+
 from . import *
 from flask import request
 from linkedin import linkedin
 from linkedin.linkedin import PERMISSIONS
+import requests
 import json
 
 
@@ -39,18 +42,25 @@ class LinkedInApi(Component):
         # you can reutrn a dict, it will be converted to json automatically
 
         application = linkedin.LinkedInApplication(token=result.access_token)
-        response = application.make_request('GET', 'https://api.linkedin.com/v2/userinfo')
-        print(response.text)
-        profile = response.text
-        profile_d = json.loads(profile)
-        user_name = profile_d['name']
+        #response = application.make_request('GET', 'https://api.linkedin.com/v2/userinfo')
+        # headers = {'Authorization': 'Bearer ' + result.access_token}
+        # response = requests.post('https://api.linkedin.com/v2/userinfo', headers)
+        # print(response.text)
+        # profile = response.text
+        # profile_d = json.loads(profile)
+        # user_name = profile_d['name']
 
         responseId = application.make_request('GET', 'https://api.linkedin.com/v2/me')
 
         profile = responseId.text
         profile_d = json.loads(profile)
+        first_name = profile_d['firstName']['localized']['en_US']
+        second_name = profile_d['lastName']['localized']['en_US']
         user_id = profile_d['id']
 
+        user_name = first_name + " " + second_name
+        if not os.path.exists("linkedin_auth.json"):
+            open("linkedin_auth.json", "w").write("{}")
         with open("linkedin_auth.json", 'r') as f:
             storage = json.load(f)
         storage[user_name] = {
