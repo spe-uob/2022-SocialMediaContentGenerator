@@ -3,6 +3,7 @@ from flask import request
 from linkedin import linkedin
 from linkedin.linkedin import PERMISSIONS
 import json
+from loguru import logger
 
 
 class LinkedIn:
@@ -23,7 +24,7 @@ class LinkedIn:
 
     def post(self, name, text, images):
         access_token = self.storage[name]['access_token']
-        user_id = self.storage[name]['user_id']
+        user_id = self.storage[name]['userId']
         if len(images) == 0:
 
             url = 'https://api.linkedin.com/v2/ugcPosts'
@@ -74,15 +75,17 @@ class LinkedIn:
                                      headers={'Authorization': 'Bearer ' + access_token, 'Content-Type': 'application/json', 'LinkedIn-Version': '202304', 'X-Restli-Protocol-Version': '2.0.0'},
                                      data=payload)
 
-            print(response.json())
+            logger.info(response.json())
 
             res = response.json()
             uploadUrl = res['value']['uploadUrl']
             image_id = res['value']['image']
 
-            responseImage = requests.put(uploadUrl, headers={'X-Restli-Protocol-Version': '2.0.0', 'Authorization': 'Bearer ' + access_token, 'LinkedIn-Version': '202304'}, data=images[0])
+            responseImage = requests.put(uploadUrl, headers={'X-Restli-Protocol-Version': '2.0.0', 'Authorization': 'Bearer ' + access_token, 'LinkedIn-Version': '202304'},
+                                         data=open(images[0], "rb"))
 
             responseImage.raise_for_status()
+
 
             message = "testing api"
 
@@ -109,27 +112,10 @@ class LinkedIn:
             r = requests.post("https://api.linkedin.com/rest/posts",
                               headers={'Authorization': 'Bearer ' + access_token, 'Content-Type': 'application/json', 'X-Restli-Protocol-Version': '2.0.0', 'LinkedIn-Version': '202304'}, data=payload)
 
-            print("here")
-            """ print(r.json()) """
+            logger.info(r.text)
 
             # you can reutrn a dict, it will be converted to json automatically
             return {'status': 'ok', 'url': uploadUrl}
-
-    #         application = linkedin.LinkedInApplication(token=access_token)
-    #         image_url = image
-    #         image_data = application.submit_image(image_url=image_url)
-    #         text = text
-    #         post_data = {
-    #             'comment': text,
-    #             'content': {
-    #                 'submitted-url': 'https://example.com/',
-    #                 'submitted-image-url': image_data['id']
-    #             },
-    #             'visibility': {
-    #                 'code': 'anyone'
-    #             }
-    #         }
-    #         response = application.submit_share(**post_data)
 
     def check(self):
         try:
