@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, request, jsonify
 import json
 import facebook
@@ -5,19 +6,38 @@ import facebook
 
 class Facebook:
     def __init__(self):
-        with open('facebook_auth.json') as json_file:
-            auth_dict = json.load(json_file)
-            userAccessToken = auth_dict['userAccessToken']
-            pageAccessToken = auth_dict['pageAccessToken']
-            pageID = auth_dict['pageID']
-        self.userAccessToken = userAccessToken
-        self.pageAccessToken = pageAccessToken
-        self.pageID = pageID
+        self.storage = None
+        self.load_auth()
 
-    def post(self, message, image):
-        graph = facebook.GraphAPI(self.userAccessToken)
-        graph.put_object(self.pageID, "feed", message=message,
-                         attachment={'media': [{'type': 'image', 'src': image, 'href': image}]})
+    def load_auth(self):
+        with open('facebook_auth.json') as f:
+            storage = json.load(f)
+        self.storage = storage
+
+    def _post(self, name, message, images):
+        graph = facebook.GraphAPI(self.storage[name]['pageAccessToken'])
+        graph.put_object(self.storage[name]["pageId"], "feed", message=message,
+                         attached=[open(image, "rb").read() for image in images])
+
+    def post(self, name, message, images):
+        post_data = {
+            'access_token': self.storage[name]['pageAccessToken'],
+            'published': 'true'
+        }
+        for i, image in enumerate(images):
+            image_file = open(image, 'rb')
+            image_data = {
+                'filename': f'image{i}.jpg',
+                'content_type': 'image/jpeg',
+                'file': image_file
+            }
+            response = requests.post(
+                f'https://graph.facebook.com/{self.storage[name]["pageId"]}/photos',
+                data=post_data,
+                files={'source': image_data}
+            )
+            print(response.json())
+        pass
 
     def check(self):
         graph = facebook.GraphAPI(access_token=self.userAccessToken, version='16.0')

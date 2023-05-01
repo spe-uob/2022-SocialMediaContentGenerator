@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "ansi-to-html": "^0.7.2",
     "axios": "^1.2.1",
     "firebase": "^9.20.0",
     "quasar": "^2.6.0",
     "stylus": "^0.59.0",
     "vue": "^3.0.0",
+    "vue-auto-complete-textarea": "^0.1.71",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {

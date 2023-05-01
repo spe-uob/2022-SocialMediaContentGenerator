@@ -58,5 +58,22 @@ def save_images(images):
         image.save(f"images/{str(last + i + 1).zfill(5)}.png")
 
 
+def test_py():
+    import tweepy
+
+    auth = tweepy.OAuth1UserHandler(
+        "EzoH0w73hC3naY84U6NBHZHyz",
+        "qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw",
+        "1335304326051491840-GFYUJKjHdJbrRLRufvuCHukNL9ocRI",
+        "CH2SL173i11eqwM3CDafuyfUEbS7K3w2Et6ZuWCyFFUm2"
+    )
+
+    api = tweepy.API(auth)
+
+    user = api.verify_credentials()
+
+    print(user.screen_name)
+
+
 if __name__ == "__main__":
     test()
