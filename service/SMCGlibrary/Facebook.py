@@ -14,30 +14,36 @@ class Facebook:
             storage = json.load(f)
         self.storage = storage
 
-    def _post(self, name, message, images):
-        graph = facebook.GraphAPI(self.storage[name]['pageAccessToken'])
-        graph.put_object(self.storage[name]["pageId"], "feed", message=message,
-                         attached=[open(image, "rb").read() for image in images])
-
     def post(self, name, message, images):
-        post_data = {
-            'access_token': self.storage[name]['pageAccessToken'],
-            'published': 'true'
+        pageAccessToken = self.storage[name]['pageAccessToken']
+        pageID = self.storage[name]['pageId']
+        photo_ids = []
+        for image_path in images:
+            with open(image_path, 'rb') as f:
+                response = requests.post(
+                    'https://graph.facebook.com/v16.0/me/photos',
+                    files={'source': f},
+                    data={
+                        'access_token': pageAccessToken,
+                        'published': 'false'
+                    }
+                )
+            photo_ids.append(response.json()['id'])
+
+        media_params = {
+            f'attached_media[{i}]': f'{{"media_fbid":"{photo_id}"}}'
+            for i, photo_id in enumerate(photo_ids)
         }
-        for i, image in enumerate(images):
-            image_file = open(image, 'rb')
-            image_data = {
-                'filename': f'image{i}.jpg',
-                'content_type': 'image/jpeg',
-                'file': image_file
-            }
-            response = requests.post(
-                f'https://graph.facebook.com/{self.storage[name]["pageId"]}/photos',
-                data=post_data,
-                files={'source': image_data}
-            )
-            print(response.json())
-        pass
+        params = {
+            'access_token': pageAccessToken,
+            'message': 'Testing multi-photo post!',
+            **media_params
+        }
+        response = requests.post(
+            f'https://graph.facebook.com/v16.0/{pageID}/feed',
+            params=params
+        )
+        return {'status': 'ok'}
 
     def check(self):
         graph = facebook.GraphAPI(access_token=self.userAccessToken, version='16.0')
