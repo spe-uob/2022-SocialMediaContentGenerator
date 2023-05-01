@@ -21,17 +21,20 @@
             <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
           </q-btn>
           <q-btn to="/GeneratedImage" flat @mouseover="select = 2" @mouseleave="select = 0">
-          <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> GeneratedImage </span>
-        </q-btn>
+            <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> GeneratedImage </span>
+          </q-btn>
           <q-btn to="/post" flat @mouseover="select = 3" @mouseleave="select = 0">
             <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
+          </q-btn>
+          <q-btn to="/BlogPreview" flat @mouseover="select = 3" @mouseleave="select = 0">
+            <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> BlogPreview </span>
           </q-btn>
           <q-btn to="/aboutUs" flat @mouseover="select = 4" @mouseleave="select = 0">
             <span :class="select == 4 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
           </q-btn>
         </div>
         <div class="col-2 q-pr-xl" v-if="$q.screen.gt.sm">
-            <div class="row justify-evenly">
+          <div class="row justify-evenly">
             <div>
               <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
               <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
@@ -61,7 +64,8 @@
               <q-list>
                 <q-item>
                   <AuthComponent v-if="!signedIn"/>
-                  <q-btn v-else ref="button" class="flex justify-center full-width" color="light-blue-2" icon="fa-brands fa-twitter" type="submit" rounded @click="signOut" style="min-height:50px; min-width:270px;">
+                  <q-btn v-else ref="button" class="flex justify-center full-width" color="light-blue-2" icon="fa-brands fa-twitter" type="submit" rounded @click="signOut"
+                         style="min-height:50px; min-width:270px;">
                     <span class="q-pa-xs">
                       Sign out of Twitter
                     </span>
@@ -83,7 +87,7 @@
             class="q-pl-lg"
           >
             <q-avatar size="2rem" :class="select == 6 ? 'text-light-blue-3' : 'text-grey-5'" @mouseover="select = 6" @mouseleave="select = 0"
-              :icon="$q.dark.isActive ? 'fa solid fa-moon' : 'fa-regular fa-moon'"/>
+                      :icon="$q.dark.isActive ? 'fa solid fa-moon' : 'fa-regular fa-moon'"/>
           </q-btn>
         </div>
       </div>
@@ -92,7 +96,7 @@
     <q-drawer
       v-model="drawer"
       bordered
-      >
+    >
       <q-scroll-area class="fit">
         <q-list>
           <q-item>
@@ -135,78 +139,78 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
 
   </q-layout>
-  </template>
+</template>
 
-  <script>
-  import AuthComponent from "components/AuthComponent.vue";
-  import LinkedInLogin from "components/LinkedInLogin.vue";
-  import { getAuth } from "firebase/auth";
-  import FBAuthComponent from "components/FBAuthComponent.vue";
-  import { openURL } from 'quasar';
-  const auth = getAuth()
+<script>
+import AuthComponent from "components/AuthComponent.vue";
+import LinkedInLogin from "components/LinkedInLogin.vue";
+import {getAuth} from "firebase/auth";
+import FBAuthComponent from "components/FBAuthComponent.vue";
+import {openURL} from 'quasar';
+
+const auth = getAuth()
 
 
-  export default {
-    components: {FBAuthComponent, AuthComponent, LinkedInLogin},
-    data(){
-      return{
-        drawer: false,
-        name: '',
-        signedIn: false,
-        select: 0,
+export default {
+  components: {FBAuthComponent, AuthComponent, LinkedInLogin},
+  data() {
+    return {
+      drawer: false,
+      name: '',
+      signedIn: false,
+      select: 0,
+    }
+  },
+  mounted() {
+    this.checkTwitterStatus()
+  },
+  methods: {
+    hyperlink() {
+      openURL("https://spacenxtlabs.com")
+    },
+    async checkTwitterStatus() {
+      console.log("checking twitter status")
+      const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`
+      const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+      })
+      // eslint-disable-next-line no-unused-vars
+      const data = await response.json()
+      if (data['status'] === "signedIn") {
+        console.log("signed in", data['name'])
+        this.name = data['name']
+        this.signedIn = true
+      } else {
+        console.log("not signed in")
+        this.name = ''
+        this.signedIn = false
+        return false
       }
     },
-    mounted() {
-      this.checkTwitterStatus()
-      },
-    methods: {
-      hyperlink() {
-        openURL("https://spacenxtlabs.com")
-      },
-      async checkTwitterStatus() {
-        console.log("checking twitter status")
-        const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`
+    signOut() {
+      auth.signOut().then(async function () {
+        const url = `http://127.0.0.1:8888/api/v1/twitterSignOut`
         const response = await fetch(url, {
           method: 'GET',
           mode: 'cors',
         })
-        // eslint-disable-next-line no-unused-vars
-        const data = await response.json()
-        if (data['status'] === "signedIn") {
-          console.log("signed in", data['name'])
-          this.name = data['name']
-          this.signedIn = true
-        }
-        else {
-          console.log("not signed in")
-          this.name = ''
-          this.signedIn = false
-          return false
-        }
-      },
-      signOut() {
-        auth.signOut().then(async function() {
-          const url = `http://127.0.0.1:8888/api/v1/twitterSignOut`
-          const response = await fetch(url, {
-            method: 'GET',
-            mode: 'cors',
-          })
-          console.log('Signed Out')
-          location.reload()
-        }, function(error) {
-          console.error('Sign Out Error', error);
-        });
-      },
-    }
+        console.log('Signed Out')
+        location.reload()
+      }, function (error) {
+        console.error('Sign Out Error', error);
+      });
+    },
   }
-  </script>
+}
+</script>
 
-  <style lang="stylus">
-  .menu-link
-    color #1da1f2
-    //background #2f353a
-  </style>
+<!--<style lang="stylus">-->
+<!--.menu-link color #1da1f2-->
+
+<!--//background #2f353a-->
+<!--</style>-->

@@ -1,8 +1,11 @@
 import json
 import logging
+import os.path
+import re
 
+from bs4 import BeautifulSoup
 from loguru import logger
-from flask import Flask
+from flask import Flask, send_from_directory, Blueprint, redirect
 from flask_cors import CORS, cross_origin
 
 
@@ -13,7 +16,7 @@ class NonASCIIJSONEncoder(json.JSONEncoder):
 
 
 class ApiServer:
-    def __init__(self, static_url_path='', static_folder="quasar/public/dist/spa"):
+    def __init__(self, static_url_path='', static_folder="web/dist/spa", blog_path="hexo/blog/public"):
         self.app = Flask(__name__,
                          static_url_path='',
                          static_folder=static_folder)

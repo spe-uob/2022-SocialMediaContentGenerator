@@ -8,32 +8,33 @@ from SMCGlibrary.Twitter import Twitter
 from SMCGlibrary.Facebook import Facebook
 from SMCGlibrary.LinkedIn import LinkedIn
 
+
 class PostAPI(Component):
-    def __init__(self,env:Environment):
-        super().__init__(env,'/api/v1/Post',PostAPI,['POST'])
+    def __init__(self, env: Environment):
+        super().__init__(env, '/api/v1/post', PostAPI, ['POST'])
         self.env = env
+
     def view(self):
         data = request.get_json()
-        if data['platform'] == "twitter":
-            response = self.twitterPost(data)
-        elif data['platform'] == "facebook":
-            response = self.facebookPost(data)
-        elif data['platform'] == "linkedin":
-            response = self.linkedinPost(data)
-        return response
-    def twitterPost(self, data):
-        tweet_string = data['status']
-        image_base64 = data['image']
-        return Twitter().post(tweet_string, image_base64)
-    def facebookPost(self, data):
-        message = data['message']
-        image_url = data['image_url']
-        return Facebook().post(message, image_url)
-    def linkedinPost(self, data):
         text = data['text']
-        image = data['image']
-        return LinkedIn().post(text, image)
+        images = data['images']
+        accounts = data['accounts']
+        for account in accounts:
+            platform = account['platform']
+            name = account['name']
+            if platform == "twitter":
+                self.twitterPost(name, text, images)
+            elif platform == "facebook":
+                self.facebookPost(name, text, images)
+            elif platform == "linkedin":
+                self.linkedinPost(name, text, images)
+        return {}
 
+    def twitterPost(self, name, text, images):
+        Twitter().post(name, text, images)
 
+    def facebookPost(self, name, text, images):
+        Facebook().post(name, text, images)
 
-
+    def linkedinPost(self, name, text, images):
+        LinkedIn().post(name, text, images)

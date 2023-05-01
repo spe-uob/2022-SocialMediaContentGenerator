@@ -32,7 +32,7 @@ def test_service():
         environment = Environment(config, core)
         scheduler = Scheduler(core, environment)
         environment.scheduler = scheduler
-        api_server, components = server_initializer.initialize(environment, config['api_server']['static_folder'])
+        api_server, components = server_initializer.initialize(environment, config['api_server']['static_folder'], config['api_server']['blog_path'])
         assert True
     except Exception as e:
         logger.error(e)

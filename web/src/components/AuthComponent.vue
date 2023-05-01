@@ -37,6 +37,7 @@
             // The signed-in user info.
             const user = result.user;
             const displayName = user.displayName
+
             const screenName = user.reloadUserInfo.screenName
             // ...
             const url = `http://localhost:8888/api/v1/Login`
