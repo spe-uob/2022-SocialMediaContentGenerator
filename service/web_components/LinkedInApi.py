@@ -65,3 +65,24 @@ class linkedinSignOut(Component):
             outfile.write(json_object)
 
         return {'status': 'signed out'}
+
+class linkedinUserData(Component):
+    def __init__(self, env: Environment):
+        super().__init__(env, '/api/linkedin/userData', linkedinUserData, ['GET', 'POST'])
+        self.env = env
+
+    def view(self):
+        with open("linkedin_auth.json") as json_file:
+                                    auth_dict = json.load(json_file)
+                                    access_token = auth_dict["access_token"]
+
+        application = linkedin.LinkedInApplication(token= access_token)
+                print("HHEEERRRREEEE 2222")
+                response = application.make_request('GET', 'https://api.linkedin.com/v2/userinfo')
+                print(response.text)
+                profile = response.text
+                profile_d = json.loads(profile)
+                user_name = profile_d['name']
+
+
+        return {'name': user_name}
