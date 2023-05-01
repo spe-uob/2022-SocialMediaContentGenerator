@@ -3,7 +3,7 @@ import json
 import os
 
 from loguru import logger
-
+from multiprocessing import Process
 from config import Config
 from core import Core
 from scheduler import Scheduler
@@ -14,16 +14,25 @@ import server_initializer
 def main(args):
     config = load_config(args.config)
     logger.info(f"Loaded config from {args.config}")
+    save_config(args.config, config)
     core = Core(config)
     environment = Environment(config, core)
     scheduler = Scheduler(core, environment)
     environment.scheduler = scheduler
     scheduler.start()
-    api_server, components = server_initializer.initialize(environment, config['api_server']['static_folder'])
+    api_server, components = server_initializer.initialize(environment, config['api_server']['static_folder'], config['api_server']['blog_path'])
     environment.api_server = api_server
+    p = Process(target=run_blog)
+    p.start()
     api_server.run(args.host, args.port)
     logger.info("Stopping scheduler...")
+    p.join()
     scheduler.stop()
+
+
+def run_blog():
+    import blog_server
+    blog_server.run_blog_server()
 
 
 def load_config(path):
@@ -35,6 +44,11 @@ def load_config(path):
     with open(path, 'r', encoding="utf-8") as f:
         config = Config(**json.load(f))
     return config
+
+
+def save_config(path, config):
+    with open(path, 'w', encoding="utf-8") as f:
+        json.dump(config, f, indent=4)
 
 
 def parse_args():
