@@ -161,3 +161,54 @@ class LinkedInApiPostImage(Component):
 
         # you can reutrn a dict, it will be converted to json automatically
         return {'status': 'ok', 'url': uploadUrl}
+
+class LinkedInApiGetPosts(Component):
+    def __init__(self, env: Environment):
+        super().__init__(env, '/api/LinkedInApiGetPosts', 'LinkedInApiGetPosts', ['GET', 'POST'])
+        self.env = env
+
+    def view(self):
+
+        with open("linkedin_auth.json") as json_file:
+                auth_dict = json.load(json_file)
+                access_token = auth_dict["access_token"]
+
+                application = linkedin.LinkedInApplication(token= access_token)
+                print("HHEEERRRREEEE 2222")
+                response = application.make_request('GET', 'https://api.linkedin.com/v2/me')
+                print(response.text)
+                profile = response.text
+                profile_d = json.loads(profile)
+                user_id = profile_d['id']
+
+        headers = {
+                "Authorization": f"Bearer {access_token}",
+                "cache-control": "no-cache",
+                "X-Restli-Protocol-Version": "2.0.0"
+            }
+
+            # define the request parameters
+        params = {
+                "q": "authors",
+                "authors": f"urn:li:person:{user_id}",
+                "projection": "(id,created,specificContent(text))"
+            }
+        linkedin_api_endpoint = "https://api.linkedin.com/v2/shares"
+        # make the GET request to the LinkedIn API
+        response = requests.get(linkedin_api_endpoint, headers=headers, params=params)
+
+        # parse the response and return the posts
+        posts = []
+        if response.ok:
+            data = response.json()
+            for share in data.get("elements", []):
+                post = {
+                    "id": share.get("id"),
+                    "text": share.get("specificContent", {}).get("text", {}).get("text")
+                }
+                posts.append(post)
+
+        print(len(posts))
+        return {'status': 'ok', 'posts': posts}
+
+

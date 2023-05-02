@@ -77,12 +77,12 @@ class linkedinUserData(Component):
                                     access_token = auth_dict["access_token"]
 
         application = linkedin.LinkedInApplication(token= access_token)
-                print("HHEEERRRREEEE 2222")
-                response = application.make_request('GET', 'https://api.linkedin.com/v2/userinfo')
-                print(response.text)
-                profile = response.text
-                profile_d = json.loads(profile)
-                user_name = profile_d['name']
+        print("HHEEERRRREEEE 2222")
+        response = application.make_request('GET', 'https://api.linkedin.com/v2/userinfo')
+        print(response.text)
+        profile = response.text
+        profile_d = json.loads(profile)
+        user_name = profile_d['name']
 
 
         return {'name': user_name}
