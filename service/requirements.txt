@@ -1,5 +1,5 @@
 einops
-Flask==2.2.2
+Flask==2.3.2
 Flask_Cors==3.0.10
 k_diffusion==0.0.12
 lark
