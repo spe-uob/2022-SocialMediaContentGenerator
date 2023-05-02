@@ -23,7 +23,6 @@
   - [Front end](#front-end)
   - [Back end](#back-end)
   - [Project Requirements](#project-requirements)
-  
 
 ## About the project
 An autonomous AI assistant to generate content for social media based on recent trends designed for companies that aim to extend their social media presence. 
@@ -40,6 +39,14 @@ David Yan
 Gene Ding
 
 Stephen Chen
+
+## function
+
+- The AI drawing function power by latent diffusion model(Stable Diffusion) and LoRA: Low-Rank Adaptation of Large Language Models
+- The Text Generation function power by GPT-3(OpenAI API)
+- The social media content auto push function by Twitter API, Facebook API and LinkedIn API
+- Auto blog post function by Hexo
+- Post editor with autocompletion
 
 ## Technology Stack
 
@@ -62,13 +69,19 @@ Stephen Chen
 - Twitter API
 - Facebook API
 - LinkedIn API
+- Hexo
+    - [[Project Link:](https://github.com/hexojs/hexo)]
 - GPT-3(OpenAI API)
 - Latent Diffusion Model(Stable Diffusion)
     - [[Paper Link: https://arxiv.org/abs/2112.10752](https://arxiv.org/abs/2112.10752)]
     - [[Project Link: https://github.com/CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion)]
 - LoRA: Low-Rank Adaptation of Large Language Models
     - [[Paper Link: https://arxiv.org/abs/2106.09685](https://arxiv.org/abs/2106.09685)]
- 
+
+Acknowledgments project:
+- [https://github.com/AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+- [https://github.com/bmaltais/kohya_ss](https://github.com/bmaltais/kohya_ss)
+
 ## Web and service
 
 --- 
