@@ -6,8 +6,6 @@
   >
     <span class="text text-grey-5 col q-ml-md" >Social Media Content Generator</span>
       <q-tab name="twitter" icon="fa-brands fa-twitter" @click="twitter"/>
-      <q-tab name="facebook" icon="fa-brands fa-facebook" />
-      <q-tab name="linkedin" icon="fa-brands fa-linkedin" />
     <div class="col"></div>
 
 
