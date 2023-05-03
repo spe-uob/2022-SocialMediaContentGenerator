@@ -6,12 +6,9 @@ import json
 
 
 class Twitter:
-    def __init__(self):
+    def __init__(self, env):
         self.storage = None
-        self.twitterAuth = {
-            'consumer_key': "EzoH0w73hC3naY84U6NBHZHyz",
-            'consumer_secret': "qjFQ5WPxqJD7C0JZtMiORkzbhYAXjNNfX0WyMdx5GWz1IiZxFw"
-        }
+        self.twitter_auth = env.config['twitter_auth']
         self.load_auth()
 
     def load_auth(self):
@@ -25,7 +22,7 @@ class Twitter:
     def post(self, name, text, images):
         tweet_string = text
 
-        auth = tweepy.OAuthHandler(self.storage[name]['consumer_key'], self.storage[name]['consumer_secret'])
+        auth = tweepy.OAuthHandler(self.twitter_auth['consumer_key'], self.twitter_auth['consumer_secret'])
         auth.set_access_token(self.storage[name]['access_token'], self.storage[name]['access_token_secret'])
 
         api = tweepy.API(auth)
@@ -39,13 +36,12 @@ class Twitter:
             api.update_status(tweet_string)
         return {'status': 'ok', 'tweet': tweet_string}
 
-    def check(self):
-        auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
-        auth.set_access_token(self.access_token, self.access_token_secret)
+    def check(self, name):
+        auth = tweepy.OAuthHandler(self.twitter_auth['consumer_key'], self.twitter_auth['consumer_secret'])
+        auth.set_access_token(self.storage[name]['access_token'], self.storage[name]['access_token_secret'])
         api = tweepy.API(auth)
         try:
             user = api.verify_credentials()
-            print("Authentication OK")
             status = 'signedIn'
             name = user.name
         except Exception as e:

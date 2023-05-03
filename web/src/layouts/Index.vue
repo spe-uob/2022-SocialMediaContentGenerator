@@ -15,22 +15,25 @@
         </div>
         <div class="col-5" v-if="$q.screen.gt.sm">
           <q-btn to="/" flat @mouseover="select = 1" @mouseleave="select = 0">
-            <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
+            <span :class="select === 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
           </q-btn>
           <q-btn to="/stablediffusionUI" flat @mouseover="select = 2" @mouseleave="select = 0">
-            <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
+            <span :class="select === 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
           </q-btn>
-          <q-btn to="/GeneratedImage" flat @mouseover="select = 2" @mouseleave="select = 0">
-            <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> GeneratedImage </span>
+          <q-btn to="/GeneratedImage" flat @mouseover="select = 3" @mouseleave="select = 0">
+            <span :class="select === 3 ? 'text-light-blue-3' : 'text-grey-5'"> GeneratedImage </span>
           </q-btn>
-          <q-btn to="/post" flat @mouseover="select = 3" @mouseleave="select = 0">
-            <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
+          <q-btn to="/TextGenerator" flat @mouseover="select = 4" @mouseleave="select = 0">
+            <span :class="select === 4 ? 'text-light-blue-3' : 'text-grey-5'"> TextGenerator </span>
           </q-btn>
-          <q-btn to="/BlogPreview" flat @mouseover="select = 3" @mouseleave="select = 0">
-            <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> BlogPreview </span>
+          <q-btn to="/post" flat @mouseover="select = 5" @mouseleave="select = 0">
+            <span :class="select === 5 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
           </q-btn>
-          <q-btn to="/aboutUs" flat @mouseover="select = 4" @mouseleave="select = 0">
-            <span :class="select == 4 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
+          <q-btn to="/BlogPreview" flat @mouseover="select = 6" @mouseleave="select = 0">
+            <span :class="select === 6 ? 'text-light-blue-3' : 'text-grey-5'"> BlogPreview </span>
+          </q-btn>
+          <q-btn to="/aboutUs" flat @mouseover="select = 7" @mouseleave="select = 0">
+            <span :class="select === 7 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
           </q-btn>
         </div>
         <div class="col-2 q-pr-xl" v-if="$q.screen.gt.sm">
@@ -174,7 +177,7 @@ export default {
     },
     async checkTwitterStatus() {
       console.log("checking twitter status")
-      const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`
+      const url = `/api/v1/twitterSignInCheck`
       const response = await fetch(url, {
         method: 'GET',
         mode: 'cors',
@@ -194,7 +197,7 @@ export default {
     },
     signOut() {
       auth.signOut().then(async function () {
-        const url = `http://127.0.0.1:8888/api/v1/twitterSignOut`
+        const url = `/api/v1/twitterSignOut`
         const response = await fetch(url, {
           method: 'GET',
           mode: 'cors',

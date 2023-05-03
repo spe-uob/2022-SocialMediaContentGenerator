@@ -4,8 +4,7 @@ from web_components import *
 from utility import Environment, Component
 
 init_web_components: [Component] = [Index, GetTasks, GetTxt2ImgTasks, VRAM, ModelList, LoadModel, CurrentModel, SamplerList, Txt2Img, Txt2ImgResult, Image, ImageList, ImageInfo, VaeList, LoadLora,
-                                    LoraList, CurrentVae, CurrentLora, LoginAPI, PostAPI, StatusAPI, SaveToBlog, LoadBlog, BlogList, BlogServerUrl,
-                                    TwitterAuth, TwitterSignInCheck, TwitterSignOut, LinkedInApi, LinkedInApiPost, openAiApi]
+                                    LoraList, CurrentVae, CurrentLora, DeleteAPI, LoginAPI, PostAPI, StatusAPI, SaveToBlog, LoadBlog, BlogList, BlogServerUrl, TextGenerator, Key]
 
 
 def initialize(environment: Environment, static_folder: str, blog_path) -> [ApiServer, [Component]]:

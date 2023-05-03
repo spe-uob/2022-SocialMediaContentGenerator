@@ -12,25 +12,33 @@
 
 
 <script>
-import {getAuth,  FacebookAuthProvider, signInWithPopup} from "firebase/auth"
+import {getAuth, FacebookAuthProvider, signInWithPopup} from "firebase/auth"
 import firebase from "firebase/compat/app"
 import axios from "axios";
+
 const provider = new FacebookAuthProvider();
 export default {
-  name: "FBAuthComponent",
+  name: "FacebookAuth",
 
   data() {
     return {
-      fb:"",
-      appID:"645161304039045",
-      version:"v16.0",
+      appID: "",
+      version: "v16.0",
+      base_url: '',
     };
   },
 
   methods: {
-    async login () {
+    getUrl(path) {
+      return this.base_url + path;
+    },
+    async getAppid() {
+      let response = await fetch(this.getUrl("/api/v1/Key"));
+      let data = await response.json();
+      this.appID = data['facebook_auth'].appid;
+    },
+    async login() {
       const auth = getAuth()
-      //const pageId = '119057271096466'
       await signInWithPopup(auth, provider)
         .then((result) => {
           const credential = FacebookAuthProvider.credentialFromResult(result)
@@ -39,35 +47,33 @@ export default {
           const uid = user.uid
           axios.get(`https://graph.facebook.com/${this.version}/me/accounts?access_token=${userAccessToken}`)
             .then((response) => {
-                const pages = response.data.data
-                const page = pages.find((page) => page.tasks.includes('ADMIN'))
-                //const pageId = page.id
-                const pageId = '119057271096466'
+              const pages = response.data.data
+              const page = pages.find((page) => page.tasks.includes('ADMIN'))
+              const pageId = page.Page.id
+              //const pageId = '119057271096466'
               fetch(`https://graph.facebook.com/${pageId}?fields=access_token&access_token=${userAccessToken}`)
                 .then(response => response.json())
                 .then(data => {
                   const pageAccessToken = data.access_token
-                  const url = `http://localhost:8888/api/v1/Login`
+                  const url = this.getUrl("api/v1/Login")
                   const response = fetch(url, {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                      platform:'facebook',
-                      pageId:pageId,
-                      userAccessToken:userAccessToken,
-                      pageAccessToken:pageAccessToken
+                      platform: 'facebook',
+                      pageId: pageId,
+                      userAccessToken: userAccessToken,
+                      pageAccessToken: pageAccessToken
                     }),
                     mode: 'cors',
                   })
-                  //this.$router.push("/FaceBookPost")
-                  //location.reload()
                 })
                 .catch(error => {
                   console.error('Error:', error);
                 });
-              }).catch((error) => {
+            }).catch((error) => {
             console.error('Error:', error)
           })
         }).catch((error) => {

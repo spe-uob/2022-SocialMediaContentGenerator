@@ -105,7 +105,7 @@ export default defineComponent({
       image_info_list: {},
       filtered_images: [],
       selected_images: [],
-      account_options: []
+      account_options: [],
     };
   },
   methods: {
@@ -263,7 +263,9 @@ export default defineComponent({
         this.account_options.push({
           value: this.logged_accounts[i],
           label: "username: " + this.logged_accounts[i].name,
-          avatar: get_avatar(this.logged_accounts[i].platform)
+          name: this.logged_accounts[i].name,
+          avatar: get_avatar(this.logged_accounts[i].platform),
+          platform: this.logged_accounts[i].platform
         })
       }
       console.log(this.logged_accounts)
@@ -299,6 +301,7 @@ export default defineComponent({
       this.$q.notify({message: `build blog complete: <br/ >${output}`, html: true, position: 'top',})
     },
     async post() {
+      this.$q.loading.show();
       let request_body = {
         text: this.post_content.replaceAll(/<.*>/g, ''),
         images: this.selected_images,
@@ -313,6 +316,7 @@ export default defineComponent({
         },
         body: JSON.stringify(request_body),
       })
+      this.$q.loading.hide();
     }
   },
   mounted() {

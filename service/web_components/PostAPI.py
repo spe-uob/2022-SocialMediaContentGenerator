@@ -23,18 +23,20 @@ class PostAPI(Component):
             platform = account['platform']
             name = account['name']
             if platform == "twitter":
-                self.twitterPost(name, text, images)
+                self.twitter_post(name, text, images)
             elif platform == "facebook":
-                self.facebookPost(name, text, images)
+                self.facebook_post(name, text, images)
             elif platform == "linkedin":
-                self.linkedinPost(name, text, images)
+                self.linkedin_post(name, text, images)
         return {}
 
-    def twitterPost(self, name, text, images):
-        Twitter().post(name, text, images)
+    def twitter_post(self, name, text, images):
+        Twitter(self.env).post(name, text, images)
 
-    def facebookPost(self, name, text, images):
+    @staticmethod
+    def facebook_post(name, text, images):
         Facebook().post(name, text, images)
 
-    def linkedinPost(self, name, text, images):
+    @staticmethod
+    def linkedin_post(name, text, images):
         LinkedIn().post(name, text, images)
