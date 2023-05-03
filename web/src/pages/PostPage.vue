@@ -56,6 +56,9 @@
                           <q-avatar size="2rem" :class="opt.avatar"/>
                           <span class="text-teal">{{ opt.label }}</span>
                         </q-item-section>
+                        <q-item-section side>
+                          <q-btn icon="delete" @click="deleteOptions(opt.name, opt.platform)"/>
+                        </q-item-section>
                       </div>
                     </q-item>
                   </template>
@@ -105,12 +108,28 @@ export default defineComponent({
       image_info_list: {},
       filtered_images: [],
       selected_images: [],
-      account_options: []
+      account_options: [],
     };
   },
   methods: {
     getUrl(path) {
       return this.base_url + path;
+    },
+    deleteOptions(name, platform) {
+      const response = fetch(this.getUrl("/api/v1/Delete"), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          platform: platform,
+          name: name
+        }),
+        mode: 'cors',
+      })
+      this.account_options = this.account_options.filter(
+        (option) => option.name !== name
+      );
     },
     async load_image_list() {
       let response = await fetch(this.getUrl("/api/v1/image_list"));
@@ -263,7 +282,9 @@ export default defineComponent({
         this.account_options.push({
           value: this.logged_accounts[i],
           label: "username: " + this.logged_accounts[i].name,
-          avatar: get_avatar(this.logged_accounts[i].platform)
+          name: this.logged_accounts[i].name,
+          avatar: get_avatar(this.logged_accounts[i].platform),
+          platform: this.logged_accounts[i].platform
         })
       }
       console.log(this.logged_accounts)
@@ -299,6 +320,7 @@ export default defineComponent({
       this.$q.notify({message: `build blog complete: <br/ >${output}`, html: true, position: 'top',})
     },
     async post() {
+      this.$q.loading.show();
       let request_body = {
         text: this.post_content.replaceAll(/<.*>/g, ''),
         images: this.selected_images,
@@ -313,6 +335,7 @@ export default defineComponent({
         },
         body: JSON.stringify(request_body),
       })
+      this.$q.loading.hide();
     }
   },
   mounted() {

@@ -11,24 +11,11 @@ class LinkedIn:
         with open("linkedin_auth.json") as json_file:
             self.storage = json.load(json_file)
 
-    #         with open("linkedin_auth.json") as json_file:
-    #             auth_dict = json.load(json_file)
-    #             access_token = auth_dict["access_token"]
-    #             APPLICATION_KEY = auth_dict["APPLICATION_KEY"]
-    #             APPLICATION_SECRET = auth_dict["APPLICATION_SECRET"]
-    #             profile = auth_dict["profile"]
-    #         access_token = access_token
-    #         self.APPLICATION_KEY = APPLICATION_KEY
-    #         self.APPLICATION_SECRET = APPLICATION_SECRET
-    #         self.profile = profile
-
     def post(self, name, text, images):
         access_token = self.storage[name]['access_token']
         user_id = self.storage[name]['userId']
         if len(images) == 0:
-
             url = 'https://api.linkedin.com/v2/ugcPosts'
-
             # Define the message to be posted
             message = {
                 "author": f"urn:li:person:{user_id}",
@@ -45,7 +32,6 @@ class LinkedIn:
                     "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
                 }
             }
-
             # Convert the message to JSON format
             payload = json.dumps(message)
 
@@ -85,7 +71,6 @@ class LinkedIn:
                                          data=open(images[0], "rb"))
 
             responseImage.raise_for_status()
-
 
             message = "testing api"
 

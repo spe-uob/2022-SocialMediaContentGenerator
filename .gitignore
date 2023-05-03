@@ -23,3 +23,4 @@ web/node_modules
 web/twitter_auth.json
 /service/linkedin_auth.json
 /service/facebook_auth.json
+/service/twitter_auth.json

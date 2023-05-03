@@ -15,39 +15,29 @@
         </div>
         <div class="col-5" v-if="$q.screen.gt.sm">
           <q-btn to="/" flat @mouseover="select = 1" @mouseleave="select = 0">
-            <span :class="select == 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
+            <span :class="select === 1 ? 'text-light-blue-3' : 'text-grey-5'"> Home </span>
           </q-btn>
           <q-btn to="/stablediffusionUI" flat @mouseover="select = 2" @mouseleave="select = 0">
-            <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
+            <span :class="select === 2 ? 'text-light-blue-3' : 'text-grey-5'"> Stable Diffusion UI </span>
           </q-btn>
-          <q-btn to="/GeneratedImage" flat @mouseover="select = 2" @mouseleave="select = 0">
-            <span :class="select == 2 ? 'text-light-blue-3' : 'text-grey-5'"> GeneratedImage </span>
+          <q-btn to="/GeneratedImage" flat @mouseover="select = 3" @mouseleave="select = 0">
+            <span :class="select === 3 ? 'text-light-blue-3' : 'text-grey-5'"> GeneratedImage </span>
           </q-btn>
-          <q-btn to="/post" flat @mouseover="select = 3" @mouseleave="select = 0">
-            <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
+          <q-btn to="/TextGenerator" flat @mouseover="select = 4" @mouseleave="select = 0">
+            <span :class="select === 4 ? 'text-light-blue-3' : 'text-grey-5'"> TextGenerator </span>
           </q-btn>
-          <q-btn to="/BlogPreview" flat @mouseover="select = 3" @mouseleave="select = 0">
-            <span :class="select == 3 ? 'text-light-blue-3' : 'text-grey-5'"> BlogPreview </span>
+          <q-btn to="/post" flat @mouseover="select = 5" @mouseleave="select = 0">
+            <span :class="select === 5 ? 'text-light-blue-3' : 'text-grey-5'"> Post </span>
           </q-btn>
-          <q-btn to="/aboutUs" flat @mouseover="select = 4" @mouseleave="select = 0">
-            <span :class="select == 4 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
+          <q-btn to="/BlogPreview" flat @mouseover="select = 6" @mouseleave="select = 0">
+            <span :class="select === 6 ? 'text-light-blue-3' : 'text-grey-5'"> BlogPreview </span>
+          </q-btn>
+          <q-btn to="/aboutUs" flat @mouseover="select = 7" @mouseleave="select = 0">
+            <span :class="select === 7 ? 'text-light-blue-3' : 'text-grey-5'"> About us </span>
           </q-btn>
         </div>
         <div class="col-2 q-pr-xl" v-if="$q.screen.gt.sm">
           <div class="row justify-evenly">
-            <div>
-              <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
-              <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
-              <q-avatar v-else size="0.5rem" class="fa-solid fa-circle text-green"/>
-            </div>
-            <div>
-              <q-avatar size="2rem" class="fa-brands fa-facebook text-blue"/>
-              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
-            </div>
-            <div>
-              <q-avatar size="2rem" class="fa-brands fa-linkedin text-blue-2"/>
-              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
-            </div>
           </div>
         </div>
         <div class="col-6" v-if="$q.screen.lt.md"></div>
@@ -63,19 +53,13 @@
             >
               <q-list>
                 <q-item>
-                  <AuthComponent v-if="!signedIn"/>
-                  <q-btn v-else ref="button" class="flex justify-center full-width" color="light-blue-2" icon="fa-brands fa-twitter" type="submit" rounded @click="signOut"
-                         style="min-height:50px; min-width:270px;">
-                    <span class="q-pa-xs">
-                      Sign out of Twitter
-                    </span>
-                  </q-btn>
+                  <TwitterAuth></TwitterAuth>
                 </q-item>
                 <q-item>
-                  <FBAuthComponent></FBAuthComponent>
+                  <FacebookAuth></FacebookAuth>
                 </q-item>
                 <q-item>
-                  <LinkedInLogin></LinkedInLogin>
+                  <LinkedinAuth></LinkedinAuth>
                 </q-item>
               </q-list>
             </q-menu>
@@ -146,27 +130,34 @@
 </template>
 
 <script>
-import AuthComponent from "components/AuthComponent.vue";
-import LinkedInLogin from "components/LinkedInLogin.vue";
+import TwitterAuth from "components/TwitterAuth.vue";
+import FacebookAuth from "components/FacebookAuth.vue";
+import LinkedinAuth from "components/LinkedinAuth.vue";
 import {getAuth} from "firebase/auth";
-import FBAuthComponent from "components/FBAuthComponent.vue";
+import axios from 'axios'
+
 import {openURL} from 'quasar';
 
 const auth = getAuth()
 
 
 export default {
-  components: {FBAuthComponent, AuthComponent, LinkedInLogin},
+  components: {TwitterAuth, FacebookAuth, LinkedinAuth},
   data() {
     return {
       drawer: false,
       name: '',
       signedIn: false,
       select: 0,
+      LCode: " "
     }
   },
   mounted() {
+    console.log("debug type:", this.$DEBUG)
+    this.debug = this.$DEBUG;
+    this.base_url = this.$BASEURL;
     this.checkTwitterStatus()
+    this.getCode()
   },
   methods: {
     hyperlink() {
@@ -174,7 +165,7 @@ export default {
     },
     async checkTwitterStatus() {
       console.log("checking twitter status")
-      const url = `http://127.0.0.1:8888/api/v1/twitterSignInCheck`
+      const url = `/api/v1/twitterSignInCheck`
       const response = await fetch(url, {
         method: 'GET',
         mode: 'cors',
@@ -194,7 +185,7 @@ export default {
     },
     signOut() {
       auth.signOut().then(async function () {
-        const url = `http://127.0.0.1:8888/api/v1/twitterSignOut`
+        const url = `/api/v1/twitterSignOut`
         const response = await fetch(url, {
           method: 'GET',
           mode: 'cors',
@@ -205,6 +196,19 @@ export default {
         console.error('Sign Out Error', error);
       });
     },
+    getUrl(path) {
+      return this.base_url + path;
+    },
+    getCode() {
+      if (this.LCode == " ") {
+        const code = new URL(location.href).searchParams.get('code')
+        this.LCode = code
+        console.log(code)
+        if (code) {
+          axios.post(this.getUrl("/api/v1/Login"), {platform:'linkedin', code: code, url: new URL(window.location.href).origin + '/index.html'})
+        }
+      }
+    }
   }
 }
 </script>

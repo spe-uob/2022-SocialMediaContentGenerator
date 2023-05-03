@@ -10,8 +10,7 @@
     </div>
   </div>
 </template>-->
-<template>
-
+<!--<template>
   <div class="q-pa-none">
     <q-toolbar class="bg-grey-2 text-grey-8" style="min-height:50px">
       <q-toolbar-title class="text-subtitle2 text-grey-5">Timeline {{temp}}</q-toolbar-title>
@@ -22,7 +21,7 @@
   <a class="twitter-timeline"
       href="https://twitter.com/DavidYa56963667"
      data-aria-polite="rude">
-     <!--data-chrome="nofooter"-->
+     &lt;!&ndash;data-chrome="nofooter"&ndash;&gt;
     Tweets by you.
   </a>
 </template>
@@ -83,4 +82,21 @@ export default {
 
 <style scoped>
 
-</style>
+</style>-->
+
+<template>
+  <a class="twitter-timeline" href="https://twitter.com/flgodd?ref_src=twsrc%5Etfw">Tweets by flgodd</a>
+</template>
+
+<script>
+export default {
+  name: "TimelineView",
+  mounted() {
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.head.appendChild(script);
+  }
+}
+</script>

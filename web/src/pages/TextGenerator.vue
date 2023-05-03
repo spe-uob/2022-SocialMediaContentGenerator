@@ -1,257 +1,127 @@
 <template>
-    <div class="left_container">
-      <q-card>
-        <q-bar :class="$q.dark.isActive ? 'bg-blue-grey-14' : 'bg-blue-grey-2'">
-          <q-card-section>
-
-            <div class="text-white text-h7">Control Area</div>
-
-          </q-card-section>
-        </q-bar>
-        <q-card-section>
-          <div class="text-h9">Prompt:</div>
-          <q-input
-            v-model="prompt"
-            square outlined
-            filled
-            autogrow
-          />
-        </q-card-section>
-
-
-
-        <q-card-section>
-          <label for="temperature-toggle">Temperature: {{temperature}}</label>
-          <input id="temperature-toggle" type="range" min="0" max="1" step="0.1" v-model="temperature">
-          <!--<q-badge color="primary"> Temperature: {{ temperature }} (0 to 1)</q-badge>
-          <input id="temperature-toggle" type="range" min="0" max="1" step="0.1" v-model="temperature">
-          <q-slider color="primary" type="range" v-model="temperature" min="0" max="1" step="0.1"/>-->
-        </q-card-section>
-
-
-
-
-      </q-card>
-
+  <q-page>
+    <div class="col flex justify-center">
+      <div class="row q-pa-lg" style="width: 90%;">
+        <div class="col-4 q-pa-sm">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">Generator arguments:</div>
+            </q-card-section>
+            <q-separator inset/>
+            <q-card-section v-if="!template_mode">
+              <q-toggle v-model="template_mode">Use fast template mode</q-toggle>
+              <q-input v-model="prompt" filled autogrow hint="prompt"/>
+              <q-badge color="secondary">
+                Degrees of freedom: {{ freedom }} (0 to 1)
+              </q-badge>
+              <q-slider v-model="freedom" :min="0" :max="1" :step="0.1"/>
+            </q-card-section>
+            <q-card-section v-else>
+              <q-toggle class="q-ma-none" v-model="template_mode">Use fast template mode</q-toggle>
+              <q-input class="q-my-sm" label="number of generate lines" v-model="number_line" type="number"></q-input>
+              <q-input class="q-my-sm" label="the key words about the topic" v-model="key_words"/>
+              <q-input class="q-my-sm" v-model="prompt" filled autogrow disable hint="prompt"/>
+            </q-card-section>
+            <q-card-section>
+              <q-btn label="Generate" color="primary" @click="generate"/>
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col-8 q-pa-sm">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">Generated result:</div>
+              <div class="text-subtitle2"></div>
+            </q-card-section>
+            <q-separator inset/>
+            <q-card-section style="min-height: 231px">
+              <span v-html="generator_output"></span>
+              <q-inner-loading
+                :showing="loading"
+                label="Please wait..."
+                label-class="text-teal"
+                label-style="font-size: 1.1em"
+              />
+            </q-card-section>
+          </q-card>
+        </div>
+      </div>
     </div>
-  <div class="right_container">
-  <div class="chat_container">
-    <form @submit.prevent="sendPrompt">
-      <textarea
-        rows="1"
-        cols="1"
-        placeholder="generate content..."
-        v-model="prompt">
-    ></textarea>
-      <button><img src="~assets/send.svg"></button>
-
-    </form>
-    <p>{{ generatedText }}</p>
-  </div>
-  </div>
-
+  </q-page>
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   name: "TextGenerator",
   data() {
     return {
+      base_url: '',
       prompt: '',
-      generatedText: '',
-      temperature: "0.5"
-
+      generator_output: '',
+      freedom: 0.5,
+      number_line: 1,
+      key_words: '',
+      loading: false,
+      template_mode: false,
+      template: {
+        part1: "please give me ",
+        part2_1: " group of prompt for generate image by Stable Diffusion about ",
+        part2_2: " groups of prompt for generate image by Stable Diffusion about "
+      }
     };
   },
+  watch: {
+    number_line: function () {
+      this.update_template()
+    },
+    key_words: function () {
+      this.update_template()
+    }
+  },
   methods: {
-    sendPrompt() {
-      console.log(this.prompt)
-      if (this.prompt) {
-        axios.post("http://localhost:8888/api/openAiApi", {prompt: this.prompt, temp: this.temperature})
-          .then(response => {
-            this.generatedText = response.data.text
-            console.log(response.data.text)
-          }).catch(error => {
-          console.log(error);
-        });
+    getUrl(path) {
+      return this.base_url + path;
+    },
+    update_template() {
+      if (this.number_line === 1) {
+        this.prompt = this.template.part1 + this.number_line + this.template.part2_1 + this.key_words
+      } else {
+        this.prompt = this.template.part1 + this.number_line + this.template.part2_2 + this.key_words
       }
     },
+    async generate() {
+      this.loading = true;
+      let response = await fetch(this.getUrl('/api/v1/text_generator'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        body: JSON.stringify({
+          prompt: this.prompt,
+          temp: this.freedom
+        })
+      });
+      let data = await response.json();
+      if (data['status'] === 'ok') {
+        this.generator_output = data.text.replaceAll('\n', '<br />');
+      } else {
+        this.$q.notify({
+          message: "Error generating text" + data['message'],
+          color: 'negative',
+          icon: 'report_problem'
+        })
+      }
+      this.loading = false;
+    },
+  },
+  mounted() {
+    console.log("debug type:", this.$DEBUG)
+    this.debug = this.$DEBUG;
+    this.base_url = this.$BASEURL;
   }
 }
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;800;900&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-body {
-  background: #343541;
-}
-
-#app {
-  width: 100vw;
-  height: 100vh;
-  background: #343541;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.container {
-  position: fixed;
-  left: 350px;
-  padding: 0;
-  margin: 0;
-}
-
-.left_container{
-  display: inline-block;
-  float: left;
-  width: 30%;
-  height:30%;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-right: 10px;
-}
-
-.right_container{
-  display: inline-block;
-  float: right;
-  width: 70%;
-  height: 70%;
-  padding-top: 10px;
-  padding-right: 10px;
-}
-
-.chat_container {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  //width: 100%;
-  //height: 100%;
-  overflow-y: scroll;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  padding-bottom: 20px;
-  scroll-behavior: smooth;
-}
-
-/* hides scrollbar */
-#chat_container::-webkit-scrollbar {
-  display: none;
-}
-main {
-  width: 100%;
-  height: calc(100% - 80px);
-}
-.wrapper {
-  width: 100%;
-  padding: 15px;
-}
-
-.ai {
-  background: #40414f;
-}
-
-.chat {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.profile {
-  width: 36px;
-  height: 36px;
-  border-radius: 5px;
-
-  background: #5436da;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ai .profile {
-  background: #10a37f;
-}
-
-.profile img {
-  width: 60%;
-  height: 60%;
-  object-fit: contain;
-}
-
-.message {
-  flex: 1;
-  color: #dcdcdc;
-  font-size: 20px;
-  max-width: 100%;
-  overflow-x: scroll;
-  white-space: pre-wrap;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.message::-webkit-scrollbar {
-  display: none;
-}
-form {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 10px;
-  background: #40414f;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-@media (max-width: 1280px) {
-  form {
-    max-width: calc(100% - 40px);
-  }
-}
-textarea {
-  width: 100%;
-
-  color: #fff;
-  font-size: 18px;
-
-  padding: 10px;
-  background: transparent;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-}
-
-button {
-  outline: 0;
-  border: 0;
-  cursor: pointer;
-  background: transparent;
-}
-
-form img {
-  width: 30px;
-  height: 30px;
-}
-
 </style>
