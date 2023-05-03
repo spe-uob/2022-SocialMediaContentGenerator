@@ -1,6 +1,7 @@
 import os
 
 import facebook
+from loguru import logger
 
 from . import *
 from flask import Flask, request, jsonify
@@ -94,6 +95,10 @@ class LoginAPI(Component):
         url = data['url']
         application_key = self.linkedin_auth['application_key']
         application_secret = self.linkedin_auth['application_secret']
+        logger.info("code: " + code)
+        logger.info("url: " + url)
+        logger.info("application_key: " + application_key)
+        logger.info("application_secret: " + application_secret)
         authentication = linkedin.LinkedInAuthentication(application_key, application_secret, url, linkedin.PERMISSIONS.enums.values())
         authentication.authorization_code = code
         result = authentication.get_access_token()

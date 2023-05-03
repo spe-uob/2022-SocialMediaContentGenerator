@@ -1,13 +1,18 @@
 import enum
 import math
+import os
 
 import torch
 import torch.nn.functional
+from loguru import logger
 from torch import einsum
 from einops import rearrange
 from ldm.util import default
 import ldm.modules.attention
 import ldm.modules.diffusionmodules.model
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+import xformers.ops
 
 
 class CorsAttentionOptimizationMode(enum.Enum):
@@ -21,11 +26,17 @@ class MemoryOptimizer:
     def apply_memory_optimizations(cross_attention_optimization_mode=CorsAttentionOptimizationMode.DEFAULT):
         # ldm.modules.diffusionmodules.model.nonlinearity = torch.nn.functional.silu
         if cross_attention_optimization_mode == CorsAttentionOptimizationMode.DEFAULT:
-            print("Applying cross attention optimization (Doggettx).")
+            logger.debug("Applying cross attention optimization (Doggettx).")
             ldm.modules.attention.CrossAttention.forward = MemoryOptimizer.split_cross_attention_forward
             ldm.modules.diffusionmodules.model.AttnBlock.forward = MemoryOptimizer.cross_attention_attnblock_forward
         elif cross_attention_optimization_mode == CorsAttentionOptimizationMode.V1:
+            logger.debug("Applying cross attention optimization (V1).")
             ldm.modules.attention.CrossAttention.forward = MemoryOptimizer.split_cross_attention_forward_v1
+        elif cross_attention_optimization_mode == CorsAttentionOptimizationMode.XFORMERS:
+            logger.debug("Applying cross attention optimization (XFORMERS).")
+
+            ldm.modules.attention.CrossAttention.forward = MemoryOptimizer.xformers_attention_forward
+            ldm.modules.diffusionmodules.model.AttnBlock.forward = MemoryOptimizer.xformers_attnblock_forward
 
     @staticmethod
     def split_cross_attention_forward_v1(self, x, context=None, mask=None):
@@ -183,5 +194,38 @@ class MemoryOptimizer:
 
         return h3
 
+    @staticmethod
+    def xformers_attention_forward(self, x, context=None, mask=None):
+        h = self.heads
+        q_in = self.to_q(x)
+        context = default(context, x)
 
+        k_in = self.to_k(context)
+        v_in = self.to_v(context)
 
+        q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> b n h d', h=h), (q_in, k_in, v_in))
+        del q_in, k_in, v_in
+        out = xformers.ops.memory_efficient_attention(q, k, v, attn_bias=None)
+
+        out = rearrange(out, 'b n h d -> b n (h d)', h=h)
+        return self.to_out(out)
+
+    @staticmethod
+    def xformers_attnblock_forward(self, x):
+        try:
+            h_ = x
+            h_ = self.norm(h_)
+            q = self.q(h_)
+            k = self.k(h_)
+            v = self.v(h_)
+            b, c, h, w = q.shape
+            q, k, v = map(lambda t: rearrange(t, 'b c h w -> b (h w) c'), (q, k, v))
+            q = q.contiguous()
+            k = k.contiguous()
+            v = v.contiguous()
+            out = xformers.ops.memory_efficient_attention(q, k, v)
+            out = rearrange(out, 'b (h w) c -> b c h w', h=h)
+            out = self.proj_out(out)
+            return x + out
+        except NotImplementedError:
+            return MemoryOptimizer.cross_attention_attnblock_forward(self, x)

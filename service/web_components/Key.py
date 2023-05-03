@@ -11,4 +11,4 @@ class Key(Component):
         self.linkedin_auth["application_secret"] = ""
 
     def view(self):
-        return {"twitter_auth": self.twitter_auth, "linkedin_auth": self.linkedin_auth}
+        return {"twitter_auth": self.twitter_auth, "linkedin_auth": self.linkedin_auth, "facebook_auth": self.facebook_auth}

@@ -49,7 +49,8 @@ export default {
             .then((response) => {
               const pages = response.data.data
               const page = pages.find((page) => page.tasks.includes('ADMIN'))
-              const pageId = page.Page.id
+              console.log(pages)
+              const pageId = pages[0].id
               //const pageId = '119057271096466'
               fetch(`https://graph.facebook.com/${pageId}?fields=access_token&access_token=${userAccessToken}`)
                 .then(response => response.json())
