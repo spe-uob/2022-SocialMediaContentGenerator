@@ -45,22 +45,16 @@ class LinkedIn:
 
             return {'status': 'ok', 'arg1': arg1}
         else:
-
             url = 'https://api.linkedin.com/rest/images?action=initializeUpload'
-
             message = {
                 "initializeUploadRequest": {
                     "owner": f"urn:li:person:{user_id}"
                 }
-
             }
-
             payload = json.dumps(message)
-
             response = requests.post(url,
                                      headers={'Authorization': 'Bearer ' + access_token, 'Content-Type': 'application/json', 'LinkedIn-Version': '202304', 'X-Restli-Protocol-Version': '2.0.0'},
                                      data=payload)
-
             logger.info(response.json())
 
             res = response.json()

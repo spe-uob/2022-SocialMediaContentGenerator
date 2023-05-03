@@ -1,4 +1,5 @@
 import os
+
 import random
 import re
 
@@ -24,7 +25,8 @@ class Core:
         self.txt2img: Txt2Img = None
 
     def optimize_memory(self):
-        self.memory_optimizer.apply_memory_optimizations(CorsAttentionOptimizationMode.DEFAULT)
+        # self.memory_optimizer.apply_memory_optimizations(CorsAttentionOptimizationMode.DEFAULT)
+        self.memory_optimizer.apply_memory_optimizations(CorsAttentionOptimizationMode.XFORMERS)
 
     def load_model(self, model_name: str, vae_name: str = None):
         self.model_loader.load_model(model_name, vae_name)

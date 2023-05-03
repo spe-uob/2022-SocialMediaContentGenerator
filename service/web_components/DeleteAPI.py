@@ -36,14 +36,14 @@ class DeleteAPI(Component):
             json.dump(storage, f)
 
     def delete_facebook_account(self, data):
-        with open('facebook_auth.json', 'w') as f:
+        with open('facebook_auth.json', 'r') as f:
             storage = json.load(f)
         del storage[data['name']]
         with open('facebook_auth.json', 'w') as f:
             json.dump(storage, f)
 
     def delete_linkedin_account(self, data):
-        with open('linkedin_auth.json', 'w') as f:
+        with open('linkedin_auth.json', 'r') as f:
             storage = json.load(f)
         del storage[data['name']]
         with open('linkedin_auth.json', 'w') as f:

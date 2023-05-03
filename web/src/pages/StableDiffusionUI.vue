@@ -424,6 +424,7 @@ export default defineComponent({
       let response = await request.json();
       console.log(response)
       this.vae_list = response['mode_list'];
+      this.vae_list.push(null);
       await this.getCurrentVae()
       this.loading_vae = false
     },
