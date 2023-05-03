@@ -97,13 +97,33 @@ class LoginAPI(Component):
         authentication = linkedin.LinkedInAuthentication(application_key, application_secret, url, linkedin.PERMISSIONS.enums.values())
         authentication.authorization_code = code
         result = authentication.get_access_token()
-        profile = authentication.get_profile(selectors=['id', 'first-name', 'last-name'])
-        auth_dict = {
+
+        # print("Access Token:", result.access_token)
+        # print("Expires in (seconds):", result.expires_in)
+        #
+        # print(result.access_token)
+
+        application = linkedin.LinkedInApplication(token=result.access_token)
+
+        response_id = application.make_request('GET', 'https://api.linkedin.com/v2/me')
+
+        profile = response_id.text
+        profile_d = json.loads(profile)
+        first_name = profile_d['firstName']['localized']['en_US']
+        second_name = profile_d['lastName']['localized']['en_US']
+        user_id = profile_d['id']
+
+        user_name = first_name + " " + second_name
+        if not os.path.exists("linkedin_auth.json"):
+            open("linkedin_auth.json", "w").write("{}")
+        with open("linkedin_auth.json", 'r') as f:
+            storage = json.load(f)
+        storage[user_name] = {
             "access_token": result.access_token,
-            "APPLICATION_KEY": '78sme225fsy5by',
-            "APPLICATION_SECRET": 'J3xg14qRTV87viVq',
-            "profile": profile
+            "userId": user_id
         }
-        json_object = json.dumps(auth_dict, indent=4)
+        json_object = json.dumps(storage, indent=4)
         with open("linkedin_auth.json", 'w') as outfile:
             outfile.write(json_object)
+
+        return {'status': 'ok'}

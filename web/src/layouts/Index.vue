@@ -166,10 +166,15 @@ export default {
       name: '',
       signedIn: false,
       select: 0,
+      LCode: " "
     }
   },
   mounted() {
+    console.log("debug type:", this.$DEBUG)
+    this.debug = this.$DEBUG;
+    this.base_url = this.$BASEURL;
     this.checkTwitterStatus()
+    this.getCode()
   },
   methods: {
     hyperlink() {
@@ -208,6 +213,19 @@ export default {
         console.error('Sign Out Error', error);
       });
     },
+    getUrl(path) {
+      return this.base_url + path;
+    },
+    getCode() {
+      if (this.LCode == " ") {
+        const code = new URL(location.href).searchParams.get('code')
+        this.LCode = code
+        console.log(code)
+        if (code) {
+          axios.post(this.getUrl("/api/v1/Login"), {platform:'linkedin', code: code, url: new URL(window.location.href).origin + '/index.html'})
+        }
+      }
+    }
   }
 }
 </script>
