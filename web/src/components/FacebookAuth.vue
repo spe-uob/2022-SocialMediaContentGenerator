@@ -83,7 +83,10 @@ export default {
     }
   },
   mounted() {
-
+    console.log("debug type:", this.$DEBUG)
+    this.debug = this.$DEBUG;
+    this.base_url = this.$BASEURL;
+    this.getAppid();
   }
 }
 </script>

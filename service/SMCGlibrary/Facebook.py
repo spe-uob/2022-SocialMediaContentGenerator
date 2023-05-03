@@ -36,7 +36,7 @@ class Facebook:
         }
         params = {
             'access_token': pageAccessToken,
-            'message': 'Testing multi-photo post!',
+            'message': message,
             **media_params
         }
         response = requests.post(

@@ -38,19 +38,6 @@
         </div>
         <div class="col-2 q-pr-xl" v-if="$q.screen.gt.sm">
           <div class="row justify-evenly">
-            <div>
-              <q-avatar size="2rem" class="fa-brands fa-twitter text-light-blue"/>
-              <q-avatar v-if="!signedIn" size="0.5rem" class="fa-solid fa-circle text-red"/>
-              <q-avatar v-else size="0.5rem" class="fa-solid fa-circle text-green"/>
-            </div>
-            <div>
-              <q-avatar size="2rem" class="fa-brands fa-facebook text-blue"/>
-              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
-            </div>
-            <div>
-              <q-avatar size="2rem" class="fa-brands fa-linkedin text-blue-2"/>
-              <q-avatar size="0.5rem" class="fa-solid fa-circle text-red"/>
-            </div>
           </div>
         </div>
         <div class="col-6" v-if="$q.screen.lt.md"></div>
@@ -66,19 +53,13 @@
             >
               <q-list>
                 <q-item>
-                  <AuthComponent v-if="!signedIn"/>
-                  <q-btn v-else ref="button" class="flex justify-center full-width" color="light-blue-2" icon="fa-brands fa-twitter" type="submit" rounded @click="signOut"
-                         style="min-height:50px; min-width:270px;">
-                    <span class="q-pa-xs">
-                      Sign out of Twitter
-                    </span>
-                  </q-btn>
+                  <TwitterAuth></TwitterAuth>
                 </q-item>
                 <q-item>
-                  <FBAuthComponent></FBAuthComponent>
+                  <FacebookAuth></FacebookAuth>
                 </q-item>
                 <q-item>
-                  <LinkedInLogin></LinkedInLogin>
+                  <LinkedinAuth></LinkedinAuth>
                 </q-item>
               </q-list>
             </q-menu>
@@ -149,17 +130,19 @@
 </template>
 
 <script>
-import AuthComponent from "components/AuthComponent.vue";
-import LinkedInLogin from "components/LinkedInLogin.vue";
+import TwitterAuth from "components/TwitterAuth.vue";
+import FacebookAuth from "components/FacebookAuth.vue";
+import LinkedinAuth from "components/LinkedinAuth.vue";
 import {getAuth} from "firebase/auth";
-import FBAuthComponent from "components/FBAuthComponent.vue";
+import axios from 'axios'
+
 import {openURL} from 'quasar';
 
 const auth = getAuth()
 
 
 export default {
-  components: {FBAuthComponent, AuthComponent, LinkedInLogin},
+  components: {TwitterAuth, FacebookAuth, LinkedinAuth},
   data() {
     return {
       drawer: false,

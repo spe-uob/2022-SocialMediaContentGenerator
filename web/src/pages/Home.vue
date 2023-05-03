@@ -16,13 +16,7 @@
   <q-separator></q-separator>
   <q-tab-panels v-model="tab" animated>
     <q-tab-panel name="twitter">
-      <div id="twitter-timeline-feed" class="embedded-twitter-feed">
-        <v-container fluid>
-        <a class="twitter-timeline" data-theme='dark' href="https://twitter.com/SpacenxtLabs?ref_src=twsrc%5Etfw">
-          Loading...
-        </a>
-        </v-container>
-      </div>
+      <a class="twitter-timeline" href="https://twitter.com/spacenxtlabs?ref_src=twsrc%5Etfw">Tweets by spacenxtlabs</a>
     </q-tab-panel>
     <q-tab-panel name="facebook">
       Facebook timeline
@@ -42,29 +36,19 @@ export default {
       tab: 'twitter'
     }
   },
+  mounted() {
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.head.appendChild(script);
+  },
   methods: {
     twitter() {
       location.reload()
     }
   }
 }
-window.twttr = (function (d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0],
-    t = window.twttr || {};
-  if (d.getElementById(id)) return t;
-  js = d.createElement(s);
-  js.id = id;
-  js.src = "https://platform.twitter.com/widgets.js";
-  fjs.parentNode.insertBefore(js, fjs);
-
-  t._e = [];
-  t.ready = function (f) {
-    t._e.push(f);
-  };
-
-  return t;
-}(document, "script", "twitter-wjs"));
-
 </script>
 
 <style scoped>

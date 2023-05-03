@@ -56,6 +56,9 @@
                           <q-avatar size="2rem" :class="opt.avatar"/>
                           <span class="text-teal">{{ opt.label }}</span>
                         </q-item-section>
+                        <q-item-section side>
+                          <q-btn icon="delete" @click="deleteOptions(opt.name, opt.platform)"/>
+                        </q-item-section>
                       </div>
                     </q-item>
                   </template>
@@ -111,6 +114,22 @@ export default defineComponent({
   methods: {
     getUrl(path) {
       return this.base_url + path;
+    },
+    deleteOptions(name, platform) {
+      const response = fetch(this.getUrl("/api/v1/Delete"), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          platform: platform,
+          name: name
+        }),
+        mode: 'cors',
+      })
+      this.account_options = this.account_options.filter(
+        (option) => option.name !== name
+      );
     },
     async load_image_list() {
       let response = await fetch(this.getUrl("/api/v1/image_list"));
