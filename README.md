@@ -135,7 +135,7 @@ GDPR usage of social media user data.
 
 ## User Stories
 SpaceNXT Labs:
-As a representative of SpaceNXT, I want to have a service that can predict social media trends.
+As a representative of SpaceNXT, I want to have a service that can generate social media content for individuals and companies.
 
 Companies and organisations:
 As a company interested in using the service, I want to be able to appeal to the younger demographic through the use of social media trends.
