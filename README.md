@@ -48,6 +48,10 @@ Stephen Chen
 - Auto blog post function by Hexo
 - Post editor with autocompletion
 
+## Install tutorial
+
+[Install tutorial](install.md)
+
 ## Technology Stack
 
 ### Front end
