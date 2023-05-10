@@ -1,12 +1,20 @@
 # Install Tutorial
 
-[Hardware prepare](1.-hardware-prepare)
+## List
 
-## 1. Hardware prepare
+- [Hardware prepare](#hardware-prepare)
+- [Enviroment prepare](#enviroment-prepare)
+- [Get promgram](#get-promgram)
+- [Configure the config.json](#configure-the-config)
+- [Run server](#run-server)
+- [Download model](#download-model)
+- [Nginx](#nginx)
+
+## Hardware prepare
 - Memory at least 12GB
 - A Nvidia GPU with at least 8GB VRAM
 
-## 2. Enviroment prepare
+## Enviroment prepare
 - CUDA >= 11.3 and CUDA < 12.0
 - Python 3.9.x
 - Nodejs 18.x
@@ -14,7 +22,7 @@
 - git
 - proxy software(e.g. Nginx, Apache, Caddy, Only write Nginx example in this tutorial)
 
-## 3. Get promgram
+## Get promgram
 The steps are as follows:
 ### Get code from github
 ```bash
@@ -39,7 +47,7 @@ pip install -r requirements.txt
 # run server first times, program will automaticlly generate config.json
 # after server running, use ctrl+c to terminate
 ```
-## 4. configure the config.json
+## Configure the config
 Edit the config file service/config.json
 following is the default config.json
 ```json
@@ -83,7 +91,7 @@ I don't suggest use this flag `force_cpu`, I tested that use cpu only to run AI 
 
 The remaining configuration parameters do not need to be explained too much because the key already contains explanations.
 
-## 5. Run server
+## Run server
 ```bash
 cd 2022-SocialMediaContentGenerator/service
 python run.py
@@ -94,7 +102,7 @@ the argument `--host 0.0.0.0` can change the ip
 
 the argument `----config config.json` can change the path to config file
 
-## 6. Download model
+## Download model
 
 ### Some link:
 
@@ -104,7 +112,7 @@ the argument `----config config.json` can change the path to config file
 
 The issue of model authorization does not belong to this project, please check the introduction of each model for details.
 
-## 7. Nginx
+## Nginx
 
 ```conf
 # main site
