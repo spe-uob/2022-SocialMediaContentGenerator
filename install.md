@@ -75,7 +75,7 @@ the `blog_server_url` is the url to access the blog page from internet
 
 the `model_path` is the path to the folder that have the main model ckpt files.
 
-the `lora_model_path` is the path to the folder that have the lora model files.
+the `lora_model_path` is the path to the folder that have the lora model files. If run on linux, please repleace \\ to /
 
 I don't suggest use this flag `force_cpu`, I tested that use cpu only to run AI drawing, the result is it take 1 min only output 1 512x512 picture on I9-13900KF
 
@@ -92,7 +92,17 @@ the argument `--host 0.0.0.0` can change the ip
 
 the argument `----config config.json` can change the path to config file
 
-## 6. Nginx
+## 6. Download model
+
+### Some link:
+
+[https://huggingface.co/](https://huggingface.co/)
+
+[https://civitai.com/](https://civitai.com/)
+
+The issue of model authorization does not belong to this project, please check the introduction of each model for details.
+
+## 7. Nginx
 
 ```conf
 # main site
