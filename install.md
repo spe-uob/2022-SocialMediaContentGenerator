@@ -33,11 +33,19 @@ cd 2022-SocialMediaContentGenerator
 ```bash
 cd 2022-SocialMediaContentGenerator/web
 # if use yarn
-yarn install
+yarn install 
 # if use npm
-npm install
+npm install 
 # build quasar 
 quasar build
+# install for blog
+cd 2022-SocialMediaContentGenerator/hexo/blog
+# if use yarn
+yarn install
+yarn -g install hexo
+# if use npm
+npm install
+npm -g install hexo
 ```
 ### make dir for models and install requierment for backend
 ```bash
