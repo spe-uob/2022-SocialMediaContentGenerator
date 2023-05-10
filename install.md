@@ -1,5 +1,7 @@
 # Install Tutorial
 
+[Hardware prepare](1.-hardware-prepare)
+
 ## 1. Hardware prepare
 - Memory at least 12GB
 - A Nvidia GPU with at least 8GB VRAM
