@@ -17,7 +17,7 @@ torchvision==0.14.1+cu116
 torchaudio==0.13.1
 safetensors
 service
-transformers==4.19.2
+transformers==4.30.0
 tweepy==4.12.1
 diffusers==0.10.2
 pytorch_lightning==1.4.2
